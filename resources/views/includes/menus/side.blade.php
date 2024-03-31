@@ -21,12 +21,6 @@
       </li> 
       <li class="nav-item">
         <a class="nav-link" href="ui-colors.html">
-          <i class="fas fa-fw fa-users"></i>
-          <span>Pending Interns</span>
-        </a>
-      </li> 
-      <li class="nav-item">
-        <a class="nav-link" href="ui-colors.html">
           <i class="fas fa-fw fa-file"></i>
           <span>Intern's Evaluation</span>
         </a>
