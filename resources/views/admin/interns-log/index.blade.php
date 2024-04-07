@@ -6,7 +6,7 @@
       <!-- Container Fluid-->
         <div class="container-fluid" id="container-wrapper">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">BookMark</h1>
+                <h1 class="h3 mb-0 text-gray-800">Intern's Log</h1>
             </div>
             <section class="mt-5">
                 <div class="card">
