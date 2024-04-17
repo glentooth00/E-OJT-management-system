@@ -37,7 +37,7 @@
                  <div class="col-lg-4 pt-5 btns bg-primary">
                     <div class="">
                         <div class="card-body">
-                            <a href="/admin/dashboard" class="btn btn-outline-light btn-lg btn-block mt-5"> ADMIN</a>
+                            <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg btn-block mt-5"> ADMIN</a>
                             <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg btn-block mt-5"> CHAIR PRSON / DEPARTMENT HEAD</a>
                             <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg btn-block mt-5"> AGENCY SUPERVISOR</a>
                             <a href="{{ route('login') }}" class="btn btn-outline-light btn-lg btn-block mt-5"> STUDENT</a>
