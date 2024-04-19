@@ -18,7 +18,7 @@
             height: 100vh;
         }
     </style>
-    <title>Admin Login</title>
+    <title>Index</title>
 </head>
 
 <body>
@@ -35,8 +35,7 @@
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
-
-                    <form method="POST" action="{{ route('admin.login.submit') }}">
+                    <form action="" method="">
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">
@@ -44,14 +43,15 @@
                             </div>
                             <div>
                                 <label for="" class="text-light">Email</label>
-                                <input type="email" class="form-control" name="email" required>
+                                <input type="email" class="form-control" required>
                             </div>
                             <div class="mt-4">
                                 <label for="" class="text-light">Password</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <input type="password" class="form-control" required>
                             </div>
                             <div>
-
+                                <p class="text-light mt-3">No Account yet? Please <a href=""
+                                        class="text-warning">Register here!</a></p>
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>

@@ -34,13 +34,23 @@ return [
     | Supported: "session"
     |
     */
-
     'guards' => [
-        'web' => [
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
         ],
     ],
+    // 'guards' => [
+    //     'web' => [
+    //         'driver' => 'session',
+    //         'provider' => 'users',
+    //     ],
+    
+    //     'admin' => [
+    //         'driver' => 'session',
+    //         'provider' => 'admins',
+    //     ],
+    // ],
 
     /*
     |--------------------------------------------------------------------------
@@ -58,18 +68,19 @@ return [
     | Supported: "database", "eloquent"
     |
     */
-
     'providers' => [
-        'users' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\Admin::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
     ],
+    // 'providers' => [
+    //     'admins' => [
+    //         'driver' => 'eloquent',
+    //         'model' => App\Models\Admin::class,
+    //     ],
+    // ],
+    
 
     /*
     |--------------------------------------------------------------------------
