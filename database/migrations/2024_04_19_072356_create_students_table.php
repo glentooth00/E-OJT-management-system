@@ -16,11 +16,16 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('middlename');
             $table->string('lastname');
-            $table->string('idnumber');
+            $table->integer('age');
+            $table->string('username');
+            $table->string('password');
+            $table->string('course');
+            $table->string('year_level');
+            $table->string('section');
+            $table->string('assignment');
+            $table->string('gender');
             $table->string('contact');
             $table->string('status');
-            $table->string('time_in');
-            $table->string('time_out');
             $table->timestamps();
         });
     }

@@ -12,8 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('students', function (Blueprint $table) {
+            $table->string('id');
             $table->string('username');
             $table->string('password');
+            $table->string('firstname');
+            $table->string('middlename');
+            $table->string('lastname');
+            $table->string('course');
+            $table->string('year_lvl');
+            $table->string('section');
+            $table->string('assignment');
+            $table->string('gender');
+            $table->string('contact');
+            $table->string('status');
         });
     }
 
