@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        //
-    }
+
+ 
+     public function index()
+     {
+         return view('admin.dashboard');
+     }
 
     /**
      * Show the form for creating a new resource.
@@ -62,4 +65,26 @@ class AdminController extends Controller
     {
         //
     }
+
+    public function showLoginForm()
+    {
+        return view('auth.login'); // Assuming you have a view named admin.login
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::guard('admin')->attempt($credentials)) {
+            // Authentication passed
+            return redirect()->intended(route('admin.dashboard'));
+        }
+    
+        // Authentication failed
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+    
+
+
+
 }
