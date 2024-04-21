@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,7 +100,10 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/site/index', function () {
     return view('site.index');
-});
+})->name('site.index');
+
+
+
 Route::get('/', function () {
     return view('site.index');
 });
@@ -125,15 +128,21 @@ Route::get('/student-login', function () {
 
 //admin access
 // Admin login form (GET request)
-Route::get('/admin-login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+Route::get('/admin-login', [UsersController::class, 'showLoginForm'])->name('admin.login');
 
 // Admin login (POST request)
-Route::post('/admin-login', [AdminController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin-login', [UsersController::class, 'login'])->name('admin.login.submit');
 
 // Admin protected routes (requires authentication)
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-    // Add other admin routes here
+    Route::get('/admin/dashboard', [UsersController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/interns', [UsersController::class, 'interns'])->name('admin.interns.index');
+    // Other admin routes here
+
+    Route::post('/admin-logout', [UsersController::class, 'logout'])->name('admin.logout');
+
+    
 });
+
 
 
