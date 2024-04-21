@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
 /*
@@ -150,8 +150,7 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
 
-
-
+    Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
 
 
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Student;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -142,6 +143,9 @@ class AdminController extends Controller
     public function categories(){
         return view('admin.categories.index');
     }
+
+    
+
     
 
 

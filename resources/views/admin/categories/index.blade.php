@@ -16,9 +16,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Your table data here --}}
+                        @foreach ($categories as $category)
+                            <tr>
+                                <td>{{ $category->name }}</td> <!-- Use 'name' instead of 'category_name' -->
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
@@ -36,21 +41,30 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="organizationName">Category</label>
-                            <input type="text" class="form-control" name="category" id="organizationName"
-                                placeholder="category name">
+                    <form method="POST" action="{{ route('admin.categories.store') }}">
+                        @csrf <!-- Add CSRF token field -->
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="organizationName">Category</label>
+                                <input type="text" class="form-control" name="category_name" id="organizationName"
+                                    placeholder="Category Name">
+                                @error('category_name')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <!-- Change to submit button -->
+                        </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
             </div>
         </div>
+
     </div>
     <!---Container Fluid-->
 @endsection

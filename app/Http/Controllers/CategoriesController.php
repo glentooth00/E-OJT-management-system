@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\categories;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -12,9 +12,12 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+    
+        return view('admin.categories.index', [
+            'categories' => $categories,
+        ]);
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -26,10 +29,24 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // Make sure to import the Category model at the top
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'category_name' => 'required|string|max:255|unique:categories,category_name',
+        ]);
+    
+        Category::create([
+            'category_name' => $request->category_name,
+        ]);
+    
+        return redirect()->back()->with('success', 'Category created successfully.');
     }
+    
+    
+    
+    
 
     /**
      * Display the specified resource.
