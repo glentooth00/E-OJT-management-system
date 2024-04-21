@@ -3,7 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
-
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\AdminController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -98,15 +99,17 @@ use App\Http\Controllers\UsersController;
 
 // require __DIR__.'/auth.php';
 
+Route::get('/', function () {
+    return view('site.index');
+});
+
 Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
 
-
-
-Route::get('/', function () {
-    return view('site.index');
-});
+Route::get('/student/register', function () {
+    return view('student.register');
+})->name('student.register');
 
 Route::get('/admin-login', function () {
     return view('auth.login');
@@ -124,22 +127,22 @@ Route::get('/student-login', function () {
     return view('auth.login_student');
 })->name('student-login');
 
-
+Route::post('/register', [StudentController::class, 'store'])->name('students.store');
 
 //admin access
 // Admin login form (GET request)
-Route::get('/admin-login', [UsersController::class, 'showLoginForm'])->name('admin.login');
+Route::get('/admin-login', [AdminController::class, 'showLoginForm'])->name('admin.login');
 
 // Admin login (POST request)
-Route::post('/admin-login', [UsersController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin-login', [AdminController::class, 'login'])->name('admin.login.submit');
 
 // Admin protected routes (requires authentication)
 Route::middleware('auth:admin')->group(function () {
-    Route::get('/admin/dashboard', [UsersController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/interns', [UsersController::class, 'interns'])->name('admin.interns.index');
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/interns', [AdminController::class, 'interns'])->name('admin.interns.index');
     // Other admin routes here
 
-    Route::post('/admin-logout', [UsersController::class, 'logout'])->name('admin.logout');
+    Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     
 });

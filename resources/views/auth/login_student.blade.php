@@ -39,7 +39,7 @@
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">
-                                <h2>Login</h2>
+                                <h2>Student Login</h2>
                             </div>
                             <div>
                                 <label for="" class="text-light">Email</label>
@@ -50,8 +50,10 @@
                                 <input type="password" class="form-control" required>
                             </div>
                             <div>
-                                <p class="text-light mt-3">No Account yet? Please <a href=""
-                                        class="text-warning">Register here!</a></p>
+                                <p class="text-light mt-3">No Account yet? Please <a
+                                        href="{{ url('/student/register') }}" class="text-warning">Register here!</a>
+                                </p>
+
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,10 @@ class AdminController extends Controller
  
      public function index()
      {
-         return view('admin.dashboard');
+        $registered_students = Student::all();
+         return view('admin.dashboard',[
+            'registered_students' =>  $registered_students,
+         ]);
      }
 
     /**
@@ -82,6 +86,20 @@ class AdminController extends Controller
     
         // Authentication failed
         return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout(); // Logout the admin user
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
+    
+        return redirect()->route('site.index'); // Redirect to the site's index page
+    }
+
+    public function interns()
+    {
+        return view('admin.interns.index');
     }
     
 

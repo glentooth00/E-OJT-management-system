@@ -75,7 +75,8 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th>Name</th>
+                                <th style="width:10%;">ID</th>
+                                {{-- <th>Name</th> --}}
                                 <th>DOB</th>
                                 <th>ID Number</th>
                                 <th>Department</th>
@@ -84,28 +85,23 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
+                            @foreach ($registered_students as $student)
+                                <tr>
+                                    {{-- <td>
+                                        <img style="width:100%;" src="/storage/{{ $student->id_attachment }}"
+                                            alt="{{ $student->fullname }}">
+                                    </td> --}}
+                                    <td>{{ $student->fullname }}</td>
+                                    <td>{{ $student->dob }}</td>
+                                    <td>{{ $student->username }}</td>
+                                    <td>{{ $student->department }}</td>
+                                    <td>{{ $student->course }}</td>
+                                    <td class="text-right">
+                                        <a href="#" class="m-0 btn btn-danger btn-sm">View More <i
+                                                class="fas fa-chevron-right"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
