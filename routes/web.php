@@ -152,8 +152,9 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
 
-
-
+    Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
+    Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
+    Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     

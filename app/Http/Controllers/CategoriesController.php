@@ -12,10 +12,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-    
+        $cats = Category::all(); // Fetch all categories
+
         return view('admin.categories.index', [
-            'categories' => $categories,
+            'cats' => $cats, // Pass the categories to the view
         ]);
     }
     /**

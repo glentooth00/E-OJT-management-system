@@ -16,13 +16,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($categories as $category)
+                        @foreach ($cats as $cat)
                             <tr>
-                                <td>{{ $category->name }}</td> <!-- Use 'name' instead of 'category_name' -->
+                                <td>{{ $cat->category_name }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
 
             </div>
         </div>
