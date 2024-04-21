@@ -14,26 +14,27 @@ class AdminController extends Controller
      */
 
  
-     public function index($status)
+     public function index(Request $request, $status = null)
      {
          $filtered_students = [];
      
-         // Check the status parameter and retrieve students accordingly
          if ($status === 'pending' || $status === 'registered') {
              $filtered_students = Student::where('application_status', $status)->get();
          } else {
-             // If an invalid status is provided, default to retrieving all students
              $filtered_students = Student::all();
+             $status = ''; // Set status to empty string for the "All" option
          }
+
+         $registered_students_no = Student::where('application_status', 'registered')->count();
+         $pending_students_no = Student::where('application_status', 'registered')->count();
      
          return view('admin.dashboard', [
              'filtered_students' => $filtered_students,
-             'selectedStatus' => $status, // Pass the selected status to the view
+             'selectedFilter' => $status, // Pass the selected status as selectedFilter
+             'registered_students_no' =>  $registered_students_no,
+             'pending_students_no' => $pending_students_no
          ]);
      }
-     
-     
-     
 
     /**
      * Show the form for creating a new resource.
@@ -90,7 +91,10 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
     
         if (Auth::guard('admin')->attempt($credentials)) {
             // Authentication passed
@@ -123,16 +127,21 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Student approved successfully.');
     }
 
-    // public function filterStudents($status)
-    // {
-    //     $filtered_students = Student::where('application_status', $status)->get();
-        
-    //     return view('admin.dashboard', [
-    //         'filtered_students' => $filtered_students,
-    //     ]);
-    // }
+    public function filterStudents(Request $request)
+    {
+        $status = $request->input('filter'); // Get the selected status from the request
+    
+        // Use the index method to handle filtering based on the status
+        return $this->index($request, $status);
+    }
 
+    public function agencies(){
+        return view('admin.agencies.index');
+    }
 
+    public function categories(){
+        return view('admin.categories.index');
+    }
     
 
 

@@ -19,7 +19,8 @@ class Student extends Model
         'dob',
         'sex',
         'id_attachment',
-        'application_status'
+        'application_status',
+        'role'
     ];
 
  

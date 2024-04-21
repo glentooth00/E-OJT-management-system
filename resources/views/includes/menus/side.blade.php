@@ -47,6 +47,20 @@
          </a>
      </li>
      <li class="nav-item">
+         <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
+             <i class='fas fa-building'></i>
+             <span>Agencies</span>
+         </a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
+             href="{{ route('admin.categories') }}">
+             <i class='fas fa-building'></i>
+             <span>Categories</span>
+         </a>
+     </li>
+
+     <li class="nav-item">
          <a class="nav-link {{ request()->is('admin/notifications') ? 'active' : '' }}" href="/admin/notifications">
              <i class="fas fa-solid fa-bell"></i>
              <span>Notification</span>

@@ -47,6 +47,7 @@ class StudentController extends Controller
         
         // Set default value for application_status if not provided in the request
         $validatedData['application_status'] = 'pending';
+        $validatedData['role'] = 'student';
         
         // Handle ID attachment upload if provided
    // Handle ID attachment upload if provided

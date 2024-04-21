@@ -17,7 +17,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Registered Interns
                                     </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800">20</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800">{{ $registered_students_no }}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                     </div>
                                 </div>
@@ -35,7 +35,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Pending Interns
                                     </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800">10</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800">{{ $pending_students_no }}</div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                     </div>
                                 </div>
@@ -71,9 +71,8 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
 
-                    <form action="{{ route('admin.dashboard') }}" method="GET">
+                    <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
 
                             <select name="filter" onchange="this.form.submit()">
                                 <option value="">All</option>
@@ -110,17 +109,30 @@
                                     <td>{{ $student->department }}</td>
                                     <td>{{ $student->course }}</td>
                                     <td>
-                                        <span
-                                            class="bg-warning p-2 w-10 text-capitalize text-dark">{{ $student->application_status }}
-                                        </span>
+
+                                        @if ($student->application_status == 'pending')
+                                            <span class="bg-warning p-2 w-10 text-capitalize text-dark">Pending</span>
+                                        @elseif ($student->application_status == 'registered')
+                                            <span class="bg-success p-2 w-10 text-capitalize text-white">Registered</span>
+                                        @else
+                                            <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown
+                                                Status</span>
+                                        @endif
+
+
                                     </td>
+
+
                                     <td class="text-right">
-                                        <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
-                                            class="d-inline">
-                                            @csrf
-                                            @method('POST')
-                                            <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
-                                        </form>
+                                        @if ($student->application_status !== 'registered')
+                                            <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
+                                                class="d-inline">
+                                                @csrf
+                                                @method('POST')
+                                                <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
+                                            </form>
+                                        @endif
+
 
                                         <a href="#" class="m-0 btn btn-danger btn-sm">View More <i
                                                 class="fas fa-chevron-right"></i></a>

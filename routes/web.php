@@ -143,7 +143,14 @@ Route::middleware('auth:admin')->group(function () {
     // Other admin routes here
 
     Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
-    Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
+    // Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/filter-students/{status}', [AdminController::class, 'filterStudents'])->name('admin.filterStudents');
+
+    Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
+
+    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
+
+
 
 
 
