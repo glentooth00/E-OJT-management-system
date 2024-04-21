@@ -14,13 +14,26 @@ class AdminController extends Controller
      */
 
  
-     public function index()
+     public function index($status)
      {
-        $registered_students = Student::all();
-         return view('admin.dashboard',[
-            'registered_students' =>  $registered_students,
+         $filtered_students = [];
+     
+         // Check the status parameter and retrieve students accordingly
+         if ($status === 'pending' || $status === 'registered') {
+             $filtered_students = Student::where('application_status', $status)->get();
+         } else {
+             // If an invalid status is provided, default to retrieving all students
+             $filtered_students = Student::all();
+         }
+     
+         return view('admin.dashboard', [
+             'filtered_students' => $filtered_students,
+             'selectedStatus' => $status, // Pass the selected status to the view
          ]);
      }
+     
+     
+     
 
     /**
      * Show the form for creating a new resource.
@@ -101,6 +114,25 @@ class AdminController extends Controller
     {
         return view('admin.interns.index');
     }
+
+    public function approveStudent(Request $request, Student $student)
+    {
+        // Update the student's application_status to "registered"
+        $student->update(['application_status' => 'registered']);
+        
+        return redirect()->back()->with('success', 'Student approved successfully.');
+    }
+
+    // public function filterStudents($status)
+    // {
+    //     $filtered_students = Student::where('application_status', $status)->get();
+        
+    //     return view('admin.dashboard', [
+    //         'filtered_students' => $filtered_students,
+    //     ]);
+    // }
+
+
     
 
 

@@ -69,7 +69,22 @@
         <section class="mt-5">
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Newly Registered Interns</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
+
+                    <form action="{{ route('admin.dashboard') }}" method="GET">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
+
+                            <select name="filter" onchange="this.form.submit()">
+                                <option value="">All</option>
+                                <option value="registered" {{ $selectedFilter == 'registered' ? 'selected' : '' }}>
+                                    Registered</option>
+                                <option value="pending" {{ $selectedFilter == 'pending' ? 'selected' : '' }}>Pending
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+
                 </div>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
@@ -81,22 +96,32 @@
                                 <th>ID Number</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
+                                <th>Application status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($registered_students as $student)
+                            @foreach ($filtered_students as $student)
                                 <tr>
-                                    {{-- <td>
-                                        <img style="width:100%;" src="/storage/{{ $student->id_attachment }}"
-                                            alt="{{ $student->fullname }}">
-                                    </td> --}}
+                                    {{-- <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment"> --}}
                                     <td>{{ $student->fullname }}</td>
                                     <td>{{ $student->dob }}</td>
-                                    <td>{{ $student->username }}</td>
+                                    <td>{{ $student->id_number }}</td>
                                     <td>{{ $student->department }}</td>
                                     <td>{{ $student->course }}</td>
+                                    <td>
+                                        <span
+                                            class="bg-warning p-2 w-10 text-capitalize text-dark">{{ $student->application_status }}
+                                        </span>
+                                    </td>
                                     <td class="text-right">
+                                        <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('POST')
+                                            <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
+                                        </form>
+
                                         <a href="#" class="m-0 btn btn-danger btn-sm">View More <i
                                                 class="fas fa-chevron-right"></i></a>
                                     </td>
@@ -109,3 +134,13 @@
     </div>
     <!---Container Fluid-->
 @endsection
+<script>
+    $(document).ready(function() {
+        $('#filterStatus').change(function() {
+            var status = $(this).val(); // Get the selected status
+            var url = '{{ route('admin.filterStudents', ['status' => ':status']) }}';
+            url = url.replace(':status', status);
+            window.location.href = url; // Redirect to the filtered URL
+        });
+    });
+</script>

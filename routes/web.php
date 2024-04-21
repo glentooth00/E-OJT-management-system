@@ -142,6 +142,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/interns', [AdminController::class, 'interns'])->name('admin.interns.index');
     // Other admin routes here
 
+    Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
+    Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
+
+
+
+
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     

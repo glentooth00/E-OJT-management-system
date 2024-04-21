@@ -42,18 +42,21 @@ class StudentController extends Controller
             'dob' => 'nullable|date',
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
-            'application_status' =>
+            'application_status' => 'nullable|string' // Define validation rule for application_status
         ]);
+        
+        // Set default value for application_status if not provided in the request
+        $validatedData['application_status'] = 'pending';
         
         // Handle ID attachment upload if provided
    // Handle ID attachment upload if provided
-   if ($request->hasFile('id_attachment')) {
-    $file = $request->file('id_attachment');
-    $fileName = $file->getClientOriginalName(); // Get the original file name
-    $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
-    // Remove 'public/' from the beginning of the file path
-    $validatedData['id_attachment'] = str_replace('public/', '', $filePath); 
-}
+    if ($request->hasFile('id_attachment')) {
+        $file = $request->file('id_attachment');
+        $fileName = $file->getClientOriginalName(); // Get the original file name
+        $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
+        // Remove 'public/' from the beginning of the file path
+        $validatedData['id_attachment'] = str_replace('public/', '', $filePath); 
+    }
 
     // Create a new student record
     $student = Student::create($validatedData);
