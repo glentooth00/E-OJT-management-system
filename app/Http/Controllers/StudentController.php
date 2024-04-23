@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -12,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        return view('student.dashboard');
     }
 
     /**
@@ -49,22 +51,27 @@ class StudentController extends Controller
         $validatedData['application_status'] = 'pending';
         $validatedData['role'] = 'student';
         
+        // Hash the password if it's provided
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
+    
         // Handle ID attachment upload if provided
-   // Handle ID attachment upload if provided
-    if ($request->hasFile('id_attachment')) {
-        $file = $request->file('id_attachment');
-        $fileName = $file->getClientOriginalName(); // Get the original file name
-        $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
-        // Remove 'public/' from the beginning of the file path
-        $validatedData['id_attachment'] = str_replace('public/', '', $filePath); 
+        if ($request->hasFile('id_attachment')) {
+            $file = $request->file('id_attachment');
+            $fileName = $file->getClientOriginalName(); // Get the original file name
+            $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
+            // Remove 'public/' from the beginning of the file path
+            $validatedData['id_attachment'] = str_replace('public/', '', $filePath); 
+        }
+    
+        // Create a new student record
+        $student = Student::create($validatedData);
+    
+        // Redirect or return a response
+        return redirect()->route('site.index')->with('success', 'Student registered successfully.');
     }
 
-    // Create a new student record
-    $student = Student::create($validatedData);
-
-    // Redirect or return a response
-    return redirect()->route('site.index')->with('success', 'Student registered successfully.');
-    }
     
 
     /**
@@ -97,5 +104,40 @@ class StudentController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.student_login'); // Assuming you have a view named auth.student_login for student login
+    }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+    
+        if (Auth::guard('student')->attempt($credentials)) {
+            return redirect()->intended(route('student.dashboard'));
+        }
+    
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    public function weeklyReportIndex(){
+
+        return view('student.dashboard');
+        
+    }
+    
+
+    public function logout(Request $request)
+    {
+        Auth::guard('student')->logout(); // Logout the student user
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
+
+        return redirect()->route('site.index'); // Redirect to the site's index page
     }
 }

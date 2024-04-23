@@ -1,4 +1,4 @@
-@extends('student.includes.layouts.app')
+@extends('includes.layouts.students')
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">

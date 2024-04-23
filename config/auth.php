@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 return [
 
@@ -49,6 +49,11 @@ return [
             'driver' => 'session',
             'provider' => 'department_heads',
         ],
+
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students',
+        ],
     ],
 
     /*
@@ -81,6 +86,11 @@ return [
         'department_heads' => [
             'driver' => 'eloquent',
             'model' => App\Models\DepartmentHead::class,
+        ],
+
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
         ],
     ],
 
