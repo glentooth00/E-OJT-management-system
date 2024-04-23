@@ -38,10 +38,17 @@
                     <div class="mt-5">
                         <h1>E-OJT MANAGEMENT SYSTEM</h1>
                     </div>
+                    <!-- Display success message -->
+
                 </div>
                 <div class="col-lg-4 pt-5 btns bg-primary">
                     <div class="">
                         <div class="card-body">
+                            @if (session('success'))
+                                <div class="alert alert-success mt-3" role="alert">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
                             <a href="{{ route('admin.login') }}"
                                 class="btn btn-outline-light btn-lg btn-block mt-5">ADMIN</a>
 
