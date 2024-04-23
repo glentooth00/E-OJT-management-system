@@ -43,21 +43,44 @@
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="" class="text-light">Email</label>
-                                <input type="email" class="form-control" name="email" required>
+                                <label for="email" class="text-light">Email</label>
+                                <input type="email" id="email"
+                                    class="form-control @error('email') is-invalid @enderror" name="email"
+                                    value="{{ old('email') }}" required>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="mt-4">
-                                <label for="" class="text-light">Password</label>
-                                <input type="password" class="form-control" name="password" required>
+                                <label for="password" class="text-light">Password</label>
+                                <input type="password" id="password"
+                                    class="form-control @error('password') is-invalid @enderror" name="password"
+                                    required>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div>
-
+                                @if ($errors->any())
+                                    <div class="alert alert-danger mt-4">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

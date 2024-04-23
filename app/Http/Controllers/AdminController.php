@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Student;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +15,26 @@ class AdminController extends Controller
      */
 
  
-     public function index()
+     public function index(Request $request, $status = null)
      {
-         return view('admin.dashboard');
+         $filtered_students = [];
+     
+         if ($status === 'pending' || $status === 'registered') {
+             $filtered_students = Student::where('application_status', $status)->get();
+         } else {
+             $filtered_students = Student::all();
+             $status = ''; // Set status to empty string for the "All" option
+         }
+
+         $registered_students_no = Student::where('application_status', 'registered')->count();
+         $pending_students_no = Student::where('application_status', 'registered')->count();
+     
+         return view('admin.dashboard', [
+             'filtered_students' => $filtered_students,
+             'selectedFilter' => $status, // Pass the selected status as selectedFilter
+             'registered_students_no' =>  $registered_students_no,
+             'pending_students_no' => $pending_students_no
+         ]);
      }
 
     /**
@@ -73,7 +92,10 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
     
         if (Auth::guard('admin')->attempt($credentials)) {
             // Authentication passed
@@ -83,6 +105,47 @@ class AdminController extends Controller
         // Authentication failed
         return back()->withErrors(['email' => 'Invalid credentials']);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('admin')->logout(); // Logout the admin user
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate the CSRF token
+    
+        return redirect()->route('site.index'); // Redirect to the site's index page
+    }
+
+    public function interns()
+    {
+        return view('admin.interns.index');
+    }
+
+    // public function approveStudent(Request $request, Student $student)
+    // {
+    //     // Update the student's application_status to "registered"
+    //     $student->update(['application_status' => 'registered']);
+        
+    //     return redirect()->back()->with('success', 'Student approved successfully.');
+    // }
+
+    public function filterStudents(Request $request)
+    {
+        $status = $request->input('filter'); // Get the selected status from the request
+    
+        // Use the index method to handle filtering based on the status
+        return $this->index($request, $status);
+    }
+
+    public function agencies(){
+        return view('admin.agencies.index');
+    }
+
+    // public function categories(){
+    //     return view('admin.categories.index');
+    // }
+
+    
+
     
 
 
