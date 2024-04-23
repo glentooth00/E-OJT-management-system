@@ -102,7 +102,7 @@
                         <tbody>
                             @foreach ($filtered_students as $student)
                                 <tr>
-                                    <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment">
+                                    {{-- <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment"> --}}
                                     <td>{{ $student->fullname }}</td>
                                     <td>{{ $student->dob }}</td>
                                     <td>{{ $student->id_number }}</td>
@@ -111,9 +111,9 @@
                                     <td>
 
                                         @if ($student->application_status == 'pending')
-                                            <span class="bg-warning p-2 w-10 text-capitalize text-dark">Pending</span>
+                                            <span class="badge badge-warning">Pending</span>
                                         @elseif ($student->application_status == 'registered')
-                                            <span class="bg-success p-2 w-10 text-capitalize text-white">Registered</span>
+                                            <span class="badge badge-success">Registered</span>
                                         @else
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown
                                                 Status</span>
