@@ -102,7 +102,7 @@
                         <tbody>
                             @foreach ($filtered_students as $student)
                                 <tr>
-                                    <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment">
+                                    {{-- <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment"> --}}
                                     <td>{{ $student->fullname }}</td>
                                     <td>{{ $student->dob }}</td>
                                     <td>{{ $student->id_number }}</td>
