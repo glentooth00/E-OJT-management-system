@@ -120,13 +120,13 @@ class AdminController extends Controller
         return view('admin.interns.index');
     }
 
-    public function approveStudent(Request $request, Student $student)
-    {
-        // Update the student's application_status to "registered"
-        $student->update(['application_status' => 'registered']);
+    // public function approveStudent(Request $request, Student $student)
+    // {
+    //     // Update the student's application_status to "registered"
+    //     $student->update(['application_status' => 'registered']);
         
-        return redirect()->back()->with('success', 'Student approved successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Student approved successfully.');
+    // }
 
     public function filterStudents(Request $request)
     {

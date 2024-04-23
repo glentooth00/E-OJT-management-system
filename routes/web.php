@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DepartmentHeadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,6 +100,11 @@ use App\Http\Controllers\AdminController;
 
 // require __DIR__.'/auth.php';
 
+Route::get('/login', function () {
+    return view('auth.login');
+})->name('login');
+
+
 Route::get('/', function () {
     return view('site.index');
 });
@@ -142,9 +148,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/interns', [AdminController::class, 'interns'])->name('admin.interns.index');
     // Other admin routes here
 
-    Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
+    // Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
     // Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/filter-students/{status}', [AdminController::class, 'filterStudents'])->name('admin.filterStudents');
+    // Route::get('/admin/filter-students/{status}', [AdminController::class, 'filterStudents'])->name('admin.filterStudents');
 
     Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
 
@@ -158,6 +164,26 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     
+});
+
+
+//department head login
+Route::get('/department_head/login', [DepartmentHeadController::class, 'showLoginForm'])->name('department_head.login');
+Route::post('/department_head/login', [DepartmentHeadController::class, 'login'])->name('department_head.login.post');
+
+Route::middleware('auth:department_head')->group(function () {
+    Route::get('/department_head/dashboard', [DepartmentHeadController::class, 'index'])->name('department_head.dashboard');
+
+    Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
+
+    Route::get('/department_head/profile', [DepartmentHeadController::class, 'profile'])->name('department_head.profile');
+
+    // Add more department head routes here
+
+    Route::post('/department_head-logout', [DepartmentHeadController::class, 'logout'])->name('department_head.logout');
+
+    // Add a route for filtering students
+    Route::get('/department_head/dashboard/filter', [DepartmentHeadController::class, 'filterStudents'])->name('department_head.filterStudents');
 });
 
 

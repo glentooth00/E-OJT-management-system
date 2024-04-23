@@ -35,29 +35,30 @@
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
-                    <form action="" method="">
+                    <form action="{{ route('department_head.login.post') }}" method="POST">
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="" class="text-light">Email</label>
-                                <input type="email" class="form-control" required>
+                                <label for="email" class="text-light">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
                             </div>
                             <div class="mt-4">
-                                <label for="" class="text-light">Password</label>
-                                <input type="password" class="form-control" required>
+                                <label for="password" class="text-light">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
                             </div>
                             <div>
-                                <p class="text-light mt-3">No Account yet? Please <a href=""
-                                        class="text-warning">Register here!</a></p>
+                                {{-- <p class="text-light mt-3">No Account yet? Please <a href="{{ route('register') }}"
+                                        class="text-warning">Register here!</a></p> --}}
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

@@ -71,18 +71,18 @@
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
 
-                    {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
-
-                    {{-- <select name="filter" onchange="this.form.submit()">
+                    <form action="{{ route('department_head.filterStudents') }}" method="GET">
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                            <select name="filter" onchange="this.form.submit()">
                                 <option value="">All</option>
                                 <option value="registered" {{ $selectedFilter == 'registered' ? 'selected' : '' }}>
                                     Registered</option>
                                 <option value="pending" {{ $selectedFilter == 'pending' ? 'selected' : '' }}>Pending
                                 </option>
-                            </select> --}}
-                    {{-- </div>
-                    </form> --}}
+                            </select>
+                        </div>
+                    </form>
+
 
                 </div>
                 <div class="table-responsive">
@@ -102,7 +102,8 @@
                         <tbody>
                             @foreach ($filtered_students as $student)
                                 <tr>
-                                    <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment">
+                                    {{-- <td> <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment"></td> --}}
+
                                     <td>{{ $student->fullname }}</td>
                                     <td>{{ $student->dob }}</td>
                                     <td>{{ $student->id_number }}</td>
@@ -124,14 +125,16 @@
 
 
                                     <td class="text-right">
+
                                         @if ($student->application_status !== 'registered')
-                                            <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
+                                            <form action="{{ route('department_head.approveStudent', $student->id) }}"
+                                                method="POST" class="d-inline">
+                                                {!! csrf_field() !!}
                                                 @method('POST')
                                                 <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
                                             </form>
                                         @endif
+
 
 
                                         <a href="#" class="m-0 btn btn-danger btn-sm">View More <i
@@ -147,12 +150,12 @@
     <!---Container Fluid-->
 @endsection
 <script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
+    $(document).ready(function() {
+        $('select[name="filter"]').change(function() {
+            var status = $(this).val(); // Get the selected status
+            var url = '{{ route('department_head.filterStudents') }}';
+            url += '?filter=' + status; // Append the filter parameter to the URL
+            window.location.href = url; // Redirect to the filtered URL
+        });
+    });
 </script>
