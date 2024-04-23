@@ -9,13 +9,19 @@
          MENUS
      </div>
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
-             href="{{ route('admin.interns.index') }}">
+         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}" href="{{ route('student.dashboard') }}">
              <i class="fas fa-fw fa-users"></i>
              <span>Home</span>
          </a>
-
      </li>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
+             href="{{ route('weekly-report.show') }}">
+             <i class="fas fa-fw fa-file"></i>
+             <span>Activities</span>
+         </a>
+     </li>
+
      <li class="nav-item">
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
              href="{{ route('student.weeklyReportIndex') }}">

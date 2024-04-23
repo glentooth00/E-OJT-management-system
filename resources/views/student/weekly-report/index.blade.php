@@ -1,53 +1,33 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.students')
 
 
 @section('content')
+    <!-- Container Fluid-->
 
-      <!-- Container Fluid-->
-        <div class="container-fluid" id="container-wrapper">
-            <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 class="h3 mb-0 text-gray-800">BookMark</h1>
+    <div class="container">
+        <h1>WEEKLY REPORT</h1>
+
+        <form action="{{ route('weeklyReport.uploadImgs') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="number" class="form-control" id="weekNumber" value="{{ $studentId }}" name="student_id">
+            <div class="form-group">
+                <label for="weekNumber">Week Number:</label>
+                <input type="number" class="form-control" id="weekNumber" name="weekNumber">
             </div>
-            <section class="mt-5">
-                <div class="card">
-                    <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>DOB</th>
-                                <th>ID Number</th>
-                                <th>Department</th>
-                                <th>Course and Year</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                     <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                     <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-        </div>
-        <!---Container Fluid-->
+            <div class="form-group">
+                <label for="activityPhoto">Activity Photos:</label>
+                <input type="file" class="form-control-file" id="activityPhoto" name="activityPhoto[]" multiple>
+            </div>
+            <div class="form-group">
+                <label for="activityDescription">Activity Description:</label>
+                <textarea class="form-control" id="activityDescription" name="activityDescription"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
 
+    </div>
+
+
+    </section>
+    <!---Container Fluid-->
 @endsection

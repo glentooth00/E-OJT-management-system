@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentHeadController;
+use App\Http\Controllers\WeeklyReportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -121,6 +122,11 @@ Route::middleware('auth:student')->group(function () {
     Route::get('/student/profile', [StudentController::class, 'profile'])->name('student.profile');
 
     Route::get('/weekly-report/index', [StudentController::class, 'weeklyReportIndex'])->name('student.weeklyReportIndex'); // New route for weekly report index
+
+
+    Route::post('/weekly-report/uploadImgs', [WeeklyReportController::class, 'uploadImgs'])->name('weeklyReport.uploadImgs');
+
+    Route::get('/weekly-report/show', [WeeklyReportController::class, 'show'])->name('weekly-report.show');
 
     Route::post('/student-logout', [StudentController::class, 'logout'])->name('student.logout');
 });

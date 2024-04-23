@@ -1,68 +1,78 @@
 @extends('includes.layouts.students')
+
 @section('content')
     <!-- Container Fluid-->
-    <div class="container-fluid" id="container-wrapper">
+    {{-- <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Home</h1>
+            <h1 class="h3 mb-0 text-gray-800">ACTIVITIES of {{ $studentId }}</h1>
         </div>
         <section class="mt-5">
+
             <div class="card">
+                <td></td>
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
-
-                    {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
-
-                    {{-- <select name="filter" onchange="this.form.submit()">
-                                <option value="">All</option>
-                                <option value="registered" {{ $selectedFilter == 'registered' ? 'selected' : '' }}>
-                                    Registered</option>
-                                <option value="pending" {{ $selectedFilter == 'pending' ? 'selected' : '' }}>Pending
-                                </option>
-                            </select> --}}
-                    {{-- </div>
-                    </form> --}}
-
                 </div>
                 <div class="table-responsive">
+
                     <table class="table align-items-center table-flush">
+
                         <thead class="thead-light">
                             <tr>
-                                {{-- <th style="width:10%;">ID</th> --}}
-                                {{-- <th>Name</th> --}}
-                                <th>DOB</th>
-                                <th>ID Number</th>
-                                <th>Department</th>
-                                <th>Course and Year</th>
-                                <th>Application status</th>
-                                <th></th>
+                                <th>Student ID</th> <!-- Add this header -->
+                                <!-- Other headers -->
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>
-                                    <a href="" class="btn btn-success btn-sm">Test</a>
-                                </td>
+                                <!-- Display the student ID here -->
+                                <!-- Other data rows -->
                             </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
         </section>
+    </div> --}}
+
+    <div class="container">
+        <div class="row justify-content-start">
+            <div class="col">
+                <h1 class="h3 mb-0 text-gray-800">ACTIVITIES </h1>
+            </div>
+            <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAgencyModal">Add New
+                Category</button>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Week no.</th>
+                        <th>Activity description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($weeklyReports as $report)
+                        <tr>
+                            <td>
+                                {{ $report->week_number }}
+                            </td>
+                            <td>
+                                {{ $report->activity_description }}
+                            </td>
+                            <td>
+                                <a href="{{ route('weekly-report.show', ['id' => $report->student_id]) }}"
+                                    class="btn btn-primary">
+                                    View Report
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
     </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>
