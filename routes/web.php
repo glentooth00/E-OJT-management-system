@@ -109,6 +109,10 @@ Route::get('/', function () {
     return view('site.index');
 });
 
+Route::get('/student/dasboard', function () {
+    return view('student.dashboard');
+});
+
 Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
