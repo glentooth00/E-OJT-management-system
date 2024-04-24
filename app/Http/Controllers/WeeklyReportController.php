@@ -7,6 +7,7 @@ use App\Models\weeklyReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class WeeklyReportController extends Controller
 {
     /**
@@ -36,14 +37,20 @@ class WeeklyReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(weeklyReport $weeklyReport)
+    public function show($id)
     {
-        $weeklyReports = weeklyReport::where('student_id', $weeklyReport->student_id)
-                            ->where('week_number', $weeklyReport->week_number)
-                            ->get();
+        // Fetch the specific weekly report based on the ID
+        $weeklyReport = WeeklyReport::find($id);
     
-        return view('student.weekly-report.show', compact('weeklyReports'));
+        // Check if the weekly report exists
+        if (!$weeklyReport) {
+            return abort(404); // Or any other error handling logic
+        }
+    
+        // Pass the weekly report data to the view
+        return view('student.weekly-report.show', compact('weeklyReport'));
     }
+    
     
     
 
@@ -87,7 +94,7 @@ class WeeklyReportController extends Controller
             foreach ($request->file('activityPhoto') as $file) {
                 // Handle each file
                 $fileName = $file->getClientOriginalName();
-                $filePath = $file->storeAs('public/activity_photos', $fileName);
+                $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
     
                 // Save file path, weekNumber, activityDescription, and student_id to database
                 $weeklyReport = new WeeklyReport();

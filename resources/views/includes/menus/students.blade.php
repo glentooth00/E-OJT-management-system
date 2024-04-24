@@ -14,13 +14,14 @@
              <span>Home</span>
          </a>
      </li>
-     <li class="nav-item">
+     {{-- <li class="nav-item">
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
-             href="{{ route('weekly-report.show') }}">
+             href="{{ route('weekly-report.show', ['id' => $report->id]) }}">
              <i class="fas fa-fw fa-file"></i>
              <span>Activities</span>
          </a>
-     </li>
+     </li> --}}
+
 
      <li class="nav-item">
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"

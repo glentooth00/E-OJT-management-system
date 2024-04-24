@@ -126,7 +126,14 @@ Route::middleware('auth:student')->group(function () {
 
     Route::post('/weekly-report/uploadImgs', [WeeklyReportController::class, 'uploadImgs'])->name('weeklyReport.uploadImgs');
 
-    Route::get('/weekly-report/show', [WeeklyReportController::class, 'show'])->name('weekly-report.show');
+    // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weekly-report.show');
+    Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
+
+
+
+
+
+
 
     Route::post('/student-logout', [StudentController::class, 'logout'])->name('student.logout');
 });

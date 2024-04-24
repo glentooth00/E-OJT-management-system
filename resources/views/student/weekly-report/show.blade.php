@@ -1,31 +1,31 @@
 @extends('includes.layouts.students')
 
-
 @section('content')
-    <!-- Container Fluid-->
-
     <div class="container">
         <div class="row">
-            @foreach ($weeklyReports as $report)
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ asset('storage/' . $report->file_path) }}" class="card-img-top" alt="Activity Photo">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-header">Week no. {{ $weeklyReport->week_number }}</div>
 
-                        <div class="card-body">
-                            <h5 class="card-title">Week No. {{ $report->week_number }}</h5>
-                            <p class="card-text">Date Submitted: {{ date('m/d/Y', strtotime($report->created_at)) }}</p>
-                            <a href="{{ asset('storage/' . $report->file_path) }}" class="btn btn-primary"
-                                target="_blank">View File</a>
-                        </div>
+                    <div class="card-body">
+                        <p>Date Submitted: {{ $weeklyReport->created_at->format('M d, Y') }}</p>
+                        <p>{{ $weeklyReport->activity_description }}</p>
+
+                        @if ($weeklyReport->images)
+                            <div class="row">
+                                @foreach ($weeklyReport->images as $image)
+                                    <div class="col-md-4 mb-4">
+                                        <img src="{{ asset('storage/' . $image) }}" alt="Activity Image">
+                                        <p>{{ asset('storage/' . $image) }}</p> <!-- Output image URL for debugging -->
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p>No images uploaded for this weekly report.</p>
+                        @endif
                     </div>
                 </div>
-            @endforeach
+            </div>
         </div>
     </div>
-
-
-
-
-    </section>
-    <!---Container Fluid-->
 @endsection
