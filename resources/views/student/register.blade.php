@@ -58,10 +58,10 @@
                                     <label for="" class="text-white">Attach your ID here</label>
                                     <input type="file" name="id_attachment" class="form-control">
                                 </div>
-                                <div class="col-md-6 mt-3">
+                                {{-- <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Username</label>
                                     <input type="text" name="username" class="form-control">
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Email</label>
                                     <input type="email" name="email" class="form-control">

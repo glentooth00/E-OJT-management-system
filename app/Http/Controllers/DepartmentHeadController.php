@@ -90,19 +90,19 @@ class DepartmentHeadController extends Controller
         //
     }
 
-    // public function approveStudent(Request $request, Student $student)
-    // {
-    //     // Check if the authenticated user is a department head
-    //     if (Auth::guard('department_head')->check()) {
-    //         // Update the student's application_status to "registered"
-    //         $student->update(['application_status' => 'registered']);
+    public function approveStudent(Request $request, Student $student)
+    {
+        // Check if the authenticated user is a department head
+        if (Auth::guard('department_head')->check()) {
+            // Update the student's application_status to "registered"
+            $student->update(['application_status' => 'registered']);
             
-    //         return redirect()->back()->with('success', 'Student approved successfully.');
-    //     } else {
-    //         // Handle cases where the user is not authorized
-    //         return redirect()->back()->withErrors(['error' => 'You are not authorized to perform this action.']);
-    //     }
-    // }
+            return redirect()->back()->with('success', 'Student approved successfully.');
+        } else {
+            // Handle cases where the user is not authorized
+            return redirect()->back()->withErrors(['error' => 'You are not authorized to perform this action.']);
+        }
+    }
     
 
     public function showLoginForm()
@@ -116,24 +116,25 @@ class DepartmentHeadController extends Controller
     
         if (Auth::guard('department_head')->attempt($credentials)) {
             // Authentication successful, redirect to intended page
-            return redirect()->intended(route('department_head.dashboard'));
+            return redirect()->route('department_head.dashboard');
         } else {
             // Authentication failed, log error message
             \Log::error('Authentication failed for department head with email: ' . $credentials['email']);
-            
+    
             return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
         }
     }
+    
 
-    public function approveStudent(Request $request, Student $student)
-    {
-        \Log::info('Approving student: ' . $student->id);
+    // public function approveStudent(Request $request, Student $student)
+    // {
+    //     \Log::info('Approving student: ' . $student->id);
         
-        // Update the student's application_status to "registered"
-        $student->update(['application_status' => 'registered']);
+    //     // Update the student's application_status to "registered"
+    //     $student->update(['application_status' => 'registered']);
         
-        return redirect()->back()->with('success', 'Student approved successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Student approved successfully.');
+    // }
     
 
     public function filterStudents(Request $request)

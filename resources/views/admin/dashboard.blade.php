@@ -125,12 +125,12 @@
 
                                     <td class="text-right">
                                         @if ($student->application_status !== 'registered')
-                                            <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
+                                            {{-- <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
-                                            </form>
+                                            </form> --}}
                                         @endif
 
 

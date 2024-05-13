@@ -66,7 +66,6 @@ class StudentController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'fullname' => 'nullable|string|max:255',
-            'username' => 'nullable|string|unique:students|max:255',
             'email' => 'nullable|email|unique:students|max:255',
             'password' => 'nullable|string|min:8',
             'course' => 'nullable|string|max:255',
@@ -154,17 +153,13 @@ public function login(Request $request)
     ]);
 
     if (Auth::guard('student')->attempt($credentials)) {
-        // Get the authenticated student
-        $student = Auth::guard('student')->user();
-        $studentId = $student->id; // Access the student's ID
-
-        // Now you can use $studentId as needed
-
-        return redirect()->intended(route('student.dashboard'));
+        // Redirect to the student dashboard upon successful login
+        return redirect()->route('student.dashboard');
     }
 
     return back()->withErrors(['email' => 'Invalid credentials']);
 }
+
 
 public function weeklyReportIndex()
 {
@@ -198,12 +193,12 @@ public function weeklyReportIndex()
 // }
     
 
-    public function logout(Request $request)
-    {
-        Auth::guard('student')->logout(); // Logout the student user
-        $request->session()->invalidate(); // Invalidate the session
-        $request->session()->regenerateToken(); // Regenerate the CSRF token
+public function logout(Request $request)
+{
+    Auth::guard('student')->logout(); // Logout the student user
+    $request->session()->invalidate(); // Invalidate the session
+    $request->session()->regenerateToken(); // Regenerate the CSRF token
 
-        return redirect()->route('site.index'); // Redirect to the site's index page
-    }
+    return redirect()->route('site.index'); // Redirect to the site's index page
+}
 }
