@@ -146,13 +146,3 @@
     </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>

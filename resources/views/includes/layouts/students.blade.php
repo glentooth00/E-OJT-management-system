@@ -8,7 +8,7 @@
 
     @yield('content')
 
-    @include('includes.sections.footer')
+    {{-- @include('includes.sections.footer') --}}
 
 </body>
 

@@ -101,86 +101,103 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new Account</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add new Supervisor Account</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <!-- Modal body content goes here -->
-                        <form>
+                        <form action="{{ route('department_heads.store') }}" method="POST">
+                            @csrf
+                            {{-- <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="name">Firstame</label>
+                                <input type="text" name="name" class="form-control" id="name"
+                                    placeholder="Name">
+                            </div>
+                        </div> --}}
                             <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputEmail4">Name</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Name">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Firstame</label>
+                                    <input type="text" name="first_name" class="form-control" id="name"
+                                        placeholder="firstname">
                                 </div>
-
+                                <div class="form-group col-md-4">
+                                    <label for="middlename">Middlename</label>
+                                    <input type="middlename" name="middle_name" class="form-control" id="middlename"
+                                        placeholder="middlename">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="lastname">Lastname</label>
+                                    <input type="lastname" name="last_name" class="form-control" id="lastname"
+                                        placeholder="lastname">
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" id="inputEmail4"
+                                        placeholder="Email">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                    <input type="password" name="password" class="form-control" id="inputPassword4"
+                                        placeholder="Password">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="Address">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputAddress2">Office</label>
-                                <input type="text" class="form-control" id=""
-                                    placeholder="Ex. Municipal office, Bank, ">
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputCity">Address</label>
-                                    <input type="text" class="form-control" id="inputCity">
-                                </div>
-                                {{-- <div class="form-group col-md-4">
-                                    <label for="inputState">State</label>
-                                    <select id="inputState" class="form-control">
-                                        <option selected>Choose...</option>
-                                        <option>...</option>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Department</label>
+                                    <select name="department" id="inputState" class="form-control">
+                                        <option hidden>Select Dept.</option>
+                                        <option>Education</option>
+                                        <option>IICS</option>
+                                        <option>Engineering</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-2">
-                                    <label for="inputZip">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip">
-                                </div> --}}
                             </div>
                             {{-- <div class="form-group">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                                    <label class="form-check-label" for="gridCheck">
-                                        Check me out
-                                    </label>
-                                </div>
+                            <label for="inputAddress2">Office</label>
+                            <input type="text" class="form-control" id=""
+                                placeholder="Ex. Municipal office, Bank, ">
+                        </div> --}}
+                            <div class="form-row">
+                                {{-- <div class="form-group col-md-12">
+                                <label for="inputCity">Address</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div> --}}
+                                {{-- <div class="form-group col-md-4">
+                                <label for="inputState">State</label>
+                                <select id="inputState" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option>...</option>
+                                </select>
                             </div>
-                            <button type="submit" class="btn btn-primary">Sign in</button> --}}
-                        </form>
+                            <div class="form-group col-md-2">
+                                <label for="inputZip">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div> --}}
+                            </div>
+                            {{-- <div class="form-group">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                <label class="form-check-label" for="gridCheck">
+                                    Check me out
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sign in</button> --}}
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Create Account</button>
-                        <!-- Additional buttons or actions can be placed here -->
+                        <button type="submit" class="btn btn-primary">Create Account</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>

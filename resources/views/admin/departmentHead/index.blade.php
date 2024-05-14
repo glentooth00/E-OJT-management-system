@@ -81,10 +81,8 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th style="width:10%;">ID</th>
                                 {{-- <th>Name</th> --}}
                                 <th>Name</th>
-                                <th>ID Number</th>
                                 <th>Department</th>
                                 <th>ACTIONS</th>
                             </tr>
@@ -101,42 +99,61 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new Account</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add new Department Head Account</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <!-- Modal body content goes here -->
-                        <form>
-                            <div class="form-row">
+                        <form action="{{ route('department_heads.store') }}" method="POST">
+                            @csrf
+                            {{-- <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label for="inputEmail4">Name</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Name">
+                                    <label for="name">Firstame</label>
+                                    <input type="text" name="name" class="form-control" id="name"
+                                        placeholder="Name">
                                 </div>
-
+                            </div> --}}
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="name">Firstame</label>
+                                    <input type="text" name="first_name" class="form-control" id="name"
+                                        placeholder="firstname">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="middlename">Middlename</label>
+                                    <input type="middlename" name="middle_name" class="form-control" id="middlename"
+                                        placeholder="middlename">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="lastname">Lastname</label>
+                                    <input type="lastname" name="last_name" class="form-control" id="lastname"
+                                        placeholder="lastname">
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Email</label>
-                                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                                    <input type="email" name="email" class="form-control" id="inputEmail4"
+                                        placeholder="Email">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Password</label>
-                                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                                    <input type="password" name="password" class="form-control" id="inputPassword4"
+                                        placeholder="Password">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Department</label>
-                                    <select id="inputState" class="form-control">
+                                    <label for="inputState">Department</label>
+                                    <select name="department" id="inputState" class="form-control">
                                         <option hidden>Select Dept.</option>
                                         <option>Education</option>
                                         <option>IICS</option>
                                         <option>Engineering</option>
                                     </select>
                                 </div>
-
                             </div>
                             {{-- <div class="form-group">
                                 <label for="inputAddress2">Office</label>
@@ -169,27 +186,16 @@
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary">Sign in</button> --}}
-                        </form>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Create Account</button>
-                        <!-- Additional buttons or actions can be placed here -->
+                        <button type="submit" class="btn btn-primary">Create Account</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>

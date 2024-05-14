@@ -10,6 +10,13 @@
      </div>
      <li class="nav-item">
          <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}" href="{{ route('student.dashboard') }}">
+             <i class="fa fa-home" aria-hidden="true"></i>
+             <span>Dashboard</span>
+         </a>
+     </li>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
+             href="{{ route('student.dashboard') }}">
              <i class="fas fa-fw fa-users"></i>
              <span>Home</span>
          </a>

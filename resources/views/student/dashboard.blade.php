@@ -35,10 +35,10 @@
         </section>
     </div> --}}
 
-    <div class="container">
+    {{-- <div class="container">
         <div class="row justify-content-start">
             <div class="col">
-                <h1 class="h3 mb-0 text-gray-800">ACTIVITIES </h1>
+                <h1 class="h3 mb-0 text-gray-800">ACTIVITIES</h1>
             </div>
             <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAgencyModal">Add New
                 Category</button>
@@ -72,7 +72,7 @@
 
         </div>
     </div>
-    </div>
+    </div> --}}
     {{-- <div class="modal fade" id="addAgencyModal" tabindex="-1" role="dialog" aria-labelledby="addAgencyModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

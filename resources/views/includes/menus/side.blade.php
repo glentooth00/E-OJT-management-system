@@ -52,13 +52,22 @@
             <span>Categories</span>
         </a>
     </li>
+
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/departmentHead*') ? 'active' : '' }}"
+        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
+            href="{{ route('admin.departmentHead.department_head') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Department Head</span>
+        </a>
+    </li>
+
+    {{-- <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
             href="{{ route('admin.departmentHead.department_head') }}">
             <i class='fas fa-building'></i>
             <span>Department Head</span>
         </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
@@ -154,5 +163,10 @@
     .dropdown-menu.show {
         opacity: 1;
         visibility: visible;
+    }
+
+    .nav-link.active {
+        background-color: #f8f9fa;
+        /* your desired background color */
     }
 </style>

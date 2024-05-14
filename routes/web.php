@@ -68,34 +68,49 @@ Route::get('/admin-login', [AdminController::class, 'showLoginForm'])->name('adm
 Route::post('/admin-login', [AdminController::class, 'login'])->name('admin.login.submit');
 
 // Admin protected routes (requires authentication)
+// Route::middleware('auth:admin')->group(function () {
+//     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+//     Route::get('/admin/interns', [AdminController::class, 'interns'])->name('admin.interns.index');
+//     // Other admin routes here
+
+//     // Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
+//     // Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
+//     // Route::get('/admin/filter-students/{status}', [AdminController::class, 'filterStudents'])->name('admin.filterStudents');
+//     Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
+
+
+//     Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
+
+//     Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
+
+//     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
+
+//     Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
+
+//     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
+
+//     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
+
+//     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
+//     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
+//     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
+//     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+    
+// });
 Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/admin/interns', [AdminController::class, 'interns'])->name('admin.interns.index');
-    // Other admin routes here
-
-    // Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
-    // Route::get('/admin/students/{status}', [AdminController::class, 'index'])->name('admin.dashboard');
-    // Route::get('/admin/filter-students/{status}', [AdminController::class, 'filterStudents'])->name('admin.filterStudents');
     Route::post('/approve-student/{student}', [AdminController::class, 'approveStudent'])->name('admin.approveStudent');
-
-
     Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
-
-    Route::get('/admin/categories', [AdminController::class, 'categories'])->name('admin.categories');
-
+    Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
-
     Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
-
+    Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
-
-    Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
-    Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
-    Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
-
-    
 });
+
 
 
 //department head login

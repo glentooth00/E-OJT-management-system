@@ -55,7 +55,25 @@ class DepartmentHeadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'first_name' => 'nullable|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'email' => 'required|email|unique:department_heads|max:255',
+            'password' => 'required|string|min:8',
+            'department' => 'required|string|max:255',
+        ]);
+
+        // dd($validatedData);
+
+        // // Hash the password before saving
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        // Create a new department head record
+        $departmentHead = DepartmentHead::create($validatedData);
+
+        // Redirect or return response as needed
+        return redirect()->route('departmentHeads.index')->with('success', 'Department Head created successfully.');
     }
 
     /**
