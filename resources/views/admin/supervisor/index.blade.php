@@ -78,18 +78,35 @@
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                {{-- <th>Name</th> --}}
-                                <th>Name</th>
+                                <th>First Name</th>
+                                <th>Middle Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
                                 <th>Office</th>
-                                <th>Category</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($supervisor_accounts as $supervisor)
+                                <tr>
+                                    <td>{{ $supervisor->first_name }}</td>
+                                    <td>{{ $supervisor->middle_name }}</td>
+                                    <td>{{ $supervisor->last_name }}</td>
+                                    <td>{{ $supervisor->email }}</td>
+                                    <td>{{ $supervisor->category }}</td>
+                                    <td>{{ $supervisor->office }}</td>
+                                    <td>
+                                        <button class="btn btn-primary">EDIT</button>
+                                        <button class="btn btn-secondary">VIEW</button>
+                                        <button class="btn btn-danger">DELETE</button>
 
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -146,7 +163,7 @@
                                 </div>
                             </div>
 
-                            <<div class="form-row">
+                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="office">Office</label>
                                     <input type="text" name="office" class="form-control" id="office"
@@ -162,18 +179,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                    </div>
-                    {{-- <div class="form-group">
+                            </div>
+                            {{-- <div class="form-group">
                             <label for="inputAddress2">Office</label>
                             <input type="text" class="form-control" id=""
                                 placeholder="Ex. Municipal office, Bank, ">
                         </div> --}}
-                    <div class="form-row">
-                        {{-- <div class="form-group col-md-12">
+                            <div class="form-row">
+                                {{-- <div class="form-group col-md-12">
                                 <label for="inputCity">Address</label>
                                 <input type="text" class="form-control" id="inputCity">
                             </div> --}}
-                        {{-- <div class="form-group col-md-4">
+                                {{-- <div class="form-group col-md-4">
                                 <label for="inputState">State</label>
                                 <select id="inputState" class="form-control">
                                     <option selected>Choose...</option>
@@ -184,8 +201,8 @@
                                 <label for="inputZip">Zip</label>
                                 <input type="text" class="form-control" id="inputZip">
                             </div> --}}
-                    </div>
-                    {{-- <div class="form-group">
+                            </div>
+                            {{-- <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gridCheck">
                                 <label class="form-check-label" for="gridCheck">
@@ -195,15 +212,15 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Sign in</button> --}}
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Create Account</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
     </div>
     <!---Container Fluid-->
 @endsection

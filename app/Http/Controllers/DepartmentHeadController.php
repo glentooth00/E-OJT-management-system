@@ -42,6 +42,15 @@ class DepartmentHeadController extends Controller
     ]);
     }
 
+    public function departmentIndex(){
+        $department_heads = DepartmentHead::all();
+
+        return view('admin.departmentHead.index', [
+            'department_heads' => $department_heads,
+        ]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */

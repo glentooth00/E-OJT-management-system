@@ -88,7 +88,19 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($department_heads as $department_head)
+                                <tr>
+                                    <td>{{ $department_head->first_name }} {{ $department_head->middle_name }}
+                                        {{ $department_head->last_name }}</td>
+                                    <td>{{ $department_head->department }}</td>
+                                    <td>
+                                        <button class="btn btn-primary">EDIT</button>
+                                        <button class="btn btn-secondary">VIEW</button>
+                                        <button class="btn btn-danger">DELETE</button>
 
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

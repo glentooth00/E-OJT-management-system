@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\DepartmentHead;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -12,7 +13,10 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return view('admin.departmentHead.index');
+        $department_heads = DepartmentHead::all();
+        return view('admin.departmentHead.index', [
+            'department_heads' => $department_heads,
+        ]);
     }
 
     /**

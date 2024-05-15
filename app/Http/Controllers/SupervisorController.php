@@ -12,9 +12,11 @@ class SupervisorController extends Controller
     public function index()
     {
         $categories = Category::all(); // Fetch all categories
+        $supervisor_accounts = Supervisor::orderBy('created_at', 'desc')->get(); // Fetch all supervisor accounts sorted by latest
 
         return view('admin.supervisor.index', [
             'categories' => $categories,
+            'supervisor_accounts' => $supervisor_accounts
         ]);
     }
 
