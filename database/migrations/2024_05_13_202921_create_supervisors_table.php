@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('supervisors', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name');
+            $table->string('middle_name');
+            $table->string('last_name');
+            $table->string('office');
+            $table->string('category');
             $table->timestamps();
         });
     }

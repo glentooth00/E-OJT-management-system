@@ -81,11 +81,10 @@
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
-                                <th style="width:10%;">ID</th>
                                 {{-- <th>Name</th> --}}
                                 <th>Name</th>
                                 <th>Office</th>
-                                <th>Department</th>
+                                <th>Category</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </thead>
@@ -108,7 +107,7 @@
                     </div>
                     <div class="modal-body">
                         <!-- Modal body content goes here -->
-                        <form action="{{ route('department_heads.store') }}" method="POST">
+                        <form action="{{ route('supervisor.store') }}" method="POST">
                             @csrf
                             {{-- <div class="form-row">
                             <div class="form-group col-md-12">
@@ -119,55 +118,62 @@
                         </div> --}}
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <label for="name">Firstame</label>
-                                    <input type="text" name="first_name" class="form-control" id="name"
-                                        placeholder="firstname">
+                                    <label for="first_name">Firstname</label>
+                                    <input type="text" name="first_name" class="form-control" id="first_name"
+                                        placeholder="Firstname">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="middlename">Middlename</label>
-                                    <input type="middlename" name="middle_name" class="form-control" id="middlename"
-                                        placeholder="middlename">
+                                    <label for="middle_name">Middlename</label>
+                                    <input type="text" name="middle_name" class="form-control" id="middle_name"
+                                        placeholder="Middlename">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="lastname">Lastname</label>
-                                    <input type="lastname" name="last_name" class="form-control" id="lastname"
-                                        placeholder="lastname">
+                                    <label for="last_name">Lastname</label>
+                                    <input type="text" name="last_name" class="form-control" id="last_name"
+                                        placeholder="Lastname">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" name="email" class="form-control" id="inputEmail4"
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email"
                                         placeholder="Email">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Password</label>
-                                    <input type="password" name="password" class="form-control" id="inputPassword4"
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" class="form-control" id="password"
                                         placeholder="Password">
                                 </div>
                             </div>
-                            <div class="form-row">
+
+                            <<div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputState">Department</label>
-                                    <select name="department" id="inputState" class="form-control">
+                                    <label for="office">Office</label>
+                                    <input type="text" name="office" class="form-control" id="office"
+                                        placeholder="Office">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="department">Department</label>
+                                    <select name="category" id="category" class="form-control">
                                         <option hidden>Select Dept.</option>
-                                        <option>Education</option>
-                                        <option>IICS</option>
-                                        <option>Engineering</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->category_name }}">{{ $category->category_name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
-                            </div>
-                            {{-- <div class="form-group">
+                    </div>
+                    {{-- <div class="form-group">
                             <label for="inputAddress2">Office</label>
                             <input type="text" class="form-control" id=""
                                 placeholder="Ex. Municipal office, Bank, ">
                         </div> --}}
-                            <div class="form-row">
-                                {{-- <div class="form-group col-md-12">
+                    <div class="form-row">
+                        {{-- <div class="form-group col-md-12">
                                 <label for="inputCity">Address</label>
                                 <input type="text" class="form-control" id="inputCity">
                             </div> --}}
-                                {{-- <div class="form-group col-md-4">
+                        {{-- <div class="form-group col-md-4">
                                 <label for="inputState">State</label>
                                 <select id="inputState" class="form-control">
                                     <option selected>Choose...</option>
@@ -178,8 +184,8 @@
                                 <label for="inputZip">Zip</label>
                                 <input type="text" class="form-control" id="inputZip">
                             </div> --}}
-                            </div>
-                            {{-- <div class="form-group">
+                    </div>
+                    {{-- <div class="form-group">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gridCheck">
                                 <label class="form-check-label" for="gridCheck">
@@ -189,15 +195,15 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Sign in</button> --}}
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Create Account</button>
-                    </div>
-                    </form>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
     <!---Container Fluid-->
 @endsection

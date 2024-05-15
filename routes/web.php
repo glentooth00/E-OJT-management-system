@@ -108,6 +108,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
+    Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 

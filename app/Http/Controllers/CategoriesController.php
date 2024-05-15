@@ -44,6 +44,15 @@ class CategoriesController extends Controller
         return redirect()->back()->with('success', 'Category created successfully.');
     }
     
+    public function dropdown() {
+        $categories = Category::all(); // Fetch all categories
+        dd($categories); // Dump and die to check the output
+    
+        return view('admin.supervisor.index', [
+            'categories' => $categories,
+        ]);
+    }
+    
     
     
     
