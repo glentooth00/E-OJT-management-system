@@ -1,4 +1,4 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.department')
 
 
 @section('content')
@@ -112,9 +112,9 @@
                                     <td>
 
                                         @if ($student->application_status == 'pending')
-                                            <span class="bg-warning p-2 w-10 text-capitalize text-dark">Pending</span>
+                                            <span class="badge badge-warning">Pending</span>
                                         @elseif ($student->application_status == 'registered')
-                                            <span class="bg-success p-2 w-10 text-capitalize text-white">Registered</span>
+                                            <span class="badge badge-success">Registered</span>
                                         @else
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown
                                                 Status</span>

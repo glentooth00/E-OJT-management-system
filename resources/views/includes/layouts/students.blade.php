@@ -3,12 +3,12 @@
 @include('includes.sections.header')
 
 <body>
-    @include('includes.menus.side')
+    @include('includes.menus.students')
     @include('includes.menus.top')
 
     @yield('content')
 
-    @include('includes.sections.footer')
+    {{-- @include('includes.sections.footer') --}}
 
 </body>
 

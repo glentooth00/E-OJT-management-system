@@ -3,35 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\WeeklyReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the student dashboard with the latest weekly reports.
      */
     public function index()
     {
-        //
+        $student = Auth::guard('student')->user();
+        $studentId = $student->id;
+
+        // Retrieve the latest weekly report for each week using a subquery
+        $latestReports = DB::table('weekly_reports')
+            ->select('week_number', DB::raw('MAX(id) as max_id'))
+            ->where('student_id', $studentId)
+            ->groupBy('week_number')
+            ->get();
+
+        // Get the full weekly reports based on the maximum IDs found in the subquery
+        $weeklyReports = WeeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
+
+        return view('student.dashboard', [
+            'weeklyReports' => $weeklyReports,
+            'studentId' => $studentId,
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new student.
      */
     public function create()
     {
-        //
+        // Implementation here if needed
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created student in storage.
      */
     public function store(Request $request)
     {
-        // Validate the incoming request data
         $validatedData = $request->validate([
             'fullname' => 'nullable|string|max:255',
-            'username' => 'nullable|string|unique:students|max:255',
             'email' => 'nullable|email|unique:students|max:255',
             'password' => 'nullable|string|min:8',
             'course' => 'nullable|string|max:255',
@@ -42,60 +60,157 @@ class StudentController extends Controller
             'dob' => 'nullable|date',
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
-            'application_status' => 'nullable|string' // Define validation rule for application_status
+            'application_status' => 'nullable|string'
         ]);
-        
-        // Set default value for application_status if not provided in the request
-        $validatedData['application_status'] = 'pending';
+
+        $validatedData['application_status'] = $validatedData['application_status'] ?? 'pending';
         $validatedData['role'] = 'student';
-        
-        // Handle ID attachment upload if provided
-   // Handle ID attachment upload if provided
-    if ($request->hasFile('id_attachment')) {
-        $file = $request->file('id_attachment');
-        $fileName = $file->getClientOriginalName(); // Get the original file name
-        $filePath = $file->storeAs('public/id_attachments', $fileName); // Store the file in the specified storage folder
-        // Remove 'public/' from the beginning of the file path
-        $validatedData['id_attachment'] = str_replace('public/', '', $filePath); 
-    }
 
-    // Create a new student record
-    $student = Student::create($validatedData);
+        if ($request->filled('password')) {
+            $validatedData['password'] = Hash::make($validatedData['password']);
+        }
 
-    // Redirect or return a response
-    return redirect()->route('site.index')->with('success', 'Student registered successfully.');
+        if ($request->hasFile('id_attachment')) {
+            $file = $request->file('id_attachment');
+            $fileName = $file->getClientOriginalName();
+            $filePath = $file->storeAs('public/id_attachments', $fileName);
+            $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
+        }
+
+        Student::create($validatedData);
+
+        return redirect()->route('site.index')->with('success', 'Student registered successfully.');
     }
-    
 
     /**
-     * Display the specified resource.
+     * Display the specified student.
      */
     public function show(string $id)
     {
-        //
+        // Implementation here if needed
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified student.
      */
     public function edit(string $id)
     {
-        //
+        // Implementation here if needed
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified student in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Implementation here if needed
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified student from storage.
      */
     public function destroy(string $id)
     {
-        //
+        // Implementation here if needed
+    }
+
+    /**
+     * Show the student login form.
+     */
+    public function showLoginForm()
+    {
+        return view('auth.student_login');
+    }
+
+    /**
+     * Handle student login.
+     */
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if (Auth::guard('student')->attempt($credentials)) {
+            return redirect()->route('student.dashboard');
+        }
+
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    /**
+     * Show the weekly report index for the authenticated student.
+     */
+    public function weeklyReportIndex()
+    {
+        $studentId = Auth::guard('student')->id();
+        return view('student.weekly_report.index', compact('studentId'));
+    }
+
+    /**
+     * Handle image uploads for weekly reports.
+     */
+    public function uploadImgs(Request $request)
+    {
+        // Validate the request
+        $validatedData = $request->validate([
+            'student_id' => 'required|integer',
+            'weekNumber' => 'required|integer',
+            'activityPhoto.*' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
+            'activityDescription' => 'required|string',
+        ]);
+
+        dd($validatedData);
+    
+        // // Ensure the directory exists
+        // $storagePath = storage_path('app/public/weekly_reports');
+        // if (!file_exists($storagePath)) {
+        //     mkdir($storagePath, 0755, true);
+        // }
+    
+        // // Process each uploaded file
+        // if ($request->hasFile('activityPhoto')) {
+        //     foreach ($request->file('activityPhoto') as $file) {
+        //         // Generate a unique file name to avoid conflicts
+        //         $fileName = time() . '_' . $file->getClientOriginalName();
+        //         $filePath = $file->storeAs('public/weekly_reports', $fileName);
+    
+        //         // Debugging info: Log the file path
+        //         \Log::info('Uploaded file path: ' . $filePath);
+    
+        //         // Save the file path to the database or handle further processing
+        //         // Assuming you have a model for WeeklyReportFile to save file info
+        //         WeeklyReportFile::create([
+        //             'student_id' => $validatedData['student_id'],
+        //             'week_number' => $validatedData['weekNumber'],
+        //             'file_path' => str_replace('public/', 'storage/', $filePath), // Adjust path for public access
+        //         ]);
+        //     }
+        // }
+    
+        // // Save other weekly report details to the database
+        // WeeklyReport::create([
+        //     'student_id' => $validatedData['student_id'],
+        //     'week_number' => $validatedData['weekNumber'],
+        //     'description' => $validatedData['activityDescription'],
+        //     // Add other necessary fields
+        // ]);
+    
+        return redirect()->back()->with('success', 'Files uploaded successfully.');
+    }
+    
+    
+
+    /**
+     * Handle student logout.
+     */
+    public function logout(Request $request)
+    {
+        Auth::guard('student')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('site.index');
     }
 }

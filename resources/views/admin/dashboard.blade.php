@@ -102,7 +102,7 @@
                         <tbody>
                             @foreach ($filtered_students as $student)
                                 <tr>
-                                    <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment">
+                                    {{-- <img src="/storage/{{ $student->id_attachment }}" alt="ID Attachment"> --}}
                                     <td>{{ $student->fullname }}</td>
                                     <td>{{ $student->dob }}</td>
                                     <td>{{ $student->id_number }}</td>
@@ -111,9 +111,9 @@
                                     <td>
 
                                         @if ($student->application_status == 'pending')
-                                            <span class="bg-warning p-2 w-10 text-capitalize text-dark">Pending</span>
+                                            <span class="badge badge-warning">Pending</span>
                                         @elseif ($student->application_status == 'registered')
-                                            <span class="bg-success p-2 w-10 text-capitalize text-white">Registered</span>
+                                            <span class="badge badge-success">Registered</span>
                                         @else
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown
                                                 Status</span>
@@ -125,12 +125,12 @@
 
                                     <td class="text-right">
                                         @if ($student->application_status !== 'registered')
-                                            <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
+                                            {{-- <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
-                                            </form>
+                                            </form> --}}
                                         @endif
 
 
@@ -146,13 +146,3 @@
     </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>

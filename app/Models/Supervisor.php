@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as AuthenticatableUser;
+use Illuminate\Database\Eloquent\Model;
 
-class DepartmentHead extends AuthenticatableUser implements Authenticatable
+class Supervisor extends Model
 {
     use HasFactory;
 
@@ -16,7 +15,7 @@ class DepartmentHead extends AuthenticatableUser implements Authenticatable
         'last_name',
         'email',
         'password',
-        'department',
+        'office',
+        'category',
     ];
 }
-
