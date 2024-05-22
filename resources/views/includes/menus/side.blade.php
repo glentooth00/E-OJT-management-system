@@ -34,6 +34,14 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}"
+            href="{{ route('admin.archive.index') }}">
+            <i class="fas fa-fw fa-clock"></i>
+            <span>Archives</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}" href="/admin/moa">
             <i class="fas fa-regular fa-building"></i>
             <span>MOA / MOU</span>

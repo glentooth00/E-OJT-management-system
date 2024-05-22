@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
@@ -109,6 +110,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
+    Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
+
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
@@ -138,36 +141,69 @@ Route::middleware('auth:department_head')->group(function () {
 });
 
 
+
+
+
 //student login
+
 Route::get('/student/login', [StudentController::class, 'showLoginForm'])->name('student.login');
 Route::post('/student/login', [StudentController::class, 'login'])->name('student.login.post');
 
 Route::middleware('auth:student')->group(function () {
+    // Dashboard and Profile
     Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
-
-    
-    // Add more student routes here
-
     Route::get('/student/profile', [StudentController::class, 'profile'])->name('student.profile');
 
-    Route::get('/weekly-report/index', [StudentController::class, 'weeklyReportIndex'])->name('student.weeklyReportIndex'); // New route for weekly report index
+    // Weekly Report
+    Route::get('/weekly-report/index', [StudentController::class, 'weeklyReportIndex'])->name('student.weeklyReportIndex');
+    Route::post('/weekly-report/upload-images', [WeeklyReportController::class, 'store'])->name('weeklyReport.uploadImgs');
+
+    Route::get('/weekly-report/{weekNumber}', 'WeeklyReportController@show')->name('weeklyReport.show');
+
+    // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
+    // routes/web.php
+
+// Route::get('/weekly_report/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
+Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
 
-    Route::post('/weekly-report/uploadImgs', [WeeklyReportController::class, 'uploadImgs'])->name('weeklyReport.uploadImgs');
-
-    // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weekly-report.show');
-    Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
 
-
-
-
-
-
+    // Logout
     Route::post('/student-logout', [StudentController::class, 'logout'])->name('student.logout');
-
-
 });
+
+
+
+// Route::get('/student/login', [StudentController::class, 'showLoginForm'])->name('student.login');
+// Route::post('/student/login', [StudentController::class, 'login'])->name('student.login.post');
+
+// Route::middleware('auth:student')->group(function () {
+//     Route::get('/student/dashboard', [StudentController::class, 'index'])->name('student.dashboard');
+
+    
+//     // Add more student routes here
+
+//     Route::get('/student/profile', [StudentController::class, 'profile'])->name('student.profile');
+
+//     Route::get('/weekly-report/index', [StudentController::class, 'weeklyReportIndex'])->name('student.weeklyReportIndex'); // New route for weekly report index
+
+
+//     Route::post('/weekly-report/uploadImgs', [WeeklyReportController::class, 'uploadImgs'])->name('weeklyReport.uploadImgs');
+
+//     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weekly-report.show');
+//     Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
+
+
+
+
+
+
+
+//     Route::post('/student-logout', [StudentController::class, 'logout'])->name('student.logout');
+
+
+// });
 
 
 
