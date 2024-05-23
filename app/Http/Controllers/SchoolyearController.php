@@ -12,7 +12,12 @@ class SchoolyearController extends Controller
      */
     public function index()
     {
-        return view('admin.school_year.index');
+
+        $schoolYears = Schoolyear::all();
+
+        return view('admin.school_year.index',[
+            'schoolYears' => $schoolYears,
+        ]);
     }
 
     /**
@@ -20,7 +25,10 @@ class SchoolyearController extends Controller
      */
     public function create()
     {
-        return view('admin.school_year.index');
+        $schoolYears = Schoolyear::all();
+        return view('admin.school_year.index',[
+            'schoolYears' => $schoolYears,
+        ]);
     }
 
     // Handle the form submission to store a new school year
@@ -34,7 +42,7 @@ class SchoolyearController extends Controller
         // Store the new school year
         // Assuming you have a SchoolYear model
         $schoolYear = new \App\Models\SchoolYear();
-        $schoolYear->year = $request->input('school_year');
+        $schoolYear->school_year = $request->input('school_year');
         $schoolYear->save();
 
         // Redirect back with a success message

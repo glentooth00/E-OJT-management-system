@@ -50,9 +50,12 @@
                                 <input type="password" id="password" name="password" class="form-control" required>
                             </div>
                             <div>
-                                <p class="text-light mt-3">No Account yet? Please <a
-                                        href="{{ route('student.register') }}" class="text-warning">Register here!</a>
+                                <p class="text-light mt-3">
+                                    No Account yet? Please
+                                    <a href="{{ route('student.register.create') }}" class="text-warning">Register
+                                        here!</a>
                                 </p>
+
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>

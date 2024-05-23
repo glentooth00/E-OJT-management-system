@@ -16,7 +16,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- Your table data here --}}
+                        @foreach ($schoolYears as $schoolYear)
+                            <tr>
+                                <td>
+                                    {{ $schoolYear->school_year }}
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

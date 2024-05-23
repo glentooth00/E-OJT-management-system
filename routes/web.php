@@ -40,9 +40,11 @@ Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
 
-Route::get('/student/register', function () {
-    return view('student.register');
-})->name('student.register');
+// Route::get('/student/register', function () {
+//     return view('student.register');
+// })->name('student.register');
+
+Route::get('/student/register', [StudentController::class, 'create'])->name('student.register.create');
 
 Route::get('/admin-login', function () {
     return view('auth.login');
