@@ -36,6 +36,18 @@ Route::get('/student/dasboard', function () {
     return view('student.dashboard');
 });
 
+Route::get('/student/bio-data', function () {
+    return view('student.bio-data');
+});
+
+Route::get('/student/letter-of-intent', function () {
+    return view('student.letter-of-intent');
+});
+
+Route::get('/student/good-moral', function () {
+    return view('student.good-moral');
+});
+
 Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
