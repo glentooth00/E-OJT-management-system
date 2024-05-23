@@ -19,7 +19,9 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
+  <script src="{{ asset('admin/js/js.js')}}"></script>
   <script src="{{ asset('admin/js/vendor/jquery.min.js')}}"></script>
   <script src="{{ asset('admin/js/bootstrap.bundle.min.js')}}"></script>
   <script src="{{ asset('admin/js/vendor/jquery.easing.min.js')}}"></script>
   <script src="{{ asset('admin/js/ruang-admin.min.js')}}"></script>
+   @stack('scripts')
