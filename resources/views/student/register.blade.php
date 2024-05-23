@@ -80,8 +80,8 @@
                                         <option value="" hidden>Select Course </option>
                                         <option value="BSIT"> BSIT </option>
                                         <option value="BSCS"> BSCS </option>
-                                        <option value="BEED"> BEED </option>
-                                        <option value="CIVIL ENGINEERING"> CIVIL ENGINEERING </option>
+                                        {{-- <option value="BEED"> BEED </option>
+                                        <option value="CIVIL ENGINEERING"> CIVIL ENGINEERING </option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
@@ -89,9 +89,9 @@
                                     <select name="department" id="" class="form-control">
                                         <option value="" hidden>Select Department </option>
                                         <option value="CICS">CICS </option>
-                                        <option value="EDUCTATION">EDUCTATION</option>
+                                        {{-- <option value="EDUCTATION">EDUCTATION</option>
                                         <option value="ENGINEERING">ENGINEERING</option>
-                                        <option value="TOURISM">TOURISM</option>
+                                        <option value="TOURISM">TOURISM</option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
