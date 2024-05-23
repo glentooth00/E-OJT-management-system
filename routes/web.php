@@ -112,7 +112,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
-    Route::get('/admin/school_year/index', [SchoolyearController::class, 'index'])->name('admin.school_year.index');
+   
+// Route for displaying the form (GET request)
+Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])->name('admin.school_year.create');
+
+// Route for handling the form submission (POST request)
+Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
 
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });

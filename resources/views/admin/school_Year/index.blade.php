@@ -30,27 +30,29 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addAgencyModalLabel">Add School year</h5>
+                    <h5 class="modal-title" id="addAgencyModalLabel">Add School Year</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="{{ route('admin.school_year.store') }}" method="POST">
+                        @csrf {{-- CSRF protection --}}
                         <div class="form-group">
-                            <label for="school_year">School year</label>
+                            <label for="school_year">School Year</label>
                             <input type="text" class="form-control" name="school_year" id="school_year"
-                                placeholder="school year">
+                                placeholder="School Year">
                         </div>
-
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="submit" class="btn btn-primary"
+                        onclick="event.preventDefault(); document.querySelector('#addAgencyModal form').submit();">Save</button>
                 </div>
             </div>
         </div>
     </div>
+
     <!---Container Fluid-->
 @endsection

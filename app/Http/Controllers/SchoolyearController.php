@@ -20,12 +20,10 @@ class SchoolyearController extends Controller
      */
     public function create()
     {
-        return view('admin.school_year.create');
+        return view('admin.school_year.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Handle the form submission to store a new school year
     public function store(Request $request)
     {
         // Validate the request data
@@ -35,6 +33,7 @@ class SchoolyearController extends Controller
 
         // Store the new school year
         // Assuming you have a SchoolYear model
+        $schoolYear = new \App\Models\SchoolYear();
         $schoolYear->year = $request->input('school_year');
         $schoolYear->save();
 
