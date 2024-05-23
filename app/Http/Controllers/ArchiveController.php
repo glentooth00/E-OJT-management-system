@@ -12,6 +12,7 @@ class ArchiveController extends Controller
      */
     public function index()
     {
+        // $students = Student::where('');
         return view('admin.archives.index');
     }
 
