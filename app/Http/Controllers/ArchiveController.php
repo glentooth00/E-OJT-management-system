@@ -14,8 +14,8 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        // Get all school years
-        $school_years = Schoolyear::all();
+        // Get all school years in descending order
+        $school_years = Schoolyear::orderBy('school_year', 'desc')->get();
     
         // Get all students
         $students = Student::all();
@@ -25,7 +25,32 @@ class ArchiveController extends Controller
             'students' => $students,
         ]);
     }
-    
+
+    public function filterStudents(Request $request)
+    {
+        $schoolYear = $request->input('school_year');
+        $course = $request->input('course');
+
+        $query = Student::query();
+
+        if ($schoolYear) {
+            $query->where('school_year', $schoolYear);
+        }
+
+        if ($course) {
+            $query->where('course', $course);
+        }
+
+        $students = $query->get();
+        $school_years = Schoolyear::all();
+
+        return view('admin.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

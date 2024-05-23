@@ -121,6 +121,14 @@ Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])
 // Route for handling the form submission (POST request)
 Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
 
+
+
+
+Route::get('/admin/archives', [ArchiveController::class, 'index'])->name('admin.archives.index');
+Route::get('/filter-students', [ArchiveController::class, 'filterStudents'])->name('filter.students');
+
+
+
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
 
@@ -143,6 +151,9 @@ Route::middleware('auth:department_head')->group(function () {
     Route::post('/department_head-logout', [DepartmentHeadController::class, 'logout'])->name('department_head.logout');
 
     Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
+
+    Route::get('/department_head/archives', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.archives.index');
+    Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
 
 
     // Add a route for filtering students

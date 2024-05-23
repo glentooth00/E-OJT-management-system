@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schoolyear;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
@@ -49,6 +50,46 @@ class DepartmentHeadController extends Controller
             'department_heads' => $department_heads,
         ]);
     }
+
+    public function indexDepartmentHead()
+    {
+        // Get all school years in descending order
+        $school_years = Schoolyear::orderBy('school_year', 'desc')->get();
+    
+        // Get all students
+        $students = Student::all();
+    
+        return view('department_head.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
+    }
+    
+
+    public function filterStudentsDept(Request $request)
+    {
+        $schoolYear = $request->input('school_year');
+        $course = $request->input('course');
+
+        $query = Student::query();
+
+        if ($schoolYear) {
+            $query->where('school_year', $schoolYear);
+        }
+
+        if ($course) {
+            $query->where('course', $course);
+        }
+
+        $students = $query->get();
+        $school_years = Schoolyear::all();
+
+        return view('department_head.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
+    }
+    
 
 
     /**
