@@ -24,7 +24,8 @@ class Student extends Authenticatable
         'sex',
         'id_attachment',
         'application_status',
-        'role'
+        'role',
+        'school_year'
     ];
 
     public function weeklyReports()

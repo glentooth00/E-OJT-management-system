@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Archive;
+use App\Models\Schoolyear;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ArchiveController extends Controller
@@ -12,8 +14,18 @@ class ArchiveController extends Controller
      */
     public function index()
     {
-        return view('admin.archives.index');
+        // Get all school years
+        $school_years = Schoolyear::all();
+    
+        // Get all students
+        $students = Student::all();
+    
+        return view('admin.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.

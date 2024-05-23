@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\WeeklyReport;
 use Illuminate\Http\Request;
@@ -40,7 +41,13 @@ class StudentController extends Controller
      */
     public function create()
     {
-        // Implementation here if needed
+        $schoolYears = Schoolyear::all();
+
+        return view('student.register',[
+            'schoolYears' => $schoolYears,
+        ]);
+
+        
     }
 
     /**
@@ -60,8 +67,10 @@ class StudentController extends Controller
             'dob' => 'nullable|date',
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
-            'application_status' => 'nullable|string'
+            'application_status' => 'nullable|string',
+            'school_year' => 'nullable|string|max:255'
         ]);
+        // dd($validatedData);
 
         $validatedData['application_status'] = $validatedData['application_status'] ?? 'pending';
         $validatedData['role'] = 'student';

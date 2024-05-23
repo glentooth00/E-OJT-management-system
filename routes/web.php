@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
@@ -39,9 +40,11 @@ Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
 
-Route::get('/student/register', function () {
-    return view('student.register');
-})->name('student.register');
+// Route::get('/student/register', function () {
+//     return view('student.register');
+// })->name('student.register');
+
+Route::get('/student/register', [StudentController::class, 'create'])->name('student.register.create');
 
 Route::get('/admin-login', function () {
     return view('auth.login');
@@ -111,6 +114,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
+   
+// Route for displaying the form (GET request)
+Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])->name('admin.school_year.create');
+
+// Route for handling the form submission (POST request)
+Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
 
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });

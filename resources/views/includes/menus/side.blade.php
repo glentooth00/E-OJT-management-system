@@ -34,7 +34,7 @@
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}"
+        <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
             href="{{ route('admin.archive.index') }}">
             <i class="fas fa-fw fa-clock"></i>
             <span>Archives</span>
@@ -103,6 +103,13 @@
             <span>Settings</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.school_year.create') }}">
+            <i class="fas fa-solid fa-cogs"></i>
+            <span>Add School Year</span>
+        </a>
+    </li>
+
     <li class="nav-item">
         <form action="{{ route('admin.logout') }}" method="POST">
             @csrf
