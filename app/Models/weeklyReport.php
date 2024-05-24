@@ -14,7 +14,7 @@ class WeeklyReport extends Model
 
     // Define the fillable attributes for mass assignment
     protected $fillable = [
-        'student_id', 'week_number', 'activity_description', 'file_path',
+        'studentname','student_id', 'week_number', 'activity_description', 'file_path',
     ];
 
     protected $casts = [

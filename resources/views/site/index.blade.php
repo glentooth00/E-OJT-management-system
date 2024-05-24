@@ -53,7 +53,7 @@
                                 class="btn btn-outline-light btn-lg btn-block mt-5">ADMIN</a>
 
                             <a href="{{ route('department-login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">CHAIR PERSON / DEPARTMENT HEAD</a>
+                                class="btn btn-outline-light btn-lg btn-block mt-5">CHAIRPERSON</a>
 
                             <a href="{{ route('supervisor-login') }}"
                                 class="btn btn-outline-light btn-lg btn-block mt-5">AGENCY SUPERVISOR</a>

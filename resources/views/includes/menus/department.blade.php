@@ -23,14 +23,23 @@
              <span>Intern</span>
          </a>
      </li>
-
-     {{-- <li class="nav-item">
-         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
-             href="/admin/interns-evaluation">
-             <i class="fas fa-fw fa-file"></i>
-             <span>Intern's Evaluation</span>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('department_head/weekly_reports*') ? 'active' : '' }}"
+             href="{{ route('department_head.weekly_reports') }}">
+             <i class="fas fa-fw fa-tachometer-alt"></i>
+             <span>Weekly Reports</span>
          </a>
-     </li> --}}
+     </li>
+
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('department_head/archive*') ? 'active' : '' }}"
+             href="{{ route('department_head.archives.index') }}">
+             <i class="fas fa-fw fa-file"></i>
+             <span>Archives</span>
+         </a>
+     </li>
+
+
      {{-- <li class="nav-item">
          <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
              <i class="fas fa-fw fa-clock"></i>
@@ -39,7 +48,7 @@
      </li> --}}
 
      <li class="nav-item">
-         <form action="{{ route('admin.logout') }}" method="POST">
+         <form action="{{ route('department_head.logout') }}" method="POST">
              @csrf
              <button type="submit" class="nav-link" style="background: none; border: none;">
                  <i class="fas fa-sign-out-alt"></i>

@@ -5,9 +5,10 @@
     <div class="row mb-5">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <a href="" class="btn btn-primary mb-4 float-right"><i class="fas fa-print"> Print</i></a>
+            <a href="#" class="btn btn-primary mb-4 float-right" onclick="printCard()"><i class="fas fa-print">
+                    Print</i></a>
             <br><br><br>
-            <div class="card">
+            <div class="card" id="printableCard">
                 <div class="card-body">
                     <div class="text-center">
                         <span>Republic of the Philippines</span>
@@ -23,21 +24,24 @@
                     </div>
                     <div>
                         <p>
-                           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            This is to certify that ________________________________________________________________ is a bonafide student of Nothern Iloilo State University
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            This is to certify that ________________________________________________________________ is a
+                            bonafide student of Nothern Iloilo State University
                             , Estancia, Iloilo for Academic Year, _____________ - _____________.
                         </p>
                     </div>
                     <div class="mt-4">
                         <p>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            Our records show that he/she had not been subjected to any disciplinary action during his/her stay in this institution.
+                            Our records show that he/she had not been subjected to any disciplinary action during his/her
+                            stay in this institution.
                         </p>
                     </div>
                     <div class="mt-4">
                         <p>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            This certification is being issued for his/her application for On-the-Job Training (OJT) as perscribed by his/her course.
+                            This certification is being issued for his/her application for On-the-Job Training (OJT) as
+                            perscribed by his/her course.
                         </p>
                     </div>
                     <div class="mt-4">
@@ -59,6 +63,29 @@
         </div>
         <div class="col-md-1"></div>
     </div>
+    <script>
+        function printCard() {
+            // Get the HTML of the card
+            var cardContent = document.getElementById('printableCard').innerHTML;
 
+            // Create a new window
+            var printWindow = window.open('', '', 'height=600,width=800');
+
+            // Write the content to the new window
+            printWindow.document.write('<html><head><title>Print</title>');
+            printWindow.document.write(
+                '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">'
+                ); // Add Bootstrap CSS if needed
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(cardContent);
+            printWindow.document.write('</body></html>');
+
+            // Close the document to trigger the print
+            printWindow.document.close();
+
+            // Print the content
+            printWindow.print();
+        }
+    </script>
     <!---Container Fluid-->
 @endsection

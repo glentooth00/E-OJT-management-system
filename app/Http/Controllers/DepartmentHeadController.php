@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schoolyear;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
@@ -50,6 +51,50 @@ class DepartmentHeadController extends Controller
         ]);
     }
 
+    public function indexDepartmentHead()
+    {
+        // Get all school years in descending order
+        $school_years = Schoolyear::orderBy('school_year', 'desc')->get();
+    
+        // Get all students
+        $students = Student::all();
+    
+        return view('department_head.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
+    }
+    
+
+    public function filterStudentsDept(Request $request)
+    {
+        $schoolYear = $request->input('school_year');
+        $course = $request->input('course');
+
+        $query = Student::query();
+
+        if ($schoolYear) {
+            $query->where('school_year', $schoolYear);
+        }
+
+        if ($course) {
+            $query->where('course', $course);
+        }
+
+        $students = $query->get();
+        $school_years = Schoolyear::all();
+
+        return view('department_head.archives.index', [
+            'school_years' => $school_years,
+            'students' => $students,
+        ]);
+    }
+    
+    public function weekly_reports()
+    {
+        return view('department_head.weekly_reports.index');
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -88,10 +133,16 @@ class DepartmentHeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DepartmentHead $departmentHead)
+    public function show($id)
     {
-        //
+        // Fetch the department head details by ID
+        $departmentHead = DepartmentHead::findOrFail($id);
+
+        // Return the view with the department head details
+        return view('show', compact('departmentHead'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

@@ -153,9 +153,17 @@ class StudentController extends Controller
      */
     public function weeklyReportIndex()
     {
-        $studentId = Auth::guard('student')->id();
-        return view('student.weekly_report.index', compact('studentId'));
+        $student = Auth::guard('student')->user();
+        if ($student) {
+            $studentId = $student->id;
+            $studentName = $student->fullname; // Adjust based on your actual column name for the student's name
+    
+            return view('student.weekly_report.index', compact('studentId', 'studentName'));
+        }
+    
+        return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
     }
+    
 
     /**
      * Handle image uploads for weekly reports.

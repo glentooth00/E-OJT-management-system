@@ -54,6 +54,11 @@ return [
             'driver' => 'session',
             'provider' => 'students',
         ],
+
+        'supervisor' => [
+            'driver' => 'session',
+            'provider' => 'supervisors',
+        ],
     ],
 
     /*
@@ -92,6 +97,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Student::class,
         ],
+
+        'supervisors' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Supervisor::class,
+        ],
     ],
 
     /*
@@ -116,6 +126,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'supervisors' => [
+            'provider' => 'supervisors',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,

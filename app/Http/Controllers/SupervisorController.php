@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SupervisorController extends Controller
@@ -19,6 +20,19 @@ class SupervisorController extends Controller
             'supervisor_accounts' => $supervisor_accounts
         ]);
     }
+
+    public function Supervisor_index()
+    {
+        $categories = Category::all(); // Fetch all categories
+        $supervisor_accounts = Supervisor::orderBy('created_at', 'desc')->get(); // Fetch all supervisor accounts sorted by latest
+
+        return view('supervisor.dashboard', [
+            'categories' => $categories,
+            'supervisor_accounts' => $supervisor_accounts
+        ]);
+    }
+
+
 
     public function create()
     {
@@ -65,6 +79,31 @@ class SupervisorController extends Controller
     {
         //
     }
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:8',
+        ]);
+
+        if (Auth::guard('supervisor')->attempt($credentials)) {
+            // Authentication passed
+            return redirect()->intended(route('supervisor.dashboard'));
+        }
+
+        // Authentication failed
+        return back()->withErrors(['email' => 'Invalid credentials']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('supervisor')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('site.index');
+    }
+
 
     public function destroy(Supervisor $supervisor)
     {

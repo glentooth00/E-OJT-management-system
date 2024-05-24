@@ -35,29 +35,45 @@
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
-                    <form action="" method="">
+                    <form action="{{ route('supervisor.login') }}" method="POST">
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="" class="text-light">Email</label>
-                                <input type="email" class="form-control" required>
+                                <label for="email" class="text-light">Email</label>
+                                <input type="email" name="email"
+                                    class="form-control @error('email') is-invalid @enderror" required>
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div class="mt-4">
-                                <label for="" class="text-light">Password</label>
-                                <input type="password" class="form-control" required>
+                                <label for="password" class="text-light">Password</label>
+                                <input type="password" name="password"
+                                    class="form-control @error('password') is-invalid @enderror" required>
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                             <div>
-                                <p class="text-light mt-3">No Account yet? Please <a href=""
-                                        class="text-warning">Register here!</a></p>
+                                {{-- <p class="text-light mt-3">No Account yet? Please <a href=""
+                                        class="text-warning">Register here!</a></p> --}}
                             </div>
                             <div class="mt-4">
                                 <button type="submit" class="btn btn-success btn-lg btn-block">Submit</button>
                             </div>
                         </div>
                     </form>
+
+
+
+
                 </div>
             </div>
         </div>
