@@ -169,9 +169,12 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
 
+    Route::get('/department_head/weekly_reports',  [DepartmentHeadController::class, 'weekly_reports'])->name('department_head.weekly_reports');
 
     // Add a route for filtering students
     Route::get('/department_head/dashboard/filter', [DepartmentHeadController::class, 'filterStudents'])->name('department_head.filterStudents');
+   
+
 });
 
 
@@ -227,6 +230,7 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::post('/supervisor/weekly-report/upload-images', [WeeklyReportController::class, 'store'])->name('supervisor.weeklyReport.uploadImgs');
 
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
+  
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

@@ -90,6 +90,10 @@ class DepartmentHeadController extends Controller
         ]);
     }
     
+    public function weekly_reports()
+    {
+        return view('department_head.weekly_reports.index');
+    }
 
 
     /**

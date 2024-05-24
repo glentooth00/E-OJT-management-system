@@ -23,6 +23,13 @@
              <span>Intern</span>
          </a>
      </li>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('department_head/weekly_reports*') ? 'active' : '' }}"
+             href="{{ route('department_head.weekly_reports') }}">
+             <i class="fas fa-fw fa-tachometer-alt"></i>
+             <span>Weekly Reports</span>
+         </a>
+     </li>
 
      <li class="nav-item">
          <a class="nav-link {{ request()->is('department_head/archive*') ? 'active' : '' }}"

@@ -47,12 +47,14 @@ class WeeklyReportController extends Controller
     {
         $validatedData = $request->validate([
             'student_id' => 'required|integer',
+            'studentname' => 'required|string',
             'week_number' => 'required|integer',
             'activityPhotos.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'activityDescription' => 'required|string',
         ]);
     
         $studentId = $request->input('student_id');
+        $studentName = $request->input('studentname'); // Corrected variable name
         $weekNumber = $request->input('week_number');
         $activityDescription = $request->input('activityDescription');
     
@@ -65,6 +67,7 @@ class WeeklyReportController extends Controller
                 $weeklyReport = new WeeklyReport();
                 $weeklyReport->student_id = $studentId;
                 $weeklyReport->week_number = $weekNumber;
+                $weeklyReport->studentname = $studentName;
                 $weeklyReport->activity_description = $activityDescription;
                 $weeklyReport->file_path = $filePath; // Store the file path
                 $weeklyReport->save();
@@ -73,6 +76,7 @@ class WeeklyReportController extends Controller
     
         return redirect()->route('student.dashboard')->with('success', 'Weekly report created successfully!');
     }
+    
     
     
     
