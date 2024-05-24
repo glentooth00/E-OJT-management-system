@@ -167,6 +167,8 @@ Route::middleware('auth:department_head')->group(function () {
     Route::get('/department_head/archives', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.archives.index');
     Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
 
+    Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
+
 
     // Add a route for filtering students
     Route::get('/department_head/dashboard/filter', [DepartmentHeadController::class, 'filterStudents'])->name('department_head.filterStudents');
@@ -207,6 +209,28 @@ Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'
 
 
 
+
+
+
+//supervisor
+// Supervisor Authentication Routes
+Route::get('/supervisor/login', [SupervisorController::class, 'showLoginForm'])->name('supervisor.login');
+Route::post('/supervisor/login', [SupervisorController::class, 'login'])->name('supervisor.login.post');
+
+Route::middleware('auth:supervisor')->group(function () {
+    // Dashboard and Profile
+    Route::get('/supervisor/dashboard', [SupervisorController::class, 'Supervisor_index'])->name('supervisor.dashboard');
+    Route::get('/supervisor/profile', [SupervisorController::class, 'profile'])->name('supervisor.profile');
+
+    // Weekly Report
+    Route::get('/supervisor/weekly-report/index', [SupervisorController::class, 'weeklyReportIndex'])->name('supervisor.weeklyReportIndex');
+    Route::post('/supervisor/weekly-report/upload-images', [WeeklyReportController::class, 'store'])->name('supervisor.weeklyReport.uploadImgs');
+
+    Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
+
+    // Logout
+    Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');
+});
 // Route::get('/student/login', [StudentController::class, 'showLoginForm'])->name('student.login');
 // Route::post('/student/login', [StudentController::class, 'login'])->name('student.login.post');
 

@@ -15,23 +15,20 @@
          </a>
      </li>
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
-             href="/student/bio-data">
+         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/bio-data">
              <i class="fas fa-fw fa-file"></i>
              <span>Bio Data Form</span>
          </a>
      </li>
 
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
-             href="/student/letter-of-intent">
+         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/letter-of-intent">
              <i class="fas fa-fw fa-file"></i>
              <span>Letter of Intent</span>
          </a>
      </li>
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
-             href="/student/good-moral">
+         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/good-moral">
              <i class="fas fa-fw fa-file"></i>
              <span>Good Moral Character</span>
          </a>

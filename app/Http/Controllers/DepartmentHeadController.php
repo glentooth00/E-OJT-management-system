@@ -129,10 +129,16 @@ class DepartmentHeadController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(DepartmentHead $departmentHead)
+    public function show($id)
     {
-        //
+        // Fetch the department head details by ID
+        $departmentHead = DepartmentHead::findOrFail($id);
+
+        // Return the view with the department head details
+        return view('show', compact('departmentHead'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

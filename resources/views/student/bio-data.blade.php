@@ -4,7 +4,9 @@
     <!-- Container Fluid-->
 
     <div class="card mb-5">
-        <div class="card-header text-center"><h2>BIO DATA</h2></div>
+        <div class="card-header text-center">
+            <h2>BIO DATA</h2>
+        </div>
         <div class="card-body">
             <div>
                 <div class="float-right">
