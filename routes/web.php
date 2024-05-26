@@ -32,20 +32,33 @@ Route::get('/', function () {
     return view('site.index');
 });
 
+// Evaluation routes
+Route::get('/admin/interns-evaluation/create', function () {
+    return view('admin.interns.create');
+});
+
+Route::get('/admin/interns-evaluation', function () {
+    return view('admin.interns-evaluation.index');
+});
+// End of Evaluation routes
 Route::get('/student/dasboard', function () {
     return view('student.dashboard');
 });
 
-Route::get('/student/bio-data', function () {
-    return view('student.bio-data');
+Route::get('/student/printables/bio-data', function () {
+    return view('student.printables.bio-data');
 });
 
-Route::get('/student/letter-of-intent', function () {
-    return view('student.letter-of-intent');
+Route::get('/student/printables/letter-of-intent', function () {
+    return view('student.printables.letter-of-intent');
 });
 
-Route::get('/student/good-moral', function () {
-    return view('student.good-moral');
+Route::get('/student/printables/good-moral', function () {
+    return view('student.printables.good-moral');
+});
+
+Route::get('/student/printables/guardian-consent-form', function () {
+    return view('student.printables.guardian-consent-form');
 });
 
 Route::get('/site/index', function () {
