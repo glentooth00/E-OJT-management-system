@@ -29,19 +29,7 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
+                                    <a href="" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal"> Delete</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -49,5 +37,4 @@
                 </div>
         </section>
     </div>
-    <!---Container Fluid-->
 @endsection

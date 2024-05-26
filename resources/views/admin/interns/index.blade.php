@@ -29,20 +29,8 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i
-                                            class="fas fa-chevron-right"></i></a>
-                                </td>
+                                    <a href="/admin/interns-evaluation/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
+                                </td> 
                             </tr>
                         </tbody>
                     </table>
