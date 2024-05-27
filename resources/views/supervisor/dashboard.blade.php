@@ -1,5 +1,6 @@
 @extends('includes.layouts.supervisor')
 
+@section('page-title', 'Supervisor Dashboard')
 
 @section('content')
     <!-- Container Fluid-->

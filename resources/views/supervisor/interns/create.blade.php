@@ -19,10 +19,8 @@
                             </div>
                             <div class="mt-5">
                                 <b>
-                                    <span>Name of Student Trainee: <span style="border-bottom: 1px solid gray;">(Insert Data
-                                            from DB)</span></span>
-                                    <span>Course/Year <span style="border-bottom: 1px solid gray;">(Insert Data from
-                                            DB)</span></span>
+                                    <span>Name of Student Trainee: <span style="border-bottom: 1px solid gray;">(Insert Data from DB)</span></span>
+                                    <span>Course/Year <span style="border-bottom: 1px solid gray;">(Insert Data from DB)</span></span>
                                 </b>
                                 <div class="mt-3">
                                     <P>Instruction:</P>
@@ -75,39 +73,36 @@
                                                 <p><b>G. Major Field of Concentration</b></p>
                                                 <span>(Weldling, Repair, Machine, Work, Typing, Filling, Accounting,
                                                     Recording, File Processing, Inland and Marine Fisheries
-                                                    )</span> <br> <br>
+                                                )</span> <br> <br>
                                                 <span><input type="checkbox"> Lacks practice</span><br>
                                                 <span><input type="checkbox"> Handle activity fairly well</span><br>
                                                 <span><input type="checkbox"> knowledgeable</span>
                                             </div>
-                                            <div class="mt-2">
+                                             <div class="mt-2">
                                                 <p><b>H. Apprearance </b></p>
                                                 <span><input type="checkbox"> Suitable and acceptable</span><br>
                                                 <span><input type="checkbox"> Create distinctly impression</span><br>
                                                 <span><input type="checkbox"> Impressive, command, admiration</span>
                                             </div>
-                                            <div class="mt-2">
+                                             <div class="mt-2">
                                                 <p><b>I. Alertness </b></p>
-                                                <span><input type="checkbox"> Low in grasping instruction/Misunderstands
-                                                    instrcution</span><br>
+                                                <span><input type="checkbox"> Low in grasping instruction/Misunderstands instrcution</span><br>
                                                 <span><input type="checkbox"> Nearly grasps intent instruction</span><br>
                                                 <span><input type="checkbox"> Exceptionally quick to understand</span>
                                             </div>
-                                            <div class="mt-2">
+                                             <div class="mt-2">
                                                 <p><b>J. Self-confidence </b></p>
-                                                <span><input type="checkbox"> Timid, hesitant, is easily
-                                                    influenced</span><br>
-                                                <span><input type="checkbox"> Moderately confidence of
-                                                    himself/herself</span><br>
+                                                <span><input type="checkbox"> Timid, hesitant, is easily influenced</span><br>
+                                                <span><input type="checkbox"> Moderately confidence of himself/herself</span><br>
                                                 <span><input type="checkbox"> Show superior self-assurance</span>
                                             </div>
-                                            <div class="mt-4">
+                                             <div class="mt-4">
                                                 <br><br><br>
                                                 <p><b>Overall Comments and Remarks</b></p>
-
+                                             
                                             </div>
                                         </div>
-
+    
                                         <div class="col-md-4 text-center">
                                             <div>
                                                 <p>Rating Point</p>
@@ -170,7 +165,7 @@
                                                 <span>1</span>
                                             </div>
                                         </div>
-
+    
                                         <div class="col-md-4 text-center">
                                             <p>Points</p>
                                             <div>
@@ -201,27 +196,26 @@
                                                 <br><br><br><br><br><br>
                                                 <span style="border-bottom: 1px solid gray;">0.6</span>
                                             </div>
-                                            <div class="mt-5">
+                                             <div class="mt-5">
                                                 <br><br>
                                                 <span style="border-bottom: 1px solid gray;">0.6</span>
                                             </div>
-                                            <div class="mt-5">
+                                             <div class="mt-5">
                                                 <br><br>
                                                 <span style="border-bottom: 1px solid gray;">0.6</span>
                                             </div>
-                                            <div class="mt-5">
+                                             <div class="mt-5">
                                                 <br><br>
                                                 <span style="border-bottom: 1px solid gray;">0.6</span>
                                             </div>
-                                            <div class="mt-5">
+                                             <div class="mt-5">
                                                 <br><br>
                                                 <span>(TOTAL POINTS HERE)</span><br>
                                                 <span style="border-top: 1px solid gray;">Total Points</span>
                                             </div>
                                         </div>
                                         <div class="col-md-12 mt-4">
-                                            <textarea name="" id="" cols="30" rows="2" class="form-control"
-                                                placeholder="Comment here....."></textarea>
+                                            <textarea name="" id="" cols="30" rows="2" class="form-control" placeholder="Comment here....."></textarea>
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="row">
@@ -242,8 +236,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 mt-4">
-                                            <button type="submit" class="btn btn-success btn-lg float-right"><i
-                                                    class="fas fa-save"></i> Submit</button>
+                                            <button type="submit" class="btn btn-success btn-lg float-right"><i class="fas fa-save"></i> Submit</button>
                                         </div>
                                     </div>
                                 </form>

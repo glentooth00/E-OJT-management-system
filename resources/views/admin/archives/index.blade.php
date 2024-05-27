@@ -1,6 +1,8 @@
 @extends('includes.layouts.app')
 
 
+@section('page-title', 'STUDENT VIEW')
+
 @section('content')
     <!-- Container Fluid-->
     {{-- <div class="container">
@@ -43,6 +45,10 @@
     </div> --}}
 
 
+    @extends('includes.layouts.app')
+
+@section('content')
+    <!-- Container Fluid-->
     <div class="container">
         <div id="accordion">
             @foreach ($school_years as $school_year)
@@ -97,7 +103,10 @@
                                                     @else
                                                         <ul>
                                                             @foreach ($filteredStudents as $student)
-                                                                <li>{{ $student->fullname }}</li>
+                                                                <li>
+                                                                    <a
+                                                                        href="{{ route('student.show', $student->id) }}">{{ $student->fullname }}</a>
+                                                                </li>
                                                             @endforeach
                                                         </ul>
                                                     @endif
@@ -113,9 +122,12 @@
             @endforeach
         </div>
     </div>
-
-
-
-
     <!---Container Fluid-->
+@endsection
+
+
+
+
+
+<!---Container Fluid-->
 @endsection

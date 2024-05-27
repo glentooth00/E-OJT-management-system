@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\Category;
 use App\Models\Supervisor;
 use Illuminate\Http\Request;
@@ -19,6 +20,15 @@ class SupervisorController extends Controller
             'categories' => $categories,
             'supervisor_accounts' => $supervisor_accounts
         ]);
+    }
+
+    public function internsLIst()
+    {
+        // Fetch interns from the database, for example:
+        $interns = Student::all();
+
+        // Return the view with interns data
+        return view('supervisor.interns.index', compact('interns'));
     }
 
     public function Supervisor_index()

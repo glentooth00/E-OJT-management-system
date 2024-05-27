@@ -1,11 +1,11 @@
-@extends('includes.layouts.supervisor')
+@extends('includes.layouts.app')
 
 
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Intern's Evaluation</h1>
+            <h1 class="h3 mb-0 text-gray-800">Interns</h1>
         </div>
         <section class="mt-5">
             <div class="card">
@@ -29,13 +29,13 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                    <a href="" class="btn btn-success btn-sm" data-toggle="modal"
-                                        data-target="#exampleModal"> Delete</a>
-                                </td>
+                                    <a href="/admin/interns-evaluation/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
+                                </td> 
                             </tr>
                         </tbody>
                     </table>
                 </div>
         </section>
     </div>
+    <!---Container Fluid-->
 @endsection
