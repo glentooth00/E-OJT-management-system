@@ -1,5 +1,6 @@
 @extends('includes.layouts.app')
 
+@section('page-title', 'School Year')
 
 @section('content')
     <!-- Container Fluid-->

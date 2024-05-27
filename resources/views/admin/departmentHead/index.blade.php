@@ -1,5 +1,6 @@
 @extends('includes.layouts.app')
 
+@section('page-title', 'Department Head')
 
 @section('content')
     <!-- Container Fluid-->
