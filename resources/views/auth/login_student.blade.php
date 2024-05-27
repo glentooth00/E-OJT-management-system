@@ -35,23 +35,25 @@
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
-                    <form action="" method="">
+                    <form action="{{ route('student.login') }}" method="POST">
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">
                                 <h2>Student Login</h2>
                             </div>
                             <div>
-                                <label for="" class="text-light">Email</label>
-                                <input type="email" class="form-control" required>
+                                <label for="email" class="text-light">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required>
                             </div>
                             <div class="mt-4">
-                                <label for="" class="text-light">Password</label>
-                                <input type="password" class="form-control" required>
+                                <label for="password" class="text-light">Password</label>
+                                <input type="password" id="password" name="password" class="form-control" required>
                             </div>
                             <div>
-                                <p class="text-light mt-3">No Account yet? Please <a
-                                        href="{{ url('/student/register') }}" class="text-warning">Register here!</a>
+                                <p class="text-light mt-3">
+                                    No Account yet? Please
+                                    <a href="{{ route('student.register.create') }}" class="text-warning">Register
+                                        here!</a>
                                 </p>
 
                             </div>
@@ -60,6 +62,7 @@
                             </div>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

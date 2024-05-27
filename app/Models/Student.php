@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Student extends Model
+class Student extends Authenticatable
 {
+    use Notifiable;
+    use HasFactory;
     protected $fillable = [
         'fullname',
         'username',
@@ -20,8 +24,12 @@ class Student extends Model
         'sex',
         'id_attachment',
         'application_status',
-        'role'
+        'role',
+        'school_year'
     ];
 
- 
+    public function weeklyReports()
+    {
+        return $this->hasMany(WeeklyReport::class);
+    }
 }

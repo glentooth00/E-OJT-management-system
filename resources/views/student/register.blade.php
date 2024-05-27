@@ -58,10 +58,10 @@
                                     <label for="" class="text-white">Attach your ID here</label>
                                     <input type="file" name="id_attachment" class="form-control">
                                 </div>
-                                <div class="col-md-6 mt-3">
+                                {{-- <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Username</label>
                                     <input type="text" name="username" class="form-control">
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Email</label>
                                     <input type="email" name="email" class="form-control">
@@ -80,6 +80,8 @@
                                         <option value="" hidden>Select Course </option>
                                         <option value="BSIT"> BSIT </option>
                                         <option value="BSCS"> BSCS </option>
+                                        {{-- <option value="BEED"> BEED </option>
+                                        <option value="CIVIL ENGINEERING"> CIVIL ENGINEERING </option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
@@ -87,7 +89,9 @@
                                     <select name="department" id="" class="form-control">
                                         <option value="" hidden>Select Department </option>
                                         <option value="CICS">CICS </option>
-                                        <option value="CICS">CICS </option>
+                                        {{-- <option value="EDUCTATION">EDUCTATION</option>
+                                        <option value="ENGINEERING">ENGINEERING</option>
+                                        <option value="TOURISM">TOURISM</option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
@@ -108,6 +112,15 @@
                                         <option value="">---- Select ----</option>
                                         <option value="MALE"> MALE </option>
                                         <option value="FEMALE"> FEMALE </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <label for="schoolYear" class="text-white">School year</label>
+                                    <select name="school_year" id="schoolYear" class="form-control">
+                                        @foreach ($schoolYears as $schoolYear)
+                                            <option value="{{ $schoolYear->school_year }}">
+                                                {{ $schoolYear->school_year }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

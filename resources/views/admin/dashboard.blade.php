@@ -1,5 +1,6 @@
 @extends('includes.layouts.app')
 
+@section('page-title', 'Admin Dashboard')
 
 @section('content')
     <!-- Container Fluid-->
@@ -125,12 +126,12 @@
 
                                     <td class="text-right">
                                         @if ($student->application_status !== 'registered')
-                                            <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
+                                            {{-- <form action="{{ route('admin.approveStudent', $student->id) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" class="m-0 btn btn-success btn-sm">Approve</button>
-                                            </form>
+                                            </form> --}}
                                         @endif
 
 
@@ -146,13 +147,3 @@
     </div>
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>

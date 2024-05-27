@@ -1,68 +1,128 @@
-@extends('student.includes.layouts.app')
+@extends('includes.layouts.students')
+
+@section('page-title', 'Student Dashboard')
+
 @section('content')
     <!-- Container Fluid-->
-    <div class="container-fluid" id="container-wrapper">
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Home</h1>
+
+    <div class="container-fluid mb-5">
+        <h3>Student Dashboard</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Student ID: {{ $studentId }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>WEEK NO.</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($weeklyReports as $weeklyReport)
+                                    <tr>
+                                        <td>{{ $weeklyReport->week_number }}</td>
+                                        <td>{{ $weeklyReport->activity_description }}</td>
+                                        <td>
+                                            {{-- <a href="{{ route('weeklyReport.show', $weeklyReport->id) }}" class="btn btn-primary">View</a> --}}
+                                            <a href="{{ route('weeklyReport.show', $weeklyReport->week_number, $weeklyReport->activity_description) }}"
+                                                class="btn btn-primary">View</a>
+
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3><b>VISION</b></h3>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4>
+                                    " A globally competitive State University in Asia."
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3><b>MISSION</b></h3>
+                            </div>
+                            <div class="card-body text-center">
+                                <h4>
+                                    " Human resources development through quality and relevant education,
+                                    environment-friendly modern technologies and preservation of Filipino values and cuture
+                                    for sustainable and improvement quality of life"
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-3">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3><b>GOALS</b></h3>
+                            </div>
+                            <div class="card-body text-center">
+                                <h5>
+                                    The University shall have the following goals:
+                                </h5>
+                                <ol class="mt-3">
+                                    <li>
+                                        <h5>
+                                            Produce human capital imbued with scientific and technological skills endown
+                                            with desirable values and work ethics;
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            Provide quality education in the fields of industries, agriculture, fishiries,
+                                            technology, science, education and other relevant undergraduates and graduate
+                                            programs;
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            Establish a university research culture responsive to community and global;
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            Enhance research-based extension programs and transfer of sustainable
+                                            technologies;
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            Maximize productivity through efficient and effective resources management;
+                                        </h5>
+                                    </li>
+                                    <li>
+                                        <h5>
+                                            Strengthen linkages with local, national and international partner-agencies.
+                                        </h5>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <section class="mt-5">
-            <div class="card">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
-
-                    {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
-
-                    {{-- <select name="filter" onchange="this.form.submit()">
-                                <option value="">All</option>
-                                <option value="registered" {{ $selectedFilter == 'registered' ? 'selected' : '' }}>
-                                    Registered</option>
-                                <option value="pending" {{ $selectedFilter == 'pending' ? 'selected' : '' }}>Pending
-                                </option>
-                            </select> --}}
-                    {{-- </div>
-                    </form> --}}
-
-                </div>
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                {{-- <th style="width:10%;">ID</th> --}}
-                                {{-- <th>Name</th> --}}
-                                <th>DOB</th>
-                                <th>ID Number</th>
-                                <th>Department</th>
-                                <th>Course and Year</th>
-                                <th>Application status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>TEST</td>
-                                <td>
-                                    <a href="" class="btn btn-success btn-sm">Test</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-        </section>
     </div>
+
+
+
+
     <!---Container Fluid-->
 @endsection
-<script>
-    // $(document).ready(function() {
-    //     $('#filterStatus').change(function() {
-    //         var status = $(this).val(); // Get the selected status
-
-    //         url = url.replace(':status', status);
-    //         window.location.href = url; // Redirect to the filtered URL
-    //     });
-    // });
-</script>
