@@ -4,8 +4,73 @@
 
 @section('content')
     <!-- Container Fluid-->
-    <div class="container-fluid p-2">
+    <div class="container-fluid ">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Home</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Weekly Logs</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active p-4" id="home" role="tabpanel" aria-labelledby="home-tab" style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
+                <div class="card">
+                    <div class="card-header"><h4>{{ $student->fullname }}</h4></div>
+                    <div class="card-body">
+                        <p><strong>School Year:</strong> {{ $student->school_year }}</p>
+                        <p><strong>Course:</strong> {{ $student->course }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab" style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
+                 <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><b>Name:</b> Alvin Mark Mantung</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <b>Date:</b> 05/27/2024
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <p>Activity Photos:</p>
+                                    <img src="/admin/images/user1.png" width="150" alt="png">
+                                        <hr>
+                                            <h5><b>Number of Week: </b> 1</h5>
+                                        <hr>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header"><b>Activity Description</b></div>
+                                    <div class="card-body">
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia tempore optio, asperiores, harum unde minima quaerat explicabo ab labore sequi fuga eos aperiam deleniti rem corporis mollitia, fugiat possimus at?</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade p-4" id="contact" role="tabpanel" aria-labelledby="contact-tab" style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
+                <div class="card col-md-4">
+                    <div class="card-body">
+                        <p><strong>Phone:</strong> {{ $student->phone }}</p>
+                        <p><strong>Emergency Contact:</strong> {{ $student->emergency_contact }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
                     role="tab" aria-controls="home" aria-selected="true">Home</button>
@@ -32,7 +97,9 @@
                 <p><strong>Phone:</strong> {{ $student->phone }}</p>
                 <p><strong>Emergency Contact:</strong> {{ $student->emergency_contact }}</p>
             </div>
-        </div>
+        </div> --}}
+
+        
     </div>
     <!---Container Fluid-->
 @endsection

@@ -35,7 +35,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
-            href="{{ route('admin.archive.index') }}">
+            href="/admin/archive">
             <i class="fas fa-fw fa-clock"></i>
             <span>Archives</span>
         </a>

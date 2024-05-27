@@ -30,7 +30,7 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                     <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i class="fas fa-chevron-right"></i></a>
+                                     <a class="m-0 btn btn-danger btn-sm" href="/admin/interns-log/show"> View More <i class="fas fa-chevron-right"></i></a>
                                 </td>
                             </tr>
                             <tr>
@@ -40,7 +40,7 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                     <a class="m-0 btn btn-danger btn-sm" href="#"> View More <i class="fas fa-chevron-right"></i></a>
+                                     <a class="m-0 btn btn-danger btn-sm" href="/admin/interns-log/show"> View More <i class="fas fa-chevron-right"></i></a>
                                 </td>
                             </tr>
                         </tbody>
