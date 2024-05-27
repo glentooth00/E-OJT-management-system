@@ -65,6 +65,13 @@ Route::get('/student/printables/guardian-consent-form', function () {
     return view('student.printables.guardian-consent-form');
 });
 
+Route::get('/admin/interns-log', function () {
+    return view('admin.interns-log.index');
+});
+Route::get('/admin/interns-log/show', function () {
+    return view('admin.interns-log.show');
+});
+
 Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
@@ -142,7 +149,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
-    Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
+    Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
    
