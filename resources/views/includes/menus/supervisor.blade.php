@@ -5,7 +5,8 @@
     </a>
     <hr class="sidebar-divider my-0">
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/dashboard') ? 'active' : '' }}" href="/admin/dashboard">
+    <!-- {{ request()->is('admin/dashboard') ? 'active' : '' }} -->
+        <a class="nav-link " href="/supervisor/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -14,12 +15,13 @@
         MENUS
     </div>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
-            href="{{ route('admin.interns.index') }}">
+        <a class="nav-link {{ request()->is('supervisor/interns') ? 'active' : '' }}"
+            href="{{ route('supervisor.interns.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>
     </li>
+
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
             href="/admin/interns-evaluation">

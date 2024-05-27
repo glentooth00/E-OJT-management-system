@@ -99,4 +99,10 @@ class ArchiveController extends Controller
     {
         //
     }
+
+    public function showStudent($id)
+    {
+        $student = Student::findOrFail($id);
+        return view('admin.archives.show', compact('student'));
+    }
 }

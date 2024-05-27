@@ -1,5 +1,7 @@
 @extends('includes.layouts.students')
 
+@section('page-title', 'Weekly Report')
+
 @section('content')
     <!-- Container Fluid-->
     <div class="container">
@@ -16,7 +18,7 @@
                 <input type="hidden" class="form-control" name="studentname" id="studentName" value="{{ $studentName }}">
             </div>
             <div class="form-group">
-                <label for="weekNumber">Week Number:</label>
+                <label for="weekNumber">Number of Week:</label>
                 <input type="number" class="form-control" id="weekNumber" name="week_number" required>
             </div>
             <div class="form-group">

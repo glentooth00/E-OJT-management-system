@@ -40,6 +40,10 @@ Route::get('/admin/interns-evaluation/create', function () {
 Route::get('/admin/interns-evaluation', function () {
     return view('admin.interns-evaluation.index');
 });
+
+Route::get('/supervisor/interns/create', function () {
+    return view('supervisor.interns.create');
+});
 // End of Evaluation routes
 Route::get('/student/dasboard', function () {
     return view('student.dashboard');
@@ -139,6 +143,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
+
+    Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
    
 // Route for displaying the form (GET request)
 Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])->name('admin.school_year.create');
@@ -244,6 +250,7 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
   
+    Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');
