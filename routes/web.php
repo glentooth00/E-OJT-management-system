@@ -40,6 +40,10 @@ Route::get('/admin/interns-evaluation/create', function () {
 Route::get('/admin/interns-evaluation', function () {
     return view('admin.interns-evaluation.index');
 });
+
+Route::get('/supervisor/interns/create', function () {
+    return view('supervisor.interns.create');
+});
 // End of Evaluation routes
 Route::get('/student/dasboard', function () {
     return view('student.dashboard');

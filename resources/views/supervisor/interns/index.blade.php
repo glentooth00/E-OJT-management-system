@@ -1,4 +1,4 @@
-@extends('includes.layouts.app')
+@extends('includes.layouts.supervisor')
 
 
 @section('content')
@@ -29,7 +29,7 @@
                                 <td>CICS</td>
                                 <td>BSIT. 4rth Year</td>
                                 <td class="text-right">
-                                    <a href="/admin/interns-evaluation/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
+                                    <a href="/supervisor/interns/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
                                 </td> 
                             </tr>
                         </tbody>
