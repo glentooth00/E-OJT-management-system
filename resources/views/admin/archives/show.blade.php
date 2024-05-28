@@ -78,15 +78,104 @@
                 style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
                 <div class="card col-md-4">
                     <div class="card-body">
-                        <p><strong>Phone:</strong> {{ $student->phone }}</p>
-                        <p><strong>Emergency Contact:</strong> {{ $student->emergency_contact }}</p>
+                        <h1>{{ $student->fullname }}</h1>
+                        <hr>
+
+                        <!-- Display student activities -->
+                        {{-- <h2>Student Activities</h2>
+                        <ul>
+                            @foreach ($student_activities as $activity)
+                                <li>{{ $activity->description }} ({{ $activity->created_at }})</li>
+                            @endforeach
+                        </ul> --}}
+
+                        <!-- Display student documents -->
+                        <h2>Student Documents</h2>
+                        <ul>
+                            @foreach ($student_documents as $document)
+                                <li>
+                                    <strong>Letter:</strong> <a href="#" data-toggle="modal"
+                                        data-target="#letterModal{{ $document->id }}">View Letter</a><br>
+                                    <strong>Good Moral:</strong> <a href="#" data-toggle="modal"
+                                        data-target="#goodMoralModal{{ $document->id }}">View Good Moral</a><br>
+                                    <strong>Consent:</strong> <a href="#" data-toggle="modal"
+                                        data-target="#consentModal{{ $document->id }}">View Consent</a><br>
+                                    <strong>Remarks:</strong> {{ $document->remarks }}
+                                </li>
+                            @endforeach
+                        </ul>
+
+                        <!-- Modals for each document -->
+                        @foreach ($student_documents as $document)
+                            <!-- Letter Modal -->
+                            <div class="modal fade" id="letterModal{{ $document->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="letterModalLabel{{ $document->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="letterModalLabel{{ $document->id }}">Letter</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ Storage::url($document->letter) }}" class="img-fluid"
+                                                alt="Letter">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Good Moral Modal -->
+                            <div class="modal fade" id="goodMoralModal{{ $document->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="goodMoralModalLabel{{ $document->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="goodMoralModalLabel{{ $document->id }}">Good
+                                                Moral</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ Storage::url($document->good_moral) }}" class="img-fluid"
+                                                alt="Good Moral">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Consent Modal -->
+                            <div class="modal fade" id="consentModal{{ $document->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="consentModalLabel{{ $document->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="consentModalLabel{{ $document->id }}">Consent
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img src="{{ Storage::url($document->consent) }}" class="img-fluid"
+                                                alt="Consent">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
+    {{-- <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
                     role="tab" aria-controls="home" aria-selected="true">Home</button>
