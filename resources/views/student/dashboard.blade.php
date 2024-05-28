@@ -11,7 +11,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Student ID: {{ $studentId }}</h5>
+                        {{-- <h5>Student ID: {{ $studentId }}</h5> --}}
                     </div>
                     <div class="card-body">
                         <table class="table">

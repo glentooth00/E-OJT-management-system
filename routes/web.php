@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentHeadController;
 use App\Http\Controllers\WeeklyReportController;
+use App\Http\Controllers\DocumentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -230,6 +231,9 @@ Route::middleware('auth:student')->group(function () {
 Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
 
+    Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
+
+    Route::post('/documents/store', [DocumentController::class, 'store'])->name('documents.store');
 
 
     // Logout

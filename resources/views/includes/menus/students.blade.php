@@ -14,21 +14,26 @@
              <span>Dashboard</span>
          </a>
      </li>
-        <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-          aria-expanded="true" aria-controls="collapseBootstrap">
-          <i class="far fa-fw fa-window-maximize"></i>
-          <span>PRINTABLES</span>
-        </a>
-        <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/printables/bio-data">Bio Data Form</a>
-            <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/printables/letter-of-intent">Letter of Intent</a>
-            <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/printables/good-moral">Good Moral Character</a>
-            <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}" href="/student/printables/guardian-consent-form">Guardian Consent Form</a>
-          </div>
-        </div>
-      </li>
+     <li class="nav-item">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
+             aria-expanded="true" aria-controls="collapseBootstrap">
+             <i class="far fa-fw fa-window-maximize"></i>
+             <span>PRINTABLES</span>
+         </a>
+         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+             data-parent="#accordionSidebar">
+             <div class="bg-white py-2 collapse-inner rounded">
+                 <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}"
+                     href="/student/printables/bio-data">Bio Data Form</a>
+                 <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}"
+                     href="/student/printables/letter-of-intent">Letter of Intent</a>
+                 <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}"
+                     href="/student/printables/good-moral">Good Moral Character</a>
+                 <a class="collapse-item {{ request()->is('admin/interns') ? 'active' : '' }}"
+                     href="/student/printables/guardian-consent-form">Guardian Consent Form</a>
+             </div>
+         </div>
+     </li>
      <li class="nav-item">
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
              href="{{ route('student.weeklyReportIndex') }}">
@@ -36,6 +41,14 @@
              <span>Weekly Logs</span>
          </a>
      </li>
+     <li class="nav-item">
+         <a class="nav-link {{ request()->is('documents/index') ? 'active' : '' }}"
+             href="{{ route('documents.index') }}">
+             <i class="fas fa-folder"></i>
+             <span>Documents</span>
+         </a>
+     </li>
+
 
      <li class="nav-item">
          <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="#">
