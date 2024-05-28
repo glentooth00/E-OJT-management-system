@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Archive;
 use App\Models\Schoolyear;
 use App\Models\Student;
+use App\Models\WeeklyReport;
 use Illuminate\Http\Request;
 
 class ArchiveController extends Controller
@@ -103,6 +104,11 @@ class ArchiveController extends Controller
     public function showStudent($id)
     {
         $student = Student::findOrFail($id);
-        return view('admin.archives.show', compact('student'));
+        $student_activities = WeeklyReport::where('student_id', $id)->get();
+    
+        return view('admin.archives.show', [
+            'student' => $student,
+            'student_activities' => $student_activities,
+        ]);
     }
 }
