@@ -24,6 +24,7 @@
                 style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
                 <div class="card">
                     <div class="card-header">
+                        {{-- <h4>{{ $student->id }}</h4> --}}
                         <h4>{{ $student->fullname }}</h4>
                     </div>
                     <div class="card-body">
@@ -32,43 +33,47 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab"
-                style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p><b>Name:</b> Alvin Mark Mantung</p>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <b>Date:</b> 05/27/2024
+
+            @foreach ($student_activities as $report)
+                <div class="tab-pane fade p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab"
+                    style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><b>Name:</b> {{ $student->studentname }}</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <b>Date:</b> {{ \Carbon\Carbon::parse($report->created_at)->format('F j, Y') }}
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <p>Activity Photos:</p>
-                                    <img src="/admin/images/user1.png" width="150" alt="png">
-                                    <hr>
-                                    <h5><b>Number of Week: </b> 1</h5>
-                                    <hr>
-                                </div>
-                                <div class="card">
-                                    <div class="card-header"><b>Activity Description</b></div>
-                                    <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia tempore optio,
-                                            asperiores, harum unde minima quaerat explicabo ab labore sequi fuga eos aperiam
-                                            deleniti rem corporis mollitia, fugiat possimus at?
-                                        </p>
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <p>Activity Photos:</p>
+                                        <img style="width:80%;" src="{{ asset('storage/' . $report->file_path) }}"
+                                            class="img-fluid" alt="Activity Photo">
+                                        <hr>
+                                        <h5><b>Number of Week: </b>{{ $report->week_number }}</h5>
+                                        <hr>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header"><b>Activity Description</b></div>
+                                        <div class="card-body">
+                                            <p>{{ $report->activity_description }}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
+
+
             <div class="tab-pane fade p-4" id="contact" role="tabpanel" aria-labelledby="contact-tab"
                 style="color: rgb(32, 31, 31) !important; background-color:#fafdfb !important;">
                 <div class="card col-md-4">

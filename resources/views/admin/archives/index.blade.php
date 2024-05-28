@@ -113,6 +113,7 @@
                                                                         href="{{ route('student.show', $student->id) }}">{{ $student->fullname }}</a>
                                                                 </li>
                                                             @endforeach
+
                                                         </ul>
                                                     @endif
                                                 </div>
