@@ -1,6 +1,6 @@
 @extends('includes.layouts.app')
 
-@section('page-title', 'Admin Dashboard')
+@section('page-title', 'OJT Supervisor')
 
 @section('content')
     <!-- Container Fluid-->

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
@@ -151,6 +153,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
+    Route::get('/admin/questionnaire', [QuestionnaireController::class, 'index'])->name('admin.questionnaire.index');
+    Route::post('/admin/questionnaire/store', [QuestionnaireController::class, 'store'])->name('admin.questionnaire.store');
+    Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
+    Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
+
+    Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
+
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
    

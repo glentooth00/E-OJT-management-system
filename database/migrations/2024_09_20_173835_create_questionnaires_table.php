@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('remarks')->nullable();
+        Schema::create('questionnaires', function (Blueprint $table) {
+            $table->id();
+            $table->string('points')->nullable();
+            $table->string('question')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('documents', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('questionnaires');
     }
 };

@@ -85,6 +85,14 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
+            href="{{ route('admin.questionnaire.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Questionaire</span>
+        </a>
+    </li>
+
 
 
 
