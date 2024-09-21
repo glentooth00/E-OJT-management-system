@@ -85,7 +85,7 @@
                                 placeholder="Supervisor">
                         </div>
                         <div class="form-group">
-                            <input type="text" value="Active" class="form-control" name="status" id="organizationName"
+                            <input type="hidden" value="Active" class="form-control" name="status" id="organizationName"
                                 placeholder="status" readonly>
                         </div>
                    

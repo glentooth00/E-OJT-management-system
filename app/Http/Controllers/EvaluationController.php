@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
 use App\Models\Questionnaire;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class EvaluationController extends Controller
@@ -59,14 +60,32 @@ class EvaluationController extends Controller
         Evaluation::create($request->all());
     }
 
+    public function evaluate($id){
 
+            // Fetch the student or intern using the ID
+        $interns = Student::findOrFail($id);
+        $attendances = Questionnaire::where('type', 'Attendance')
+                                    ->where('status', 1)
+                                    ->get();
+
+        $punctualities = Questionnaire::where('type', 'Punctuality')
+                                    ->where('status', 1)
+                                    ->get();
+
+        
+        return view('supervisor.interns.evaluation_form', [
+            'interns' => $interns,
+            'attendances' => $attendances,
+            'punctualities' => $punctualities,
+        ]);
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(Evaluation $evaluation)
     {
-        //
+    //    /
     }
 
     /**

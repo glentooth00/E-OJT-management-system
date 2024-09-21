@@ -159,6 +159,8 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
     Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
     Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
+    Route::put('/admin/students/update-status/{id}', [StudentController::class, 'updateStatus'])->name('admin.students.updateStatus');
+
 
     Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
 
@@ -273,6 +275,9 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
   
     Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
+
+    Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
+
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

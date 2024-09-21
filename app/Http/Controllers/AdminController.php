@@ -30,11 +30,14 @@ class AdminController extends Controller
          $registered_students_no = Student::where('application_status', 'registered')->count();
          $pending_students_no = Student::where('application_status', 'registered')->count();
      
+         $agencies =  Agency::all();
+
          return view('admin.dashboard', [
              'filtered_students' => $filtered_students,
              'selectedFilter' => $status, // Pass the selected status as selectedFilter
              'registered_students_no' =>  $registered_students_no,
-             'pending_students_no' => $pending_students_no
+             'pending_students_no' => $pending_students_no,
+             'agencies' => $agencies,
          ]);
      }
 

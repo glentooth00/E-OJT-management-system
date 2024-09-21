@@ -1,5 +1,6 @@
 @extends('includes.layouts.supervisor')
 
+@section('page-title', 'Interns')
 
 @section('content')
     <!-- Container Fluid-->
@@ -14,7 +15,6 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Name</th>
-                                <th>DOB</th>
                                 <th>ID Number</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
@@ -22,16 +22,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a href="/supervisor/interns/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
-                                </td> 
-                            </tr>
+                            @foreach ($interns as $intern)
+                                <tr>
+                                    <td>{{ $intern->fullname }}</td>
+                                    <td>{{ $intern->id_number }}</td>
+                                    <td>{{ $intern->department }}</td>
+                                    <td>{{ $intern->course }}</td>
+                                    <td>
+                                    <a href="{{ route('supervisor.evaluation.evaluate', $intern->id) }}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-list"></i> Evaluate
+                                    </a>  
+                                    </td>
+
+                                    
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

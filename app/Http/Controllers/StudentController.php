@@ -115,6 +115,26 @@ class StudentController extends Controller
         // Implementation here if needed
     }
 
+    public function updateStatus(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate([
+            'disignation' => 'nullable|string',
+        ]);
+
+        // Find the student by ID
+        $student = Student::findOrFail($id);
+
+        // dd($student);
+
+        // // Update the status
+        $student->designation = $request->input('designation');
+        $student->save();
+
+        // Redirect or return a response
+        return redirect()->back()->with('success', 'Student status updated successfully');
+    }
+
     /**
      * Remove the specified student from storage.
      */

@@ -95,6 +95,7 @@
                                 <th>ID Number</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
+                                <th>Assigned to</th>
                                 <th>Application status</th>
                                 <th></th>
                             </tr>
@@ -108,22 +109,31 @@
                                     <td>{{ $student->department }}</td>
                                     <td>{{ $student->course }}</td>
                                     <td>
+                                        @if(empty($student->designation))
+                                            <span class="badge badge-warning"  style="font-size: 16px;">Not Assigned</span>
+                                        @else
+                                            <span class="badge badge-success"  style="font-size: 16px;">{{ $student->designation }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
                                         @if ($student->application_status == 'pending')
-                                            <span class="badge badge-warning">Pending</span>
+                                            <span class="badge badge-warning" style="font-size: 16px;">Pending</span>
                                         @elseif ($student->application_status == 'registered')
-                                            <span class="badge badge-success">Registered</span>
+                                            <span class="badge badge-success" style="font-size: 16px;">Registered</span>
                                         @else
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
                                         @endif
                                     </td>
                                     <td class="text-right">
-                                        <button type="button" class="btn btn-danger btn-sm view-more" 
+                                        <button type="button" class="btn btn-danger btn-sm view-more data-id="{{ $student->id }}" 
                                             data-toggle="modal" data-target="#exampleModal" 
+                                            data-id="{{  $student->id }}"
                                             data-fullname="{{ $student->fullname }}" 
                                             data-dob="{{ $student->dob }}" 
                                             data-idnumber="{{ $student->id_number }}" 
                                             data-department="{{ $student->department }}" 
                                             data-course="{{ $student->course }}" 
+                                            data-designation="{{ $student->designation }}"
                                             data-applicationstatus="{{ $student->application_status }}">
                                             View More <i class="fas fa-chevron-right"></i>
                                         </button>
@@ -150,53 +160,62 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" method="post">
+                <form action="{{ route('admin.students.updateStatus', $student->id) }}" method="post">
                     @csrf
+                    @method('PUT') <!-- Use PUT method for updating -->
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="modalFullName">Fullname</label>
-                            <input type="text" name="fullname" class="form-control" id="modalFullName" placeholder="Fullname" readonly>
+                            <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id }}" readonly>
+                            <label for="modalFullName" class="badge">Fullname</label>
+                            <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalDOB">DOB</label>
-                            <input type="text" name="dob" class="form-control" id="modalDOB" placeholder="DOB" readonly>
+                            <label for="modalDOB" class="badge">Date of Birth</label>
+                            <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob }}" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="modalIDNumber">ID Number</label>
-                            <input type="text" name="id_number" class="form-control" id="modalIDNumber" placeholder="ID Number" readonly>
+                            <label for="modalIDNumber" class="badge">ID Number</label>
+                            <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalDepartment">Department</label>
-                            <input type="text" name="department" class="form-control" id="modalDepartment" placeholder="Department" readonly>
+                            <label for="modalDepartment" class="badge">Department</label>
+                            <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department }}" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="modalCourse">Course and Year</label>
-                            <input type="text" name="course" class="form-control" id="modalCourse" placeholder="Course and Year" readonly>
+                            <label for="modalCourse" class="badge">Course and Year</label>
+                            <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalApplicationStatus">Application Status</label><br>
-                            <input type="text" name="application_status" class="form-control" id="modalApplicationStatus" readonly>
+                            <label for="modalApplicationStatus" class="badge">Application Status</label><br>
+                            @if ($student->application_status == 'pending')
+                            <span class="badge badge-warning" style="font-size: 30px;">PENDING</span>
+                        @elseif ($student->application_status == 'registered')
+                            <span class="badge badge-success" style="font-size: 30px;">REGISTERED</span>
+                        @else
+                            <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
+                        @endif
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalAssignedTo">Assign to</label>
-                            <select name="assigned_to" class="form-control">
-                                <option value=""></option>
-                                <option value="Agency 1">Agency 1</option>
-                                <option value="Agency 2">Agency 2</option>
+                            <label for="modalAssignedTo" class="badge">Assign to</label>
+                            <select name="designation" id="modalDesignation" class="form-control" placeholder>
+                                <option value="{{ $student->designation }}" hidden>{{ $student->designation }}</option>
+                                @foreach ($agencies as $agency)
+                                    <option value="{{ $agency->agency_name }}">{{ $agency->agency_name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
                 
+            </div>  
         </div>
     </div>
 </div>
@@ -214,22 +233,32 @@
 $(document).ready(function() {
     $('.view-more').on('click', function() {
         // Get the data attributes
+        var id = $(this).data('id');
         var fullname = $(this).data('fullname');
         var dob = $(this).data('dob');
         var idnumber = $(this).data('idnumber');
         var department = $(this).data('department');
         var course = $(this).data('course');
+        var designation = $(this).data('designation');
         var applicationstatus = $(this).data('applicationstatus');
 
         // Populate the modal input fields
+        $('#modalId').val(id);
+        $('#modalDesignation').val(designation);
         $('#modalFullName').val(fullname);
         $('#modalDOB').val(dob);
         $('#modalIDNumber').val(idnumber);
         $('#modalDepartment').val(department);
         $('#modalCourse').val(course);
         $('#modalApplicationStatus').val(applicationstatus);
+
+        // Update the form action with the correct student ID
+        var formAction = "{{ route('admin.students.updateStatus', ':id') }}";
+        formAction = formAction.replace(':id', id);
+        $('form').attr('action', formAction);
     });
 });
+
 </script>
 
 
