@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -137,7 +138,14 @@ class AdminController extends Controller
     }
 
     public function agencies(){
-        return view('admin.agencies.index');
+
+        $agencies = Agency::all();
+
+        // dd($agencies);
+
+        return view('admin.agencies.index', [
+            'agencies' => $agencies,
+        ]);
     }
 
     // public function categories(){

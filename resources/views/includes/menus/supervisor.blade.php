@@ -24,7 +24,7 @@
 
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
-            href="/admin/interns-evaluation">
+            href="">
             <i class="fas fa-fw fa-file"></i>
             <span>Intern's Evaluation</span>
         </a>

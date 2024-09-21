@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ProfileController;
@@ -157,6 +158,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/questionnaire/store', [QuestionnaireController::class, 'store'])->name('admin.questionnaire.store');
     Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
     Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
+    Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
 
     Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
 
