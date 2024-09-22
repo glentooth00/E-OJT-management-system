@@ -49,24 +49,28 @@ Route::get('/supervisor/interns/create', function () {
     return view('supervisor.interns.create');
 });
 // End of Evaluation routes
+// STUDENT routes
 Route::get('/student/dasboard', function () {
     return view('student.dashboard');
 });
 
-Route::get('/student/printables/bio-data', function () {
-    return view('student.printables.bio-data');
+Route::get('/student/experience_record', function () {
+    return view('student.experience_record.index');
 });
 
-Route::get('/student/printables/letter-of-intent', function () {
-    return view('student.printables.letter-of-intent');
+Route::get('/student/download', function () {
+    return view('student.download_&_upload.download');
 });
 
-Route::get('/student/printables/good-moral', function () {
-    return view('student.printables.good-moral');
+Route::get('/student/upload', function () {
+    return view('student.download_&_upload.upload');
 });
 
 Route::get('/student/printables/guardian-consent-form', function () {
     return view('student.printables.guardian-consent-form');
+});
+Route::get('/student/notification', function () {
+    return view('student.notifications.index');
 });
 
 Route::get('/admin/interns-log', function () {
