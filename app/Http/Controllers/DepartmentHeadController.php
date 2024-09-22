@@ -101,7 +101,11 @@ class DepartmentHeadController extends Controller
      */
     public function create()
     {
-        //
+        $department_heads = DepartmentHead::all();
+
+        return view('department_head.departmentHead.index',[
+            'department_heads' => $department_heads,
+        ]);
     }
 
     /**
@@ -128,7 +132,7 @@ class DepartmentHeadController extends Controller
 
         // Redirect or return response as needed
         return redirect()->route('departmentHeads.index')->with('success', 'Department Head created successfully.');
-    }
+    }          
 
     /**
      * Display the specified resource.

@@ -165,6 +165,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
     Route::put('/admin/students/update-status/{id}', [StudentController::class, 'updateStatus'])->name('admin.students.updateStatus');
 
+    Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
+
+
 
     Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
 
@@ -217,6 +220,9 @@ Route::middleware('auth:department_head')->group(function () {
 
     // Add a route for filtering students
     Route::get('/department_head/dashboard/filter', [DepartmentHeadController::class, 'filterStudents'])->name('department_head.filterStudents');
+
+    Route::get('department-head/create', [DepartmentHeadController::class, 'create'])->name('department_head.departmentHead.create');
+
    
 
 });

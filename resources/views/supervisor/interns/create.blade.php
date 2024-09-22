@@ -105,70 +105,70 @@
     
                                         <div class="col-md-4 text-center">
                                             <div>
-                                                {{-- <p>Rating Point</p>
+                                                <p>Rating Point</p>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br><br><br><br><br>
+                                                <br><br><br><br><br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                             <div class="mt-4">
-                                                {{-- <br>
+                                                <br>
                                                 <span>0.6</span><br>
                                                 <span>0.8</span><br>
-                                                <span>1</span> --}}
+                                                <span>1</span>
                                             </div>
                                         </div>
     
                                         <div class="col-md-4 text-center">
                                             <p>Points</p>
-                                            {{-- <div>
+                                            <div>
                                                 <br><br>
                                                 <span style="border-bottom: 1px solid gray;">0.6</span>
                                             </div>
@@ -212,7 +212,7 @@
                                                 <br><br>
                                                 <span>(TOTAL POINTS HERE)</span><br>
                                                 <span style="border-top: 1px solid gray;">Total Points</span>
-                                            </div> --}}
+                                            </div>
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <textarea name="" id="" cols="30" rows="2" class="form-control" placeholder="Comment here....."></textarea>

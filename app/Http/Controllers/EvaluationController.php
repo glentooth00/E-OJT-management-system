@@ -99,10 +99,30 @@ class EvaluationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Evaluation $evaluation)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate the request
+        $request->validate([
+            'question' => 'nullable|string|max:255',
+            'type' => 'nullable|string',
+            'points' => 'nullable|numeric|min:0',
+        ]);
+    
+        // Find the item by ID
+        $item = Questionnaire::findOrFail($id);
+    
+        // Update the fields
+        $item->question = $request->input('question'); // Assuming this is the field name
+        $item->type = $request->input('type');
+        $item->points = $request->input('points');
+    
+        // Save the changes
+        $item->save();
+    
+        // Redirect or return a response
+        return redirect()->back()->with('success', 'Evaluation updated successfully');
     }
+    
 
     /**
      * Remove the specified resource from storage.

@@ -39,6 +39,14 @@
          </a>
      </li>
 
+     <li class="nav-item">
+        <a class="nav-link {{ request()->is('department_head/departmentHead*') ? 'active' : '' }}"
+            href="{{ route('department_head.departmentHead.create') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Department Head</span>
+        </a>
+    </li>
+
 
      {{-- <li class="nav-item">
          <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
