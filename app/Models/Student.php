@@ -32,4 +32,9 @@ class Student extends Authenticatable
     {
         return $this->hasMany(WeeklyReport::class);
     }
+
+    public function evaluations()
+    {
+        return $this->hasMany(Evaluation::class);
+    }
 }
