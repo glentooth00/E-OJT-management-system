@@ -240,7 +240,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/department-head/school_year', [SchoolYearController::class, 'store'])->name('department_head.school_year.store');
 
-    Route::put('/department-head/students/update-status/{id}', [StudentController::class, 'updateStatus'])->name('department-head.students.updateStatus');
+    Route::put('/department-head/students/updateStatus/{id}', [StudentController::class, 'updateStatus'])->name('department-head.students.updateStatus');
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
