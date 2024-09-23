@@ -49,17 +49,20 @@
                                     {{ session('success') }}
                                 </div>
                             @endif
-                            <a href="{{ route('admin.login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">ADMIN</a>
-
                             <a href="{{ route('department-login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">CHAIRPERSON</a>
+                                class="btn btn-outline-light btn-lg btn-block mt-5">CHAIRPERSON
+                            </a>
 
+                            <a href="{{ route('admin.login') }}"
+                                class="btn btn-outline-light btn-lg btn-block mt-5">OJT SUPERVISOR
+                            </a>
                             <a href="{{ route('supervisor-login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">AGENCY SUPERVISOR</a>
-
+                                class="btn btn-outline-light btn-lg btn-block mt-5">AGENCY
+                            </a>
                             <a href="{{ route('student-login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">STUDENT</a>
+                                class="btn btn-outline-light btn-lg btn-block mt-5">STUDENT
+                            </a>
+
                         </div>
                     </div>
 
