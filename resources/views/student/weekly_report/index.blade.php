@@ -9,6 +9,15 @@
         @error('student_id')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
+{{-- <<<<<<< HEAD
+
+        <form action="{{ route('weeklyReport.uploadImgs') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" id="studentId" value="{{ $studentId }}" name="student_id">
+            <div class="form-group">
+                {{-- <label for="studentName">Student Name:</label> 
+                <input type="hidden" class="form-control" name="studentname" id="studentName" value="{{ $studentName }}">--}}
+
         <div class="card col-md-6">
             <div class="card-body">
                 <form action="{{ route('weeklyReport.uploadImgs') }}" method="POST" enctype="multipart/form-data">
@@ -32,6 +41,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
+{{-- >>>>>>> NEW-UI-ALVIN --}}
             </div>
         </div>
 

@@ -20,13 +20,13 @@
             <span>Interns</span>
         </a>
     </li>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
             href="/admin/interns-evaluation">
             <i class="fas fa-fw fa-file"></i>
             <span>Intern's Evaluation</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
             <i class="fas fa-fw fa-clock"></i>
@@ -35,7 +35,7 @@
     </li>
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
-            href="{{ route('admin.archive.index') }}">
+            href="/admin/archive">
             <i class="fas fa-fw fa-clock"></i>
             <span>Archives</span>
         </a>
@@ -47,27 +47,9 @@
             <span>MOA / MOU</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
-            <i class='fas fa-building'></i>
-            <span>Agencies</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
-            href="{{ route('admin.categories.index') }}">
-            <i class='fas fa-building'></i>
-            <span>Categories</span>
-        </a>
-    </li>
 
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
-            href="{{ route('admin.departmentHead.department_head') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Department Head</span>
-        </a>
-    </li>
+
+
 
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
@@ -85,28 +67,140 @@
         </a>
     </li>
 
+    {{-- <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
+            href="{{ route('admin.questionnaire.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Questionaire</span>
+        </a>
+    </li> --}}
 
 
 
 
-    <li class="nav-item">
+
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/notifications') ? 'active' : '' }}" href="/admin/notifications">
             <i class="fas fa-solid fa-bell"></i>
             <span>Notification</span>
             <span class="badge badge-success rounded-circle" style="font-size: 10px;">3+</span>
         </a>
-    </li>
-    <hr class="sidebar-divider">
+    </li> --}}
+    {{-- <hr class="sidebar-divider">
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-solid fa-cogs"></i>
             <span>Settings</span>
         </a>
     </li>
+
+    
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
+            href="{{ route('admin.departmentHead.department_head') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Department Head</span>
+        </a>
+    </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.school_year.create') }}">
             <i class="fas fa-solid fa-cogs"></i>
             <span>Add School Year</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
+            href="{{ route('admin.categories.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Categories</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
+            href="{{ route('admin.questionnaire.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Evaluation</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
+            <i class='fas fa-building'></i>
+            <span>Agencies</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <form action="{{ route('admin.logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="nav-link" style="background: none; border: none;">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </button>
+        </form>
+    </li> --}}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Menu structure -->
+<hr class="sidebar-divider">
+<li class="nav-item">
+    <a class="nav-link" href="#settingsMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="settingsMenu">
+        <i class="fas fa-solid fa-cogs"></i>
+        <span>Settings</span>
+    </a>
+</li>
+
+<!-- Submenu items under Settings -->
+<div class="collapse" id="settingsMenu">
+    {{-- <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
+            href="{{ route('admin.departmentHead.department_head') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Department Head</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.school_year.create') }}">
+            <i class="fas fa-solid fa-cogs"></i>
+            <span>Add School Year</span>
+        </a>
+    </li> --}}
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
+            href="{{ route('admin.categories.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Categories</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
+            href="{{ route('admin.questionnaire.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Evaluation</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
+            <i class='fas fa-building'></i>
+            <span>Agencies</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}"
+            href="{{ route('admin.moa.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Upload MOA</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}"
+            href="{{ route('admin.course.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Course</span>
         </a>
     </li>
 
@@ -119,6 +213,13 @@
             </button>
         </form>
     </li>
+</div>
+
+<!-- Bootstrap JS and Popper.js (required for Bootstrap 5) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
 
     <div class="sidebar-heading">
 </ul>

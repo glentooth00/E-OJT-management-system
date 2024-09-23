@@ -1,8 +1,13 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\SupervisorController;
 use Illuminate\Support\Facades\Route;
@@ -11,6 +16,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentHeadController;
 use App\Http\Controllers\WeeklyReportController;
+use App\Http\Controllers\DocumentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -67,6 +73,13 @@ Route::get('/student/printables/guardian-consent-form', function () {
 });
 Route::get('/student/notification', function () {
     return view('student.notifications.index');
+});
+
+Route::get('/admin/interns-log', function () {
+    return view('admin.interns-log.index');
+});
+Route::get('/admin/interns-log/show', function () {
+    return view('admin.interns-log.show');
 });
 
 Route::get('/site/index', function () {
@@ -146,7 +159,29 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
-    Route::get('/admin/interns-log', [ArchiveController::class, 'index'])->name('admin.archive.index');
+    Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
+    Route::get('/admin/questionnaire', [QuestionnaireController::class, 'index'])->name('admin.questionnaire.index');
+    Route::post('/admin/questionnaire/store', [QuestionnaireController::class, 'store'])->name('admin.questionnaire.store');
+    Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
+    Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
+    Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
+    //MOA
+    Route::get('/admin/moa/index',[MoaController::class, 'index'])->name('admin.moa.index');
+
+    Route::post('/admin/store', [MoaController::class, 'store'])->name('admin.moa.store');
+
+    //Course
+    Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
+    Route::post('/admin/course/store', [CourseController::class, 'store'])->name('admin.course.store');
+
+    Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
+
+    Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
+
+
+
+    Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
+
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
    
@@ -196,7 +231,21 @@ Route::middleware('auth:department_head')->group(function () {
 
     // Add a route for filtering students
     Route::get('/department_head/dashboard/filter', [DepartmentHeadController::class, 'filterStudents'])->name('department_head.filterStudents');
-   
+
+    Route::get('department-head/create', [DepartmentHeadController::class, 'create'])->name('department_head.departmentHead.create');
+
+    Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
+
+    Route::get('/department-head/school_year/create', [SchoolYearController::class, 'create'])->name('department_head.school_year.create');
+
+    Route::post('/department-head/school_year', [SchoolYearController::class, 'store'])->name('department_head.school_year.store');
+
+    Route::put('/department-head/students/updateStatus/{id}', [StudentController::class, 'updateStatus'])->name('department-head.students.updateStatus');
+
+    // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
+
+    // Route::post('/department_head/store', [MoaController::class, 'store'])->name('department_head.moa.store');
+
 
 });
 
@@ -227,6 +276,9 @@ Route::middleware('auth:student')->group(function () {
 Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
 
+    Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
+
+    Route::post('/documents/store', [DocumentController::class, 'store'])->name('documents.store');
 
 
     // Logout
@@ -255,6 +307,9 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
   
     Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
+
+    Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
+
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

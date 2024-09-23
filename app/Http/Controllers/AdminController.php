@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Agency;
 use App\Models\Student;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -27,13 +28,16 @@ class AdminController extends Controller
          }
 
          $registered_students_no = Student::where('application_status', 'registered')->count();
-         $pending_students_no = Student::where('application_status', 'registered')->count();
+         $pending_students_no = Student::where('application_status', 'pending')->count();
      
+         $agencies =  Agency::all();
+
          return view('admin.dashboard', [
              'filtered_students' => $filtered_students,
              'selectedFilter' => $status, // Pass the selected status as selectedFilter
              'registered_students_no' =>  $registered_students_no,
-             'pending_students_no' => $pending_students_no
+             'pending_students_no' => $pending_students_no,
+             'agencies' => $agencies,
          ]);
      }
 
@@ -137,7 +141,14 @@ class AdminController extends Controller
     }
 
     public function agencies(){
-        return view('admin.agencies.index');
+
+        $agencies = Agency::all();
+
+        // dd($agencies);
+
+        return view('admin.agencies.index', [
+            'agencies' => $agencies,
+        ]);
     }
 
     // public function categories(){

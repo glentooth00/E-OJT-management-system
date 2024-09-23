@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
+use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +33,10 @@ class DepartmentHeadController extends Controller
         $status = ''; // Set status to empty string for the "All" option
     }
 
+    $agencies =  Agency::all();
+
+    $moas = Moa::all();
+
     // Other data you may need to pass to the view
     $registered_students_no = Student::where('application_status', 'registered')->count();
     $pending_students_no = Student::where('application_status', 'pending')->count();
@@ -39,7 +45,9 @@ class DepartmentHeadController extends Controller
         'filtered_students' => $filtered_students,
         'selectedFilter' => $status, // Pass the selected status as selectedFilter
         'registered_students_no' => $registered_students_no,
-        'pending_students_no' => $pending_students_no
+        'pending_students_no' => $pending_students_no,
+        'agencies' => $agencies,
+        'moas' => $moas,
     ]);
     }
 
@@ -101,7 +109,11 @@ class DepartmentHeadController extends Controller
      */
     public function create()
     {
-        //
+        $department_heads = DepartmentHead::all();
+
+        return view('department_head.departmentHead.index',[
+            'department_heads' => $department_heads,
+        ]);
     }
 
     /**
@@ -127,8 +139,8 @@ class DepartmentHeadController extends Controller
         $departmentHead = DepartmentHead::create($validatedData);
 
         // Redirect or return response as needed
-        return redirect()->route('departmentHeads.index')->with('success', 'Department Head created successfully.');
-    }
+        return redirect()->route('department_head.departmentHead.create')->with('success', 'Department Head created successfully.');
+    }          
 
     /**
      * Display the specified resource.
