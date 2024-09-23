@@ -7,8 +7,8 @@
 
     <div class="container-fluid mb-5">
         <h3>Student Dashboard</h3>
-        <div class="row">
-            <div class="col-md-6">
+        <div class="row mt-5">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
                         {{-- <h5>Student ID: {{ $studentId }}</h5> --}}
@@ -30,7 +30,7 @@
                                         <td>
                                             {{-- <a href="{{ route('weeklyReport.show', $weeklyReport->id) }}" class="btn btn-primary">View</a> --}}
                                             <a href="{{ route('weeklyReport.show', $weeklyReport->week_number, $weeklyReport->activity_description) }}"
-                                                class="btn btn-primary">View</a>
+                                                class="btn btn-primary btn-sm">View</a>
 
                                         </td>
                                     </tr>
@@ -40,9 +40,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+            <hr>
+            <div class="col-md-12 mt-5 pt-5">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 mt-3">
                         <div class="card">
                             <div class="card-header text-center">
                                 <h3><b>VISION</b></h3>
@@ -73,9 +74,9 @@
                             <div class="card-header text-center">
                                 <h3><b>GOALS</b></h3>
                             </div>
-                            <div class="card-body text-center">
+                            <div class="card-body">
                                 <h5>
-                                    The University shall have the following goals:
+                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>The University shall have the following goals:</b>
                                 </h5>
                                 <ol class="mt-3">
                                     <li>

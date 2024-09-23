@@ -24,11 +24,16 @@ class SupervisorController extends Controller
 
     public function internsLIst()
     {
-        // Fetch interns from the database, for example:
-        $interns = Student::all();
+        $loggedInUser = Auth::user();
+
+        // dd($loggedInUser->office);
+        // /Fetch interns from the database, for example:
+        $interns = Student::where('designation',  $loggedInUser->office )->get();
 
         // Return the view with interns data
-        return view('supervisor.interns.index', compact('interns'));
+        return view('supervisor.interns.index',[
+            'interns' => $interns,
+        ]);
     }
 
     public function Supervisor_index()

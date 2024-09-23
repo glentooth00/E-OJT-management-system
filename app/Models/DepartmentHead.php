@@ -10,13 +10,15 @@ class DepartmentHead extends AuthenticatableUser implements Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = [
-        'first_name',
-        'middle_name',
-        'last_name',
-        'email',
-        'password',
-        'department',
-    ];
+    protected $guarded = [];
+
+    // protected $fillable = [
+    //     'first_name',
+    //     'middle_name',
+    //     'last_name',
+    //     'email',
+    //     'password',
+    //     'department',
+    // ];
 }
 

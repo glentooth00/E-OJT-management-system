@@ -50,7 +50,7 @@
                                 </div>
                             @endif
                             <a href="{{ route('admin.login') }}"
-                                class="btn btn-outline-light btn-lg btn-block mt-5">ADMIN</a>
+                                class="btn btn-outline-light btn-lg btn-block mt-5">OJT SUPERVISOR</a>
 
                             <a href="{{ route('department-login') }}"
                                 class="btn btn-outline-light btn-lg btn-block mt-5">CHAIRPERSON</a>

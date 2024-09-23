@@ -15,7 +15,7 @@ class SchoolyearController extends Controller
 
         $schoolYears = Schoolyear::all();
 
-        return view('admin.school_year.index',[
+        return view('department_head.school_year.index',[
             'schoolYears' => $schoolYears,
         ]);
     }
@@ -26,7 +26,7 @@ class SchoolyearController extends Controller
     public function create()
     {
         $schoolYears = Schoolyear::all();
-        return view('admin.school_year.index',[
+        return view('department_head.school_year.index',[
             'schoolYears' => $schoolYears,
         ]);
     }
@@ -39,14 +39,15 @@ class SchoolyearController extends Controller
             'school_year' => 'required|string|max:255',
         ]);
 
-        // Store the new school year
-        // Assuming you have a SchoolYear model
-        $schoolYear = new \App\Models\SchoolYear();
+
+        //Store the new school year
+        //Assuming you have a SchoolYear model
+        $schoolYear = new Schoolyear();
         $schoolYear->school_year = $request->input('school_year');
         $schoolYear->save();
 
-        // Redirect back with a success message
-        return redirect()->route('admin.school_year.create')->with('success', 'School year added successfully!');
+        //Redirect back with a success message
+        return redirect()->route('department_head.school_year.create')->with('success', 'School year added successfully!');
     }
 
     /**
