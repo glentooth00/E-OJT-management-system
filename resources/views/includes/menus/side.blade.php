@@ -155,7 +155,7 @@
 
 <!-- Submenu items under Settings -->
 <div class="collapse" id="settingsMenu">
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
             href="{{ route('admin.departmentHead.department_head') }}">
             <i class="fas fa-fw fa-users"></i>
@@ -167,7 +167,7 @@
             <i class="fas fa-solid fa-cogs"></i>
             <span>Add School Year</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
             href="{{ route('admin.categories.index') }}">
@@ -188,6 +188,22 @@
             <span>Agencies</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}"
+            href="{{ route('admin.moa.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Upload MOA</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}"
+            href="{{ route('admin.course.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Course</span>
+        </a>
+    </li>
+
     <li class="nav-item">
         <form action="{{ route('admin.logout') }}" method="POST">
             @csrf

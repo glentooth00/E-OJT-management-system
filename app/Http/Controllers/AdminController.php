@@ -28,7 +28,7 @@ class AdminController extends Controller
          }
 
          $registered_students_no = Student::where('application_status', 'registered')->count();
-         $pending_students_no = Student::where('application_status', 'registered')->count();
+         $pending_students_no = Student::where('application_status', 'pending')->count();
      
          $agencies =  Agency::all();
 

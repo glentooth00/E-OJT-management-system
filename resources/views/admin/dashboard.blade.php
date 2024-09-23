@@ -68,9 +68,15 @@
         </section>
 
         <section class="mt-5">
+            @if(session('success'))
+            <div class="alert alert-success text-success">
+                <b>{{ session('success') }}</b>
+            </div>
+            @endif
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
+
 
                     {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
@@ -125,19 +131,29 @@
                                         @endif
                                     </td>
                                     <td class="text-right">
-                                        <button type="button" class="btn btn-danger btn-sm view-more data-id="{{ $student->id }}" 
-                                            data-toggle="modal" data-target="#exampleModal" 
-                                            data-id="{{  $student->id }}"
-                                            data-fullname="{{ $student->fullname }}" 
-                                            data-dob="{{ $student->dob }}" 
-                                            data-idnumber="{{ $student->id_number }}" 
-                                            data-department="{{ $student->department }}" 
-                                            data-course="{{ $student->course }}" 
-                                            data-designation="{{ $student->designation }}"
-                                            data-applicationstatus="{{ $student->application_status }}">
-                                            View More <i class="fas fa-chevron-right"></i>
-                                        </button>
+                                        <div class="d-inline-block">
+                                            <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT') <!-- For a PUT request -->
+                                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                            </form>
+                                            
+                                            <button type="button" class="btn btn-danger btn-sm view-more" 
+                                                data-id="{{ $student->id }}" 
+                                                data-toggle="modal" 
+                                                data-target="#exampleModal" 
+                                                data-fullname="{{ $student->fullname }}" 
+                                                data-dob="{{ $student->dob }}" 
+                                                data-idnumber="{{ $student->id_number }}" 
+                                                data-department="{{ $student->department }}" 
+                                                data-course="{{ $student->course }}" 
+                                                data-designation="{{ $student->designation }}" 
+                                                data-applicationstatus="{{ $student->application_status }}">
+                                                View More <i class="fas fa-chevron-right"></i>
+                                            </button>
+                                        </div>
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -160,37 +176,38 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.students.updateStatus', $student->id) }}" method="post">
+                {{-- {{ route('admin.students.updateStatus', $student->id) }} --}}
+                <form action="" method="post">
                     @csrf
                     @method('PUT') <!-- Use PUT method for updating -->
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id }}" readonly>
-                            <label for="modalFullName" class="badge">Fullname</label>
+                            <label for="modalFullName" class="badge text-black">Fullname</label>
                             <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalDOB" class="badge">Date of Birth</label>
+                            <label for="modalDOB" class="badge text-black">Date of Birth</label>
                             <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob }}" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="modalIDNumber" class="badge">ID Number</label>
+                            <label for="modalIDNumber" class="badge text-black">ID Number</label>
                             <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalDepartment" class="badge">Department</label>
+                            <label for="modalDepartment" class="badge text-black">Department</label>
                             <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department }}" readonly>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="modalCourse" class="badge">Course and Year</label>
+                            <label for="modalCourse" class="badge text-black">Course and Year</label>
                             <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course }}" readonly>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalApplicationStatus" class="badge">Application Status</label><br>
+                            <label for="modalApplicationStatus" class="badge text-black">Application Status</label><br>
                             @if ($student->application_status == 'pending')
                             <span class="badge badge-warning" style="font-size: 30px;">PENDING</span>
                         @elseif ($student->application_status == 'registered')
@@ -200,13 +217,17 @@
                         @endif
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="modalAssignedTo" class="badge">Assign to</label>
-                            <select name="designation" id="modalDesignation" class="form-control" placeholder>
+                            <label for="modalAssignedTo" class="badge text-black">Assign to</label>
+                            <select name="designation" id="modalDesignation" class="form-control" readonly disabled>
                                 <option value="{{ $student->designation }}" hidden>{{ $student->designation }}</option>
                                 @foreach ($agencies as $agency)
                                     <option value="{{ $agency->agency_name }}">{{ $agency->agency_name }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="modalIDNumber" class="badge text-black">Attach MOA</label>
+                            <input type="file"  name="id_number" class="form-control" id="modalIDNumber" >
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -253,7 +274,7 @@ $(document).ready(function() {
         $('#modalApplicationStatus').val(applicationstatus);
 
         // Update the form action with the correct student ID
-        var formAction = "{{ route('admin.students.updateStatus', ':id') }}";
+      
         formAction = formAction.replace(':id', id);
         $('form').attr('action', formAction);
     });

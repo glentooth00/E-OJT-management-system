@@ -3,7 +3,9 @@
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
+use App\Http\Controllers\CourseController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
@@ -163,9 +165,18 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
     Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
     Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
-    Route::put('/admin/students/update-status/{id}', [StudentController::class, 'updateStatus'])->name('admin.students.updateStatus');
+    //MOA
+    Route::get('/admin/moa/index',[MoaController::class, 'index'])->name('admin.moa.index');
+
+    Route::post('/admin/store', [MoaController::class, 'store'])->name('admin.moa.store');
+
+    //Course
+    Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
+    Route::post('/admin/course/store', [CourseController::class, 'index'])->name('admin.course.store');
 
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
+
+    Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
 
 
 
@@ -223,7 +234,18 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('department-head/create', [DepartmentHeadController::class, 'create'])->name('department_head.departmentHead.create');
 
-   
+    Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
+
+    Route::get('/department-head/school_year/create', [SchoolYearController::class, 'create'])->name('department_head.school_year.create');
+
+    Route::post('/department-head/school_year', [SchoolYearController::class, 'store'])->name('department_head.school_year.store');
+
+    Route::put('/department-head/students/update-status/{id}', [StudentController::class, 'updateStatus'])->name('department-head.students.updateStatus');
+
+    // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
+
+    // Route::post('/department_head/store', [MoaController::class, 'store'])->name('department_head.moa.store');
+
 
 });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evaluation;
+use App\Models\EvaluationScore;
 use App\Models\Questionnaire;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -42,23 +43,32 @@ class EvaluationController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'Attendance[]' => 'nullable|string|max:255',
-            'activitypoints[]' => 'nullable|numeric|min:0|max:255',
+        // Create a new evaluation
+        $evaluation = Evaluation::create([
+            'student_id' => $request->student_id,
+            'date' => now(),
+            'comments' => $request->comments
         ]);
-
-        // $request->validate([
-        //     'Attendance1' => 'nullable|string|max:255',
-        //     'Attendance2' => 'nullable|string|max:255',
-        //     'Attendance3' => 'nullable|string|max:255',
-        //     'activitypoints1' => 'nullable|numeric|min:0|max:255',
-        //     'activitypoints2' => 'nullable|numeric|min:0|max:255',
-        //     'activitypoints3' => 'nullable|numeric|min:0|max:255',
-        // ]);
-
-    dd($request->all());
-        Evaluation::create($request->all());
+    
+        // Loop through the criteria and store individual scores
+        foreach ($request->criteria as $criterion_id => $score) {
+            EvaluationScore::create([
+                'evaluation_id' => $evaluation->id,
+                'criterion_id' => $criterion_id,
+                'score' => $score
+            ]);
+        }
+    
+        // Calculate total score
+        $totalPoints = EvaluationScore::where('evaluation_id', $evaluation->id)
+            ->sum('score');
+    
+        // Update the total points in the evaluation
+        $evaluation->update(['total_points' => $totalPoints]);
+    
+        return redirect()->back()->with('success', 'Evaluation successfully recorded.');
     }
+    
 
     public function evaluate($id){
 

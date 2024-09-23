@@ -9,6 +9,8 @@ class EvaluationScore extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function evaluation()
     {
         return $this->belongsTo(Evaluation::class);

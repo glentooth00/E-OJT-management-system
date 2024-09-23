@@ -135,6 +135,23 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Student status updated successfully');
     }
 
+    public function approve($id)
+    {
+        // Find the student by ID
+        $student = Student::findOrFail($id);
+    
+        // Update the student's status to 'registered'
+        $student->application_status = 'registered';
+    
+        // Save the changes
+        $student->save();
+    
+        // /Redirect or return a response
+        return redirect()->back()->with('success', 'Student status updated to registered.');
+    }
+    
+
+
     /**
      * Remove the specified student from storage.
      */
