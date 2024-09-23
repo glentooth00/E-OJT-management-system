@@ -148,9 +148,11 @@
                                                 data-department="{{ $student->department }}" 
                                                 data-course="{{ $student->course }}" 
                                                 data-designation="{{ $student->designation }}" 
-                                                data-applicationstatus="{{ $student->application_status }}">
+                                                data-applicationstatus="{{ $student->application_status }}"
+                                                data-moa="{{ asset($student->moa) }}">
                                                 View More <i class="fas fa-chevron-right"></i>
                                             </button>
+
                                         </div>
                                     </td>
                                     
@@ -229,6 +231,7 @@
                             <label for="modalIDNumber" class="badge text-black">Attach MOA</label>
                             <input type="file"  name="id_number" class="form-control" id="modalIDNumber" >
                         </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -280,6 +283,21 @@ $(document).ready(function() {
     });
 });
 
+
+$(document).ready(function() {
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var moaUrl = button.data('moa'); // Extract MOA URL from data-* attribute
+
+            var modal = $(this);
+            
+            // For link display
+            modal.find('#modalMOALink').attr('href', moaUrl);
+
+            // For image display
+            modal.find('#modalMOAImage').attr('src', moaUrl);
+        });
+    });
 </script>
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Moa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -15,8 +16,10 @@ class MoaController extends Controller
     public function index()
     {
         $moas = Moa::all();
+        $courses = Course::all();
         return view('admin.moa.index', [
             'moas' => $moas,
+            'courses' => $courses,
         ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\WeeklyReport;
@@ -43,8 +44,11 @@ class StudentController extends Controller
     {
         $schoolYears = Schoolyear::all();
 
+        $courses =  Course::all();
+
         return view('student.register',[
             'schoolYears' => $schoolYears,
+            'courses' => $courses,
         ]);
 
         
@@ -120,6 +124,7 @@ class StudentController extends Controller
         // Validate the request
         $request->validate([
             'disignation' => 'nullable|string',
+            'moa' => 'nullable|string',
         ]);
 
         // Find the student by ID
@@ -128,6 +133,7 @@ class StudentController extends Controller
         // dd($student);
 
         // // Update the status
+        $student->moa = $request->input('moa');
         $student->designation = $request->input('designation');
         $student->save();
 
@@ -149,6 +155,7 @@ class StudentController extends Controller
         // /Redirect or return a response
         return redirect()->back()->with('success', 'Student status updated to registered.');
     }
+
     
 
 

@@ -97,6 +97,7 @@
                                 <th>Department</th>
                                 <th>Course and Year</th>
                                 <th>Assigned to</th>
+                                <th>MOA</th>
                                 <th>Application status</th>
                                 <th></th>
                             </tr>
@@ -116,6 +117,16 @@
                                             <span class="badge badge-primary"  style="font-size: 16px;">{{ $student->designation }}</span>
                                         @endif
                                     </td>
+                                    <td>  
+                                        @if (empty($student->moa))
+                                            <span class="badge badge-danger"  style="font-size: 16px;">No MOA</span>
+                                        @else
+                                            <a href="javascript:void(0)" class="view-moa" data-toggle="modal" data-target="#moaModal" data-moa="{{ $student->moa }}">View MOA</a>
+                                        @endif
+                                        
+                                    </td>
+                                    
+                                    
                                     <td>
                                         @if ($student->application_status == 'pending')
                                             <span class="badge badge-warning" style="font-size: 16px;">Pending</span>
@@ -143,12 +154,32 @@
                             @endforeach
                         </tbody>
                     </table>
-                    
-                    
+
                 </div>
         </section>
     </div>
     <!---Container Fluid-->
+
+<!-- MOA Modal -->
+<div class="modal fade" id="moaModal" tabindex="-1" role="dialog" aria-labelledby="moaModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="moaModalLabel">MOA Document</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="moaImage" src="{{ asset($student->moa) }}" alt="MOA" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -211,8 +242,14 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="modalIDNumber" class="badge text-black">Attach MOA</label>
-                            <input type="file"  name="id_number" class="form-control" id="modalIDNumber" >
+                            <select type="file"  name="moa" class="form-control" id="modalIDNumber" >
+                                <option value="" hidden>Select MOA</option>
+                                @foreach ($moas as $moa)
+                                    <option value="{{ $moa->moa_file }}">{{ $moa->moa_name }}</option>
+                                @endforeach
+                            </select>
                         </div>
+                        
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -263,6 +300,24 @@ $(document).ready(function() {
         $('form').attr('action', formAction);
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.view-moa').forEach(function(element) {
+        element.addEventListener('click', function() {
+            var moaFile = this.getAttribute('data-moa');
+            var moaImage = document.getElementById('moaImage');
+
+            // Set the source for the image
+            moaImage.src = `/${moaFile}`; // Ensure leading slash for correct path
+
+            // Show the modal
+            $('#moaModal').modal('show');
+        });
+    });
+});
+
+
 
 </script>
 

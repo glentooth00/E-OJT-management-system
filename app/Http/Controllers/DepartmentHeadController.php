@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,8 @@ class DepartmentHeadController extends Controller
 
     $agencies =  Agency::all();
 
+    $moas = Moa::all();
+
     // Other data you may need to pass to the view
     $registered_students_no = Student::where('application_status', 'registered')->count();
     $pending_students_no = Student::where('application_status', 'pending')->count();
@@ -44,6 +47,7 @@ class DepartmentHeadController extends Controller
         'registered_students_no' => $registered_students_no,
         'pending_students_no' => $pending_students_no,
         'agencies' => $agencies,
+        'moas' => $moas,
     ]);
     }
 

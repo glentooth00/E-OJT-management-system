@@ -12,7 +12,10 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('admin.course.index');
+        $courses = Course::all();
+        return view('admin.course.index',[
+            'courses' => $courses,
+        ]);
     }
 
     /**
@@ -28,7 +31,16 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $course = $request->validate([
+            'course' => 'nullable|string|max:255',
+            'course_code' => 'nullable|string|max:255',
+            'course_initials' => 'nullable|string|max:255',
+        ]);
+        
+        Course::create($course);
+
+        return redirect()->back()->with('success', 'New Course added successfully.');
     }
 
     /**

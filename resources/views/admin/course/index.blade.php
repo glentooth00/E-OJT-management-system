@@ -5,6 +5,12 @@
 @section('content')
     <!-- Container Fluid-->
     <div class="container">
+
+        @if(session('success'))
+        <div class="alert alert-success text-success">
+            {{ session('success') }}
+        </div>
+        @endif
         <div class="row justify-content-start">
             <div class="col">
                 <h1 class="mb-3">Course</h1>
@@ -15,14 +21,14 @@
                             <th>Course</th>
                         </tr>
                     </thead>
-                    {{-- <tbody>
-                        @foreach ($courses as $course) --}}
+                    <tbody>
+                        @foreach ($courses as $course)
                             <tr>
                                 <td>
-                                    {{-- {{ $schoolYear->school_year }} --}}
+                                    {{ $course->course_initials }}
                                 </td>
                             </tr>
-                        {{-- @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -45,19 +51,19 @@
                     <form action="{{ route('admin.course.store') }}" method="POST">
                         @csrf {{-- CSRF protection --}}
                         <div class="form-group">
-                            <label for="school_year">Course</label>
+                            <label for="school_year" class="badge text-dark">Course</label>
                             <input type="text" class="form-control" name="course" id="course"
-                                placeholder="School Year">
+                                placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="school_year">Course code</label>
+                            <label for="school_year" class="badge text-dark">Course code</label>
                             <input type="text" class="form-control" name="course_code" id="course"
-                                placeholder="School Year">
+                                placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="school_year">Course initials</label>
-                            <input type="text" class="form-control" name="course" id="course_initials"
-                                placeholder="School Year">
+                            <label for="school_year" class="badge text-dark">Course initials</label>
+                            <input type="text" class="form-control" name="course_initials" id="course_initials"
+                                placeholder="">
                         </div>
                     </form>
                 </div>

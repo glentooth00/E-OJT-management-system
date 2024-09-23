@@ -105,7 +105,12 @@
                         </div>
                         <div class="form-group">
                             <label for="moa" class="badge text-dark">MOA Course</label>
-                            <input type="text" class="form-control" name="moa_course" id="moa" placeholder="">
+                            <select type="text" class="form-control" name="moa_course" id="moa" placeholder="">
+                                <option value="" hidden>Select Course</option>
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->course_initials }}">{{ $course->course_initials }}</option>
+                                    @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="moa" class="badge text-dark">MOA Status</label>

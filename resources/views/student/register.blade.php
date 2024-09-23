@@ -78,8 +78,9 @@
                                     <label for="" class="text-white">Course</label>
                                     <select name="course" id="" class="form-control">
                                         <option value="" hidden>Select Course </option>
-                                        <option value="BSIT"> BSIT </option>
-                                        <option value="BSCS"> BSCS </option>
+                                        @foreach ($courses as $course)
+                                            <option value="{{ $course->course_initials }}">{{ $course->course_initials }}</option>
+                                        @endforeach
                                         {{-- <option value="BEED"> BEED </option>
                                         <option value="CIVIL ENGINEERING"> CIVIL ENGINEERING </option> --}}
                                     </select>

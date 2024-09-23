@@ -172,7 +172,7 @@ Route::middleware('auth:admin')->group(function () {
 
     //Course
     Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
-    Route::post('/admin/course/store', [CourseController::class, 'index'])->name('admin.course.store');
+    Route::post('/admin/course/store', [CourseController::class, 'store'])->name('admin.course.store');
 
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
