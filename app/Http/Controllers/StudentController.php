@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\WeeklyReport;
@@ -21,6 +22,8 @@ class StudentController extends Controller
         $student = Auth::guard('student')->user();
         $studentId = $student->id;
 
+  
+
         // Retrieve the latest weekly report for each week using a subquery
         $latestReports = DB::table('weekly_reports')
             ->select('week_number', DB::raw('MAX(id) as max_id'))
@@ -34,6 +37,7 @@ class StudentController extends Controller
         return view('student.dashboard', [
             'weeklyReports' => $weeklyReports,
             'studentId' => $studentId,
+    
         ]);
     }
 
@@ -119,12 +123,16 @@ class StudentController extends Controller
         // Implementation here if needed
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStudentStatus(Request $request)
     {
+        $id = $request->input('id');
+        // Fetch the student using the ID
+        $student = Student::findOrFail($id);
         // Validate the request
         $request->validate([
             'disignation' => 'nullable|string',
             'moa' => 'nullable|string',
+            'endorsement' => 'nullable|string',
         ]);
 
         // Find the student by ID
@@ -135,6 +143,7 @@ class StudentController extends Controller
         // // Update the status
         $student->moa = $request->input('moa');
         $student->designation = $request->input('designation');
+        $student->endorsement = $request->input('endorsement');
         $student->save();
 
         // Redirect or return a response

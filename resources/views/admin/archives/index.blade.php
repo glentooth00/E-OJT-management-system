@@ -45,9 +45,6 @@
         </div>
     </div> --}}
 
-
-    @extends('includes.layouts.app')
-
 @section('content')
     <!-- Container Fluid-->
 

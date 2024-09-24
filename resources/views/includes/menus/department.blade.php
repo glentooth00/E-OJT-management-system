@@ -106,7 +106,7 @@
         </a>
     </li> --}}
     <li class="nav-item">
-        <form action="{{ route('admin.logout') }}" method="POST">
+        <form action="{{ route('department_head.logout') }}" method="POST">
             @csrf
             <button type="submit" class="nav-link" style="background: none; border: none;">
                 <i class="fas fa-sign-out-alt"></i>

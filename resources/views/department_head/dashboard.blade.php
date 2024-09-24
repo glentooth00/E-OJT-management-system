@@ -4,6 +4,11 @@
 @section('page-title', 'OJT Supervisor')
 
 @section('content')
+<style>
+    .with-data:hover {
+        cursor: pointer;
+    }   
+</style>
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -98,6 +103,7 @@
                                 <th>Course and Year</th>
                                 <th>Assigned to</th>
                                 <th>MOA</th>
+                                <th>Endorsement Letter</th>
                                 <th>Application status</th>
                                 <th></th>
                             </tr>
@@ -112,44 +118,77 @@
                                     <td>{{ $student->course }}</td>
                                     <td>
                                         @if(empty($student->designation))
-                                            <span class="badge badge-warning"  style="font-size: 16px;">Not Assigned</span>
+                                            <span class="badge badge-warning" >Not Assigned</span>
                                         @else
-                                            <span class="badge badge-primary"  style="font-size: 16px;">{{ $student->designation }}</span>
+                                            <span class="badge badge-primary" >{{ $student->designation }}</span>
                                         @endif
                                     </td>
                                     <td>  
                                         @if (empty($student->moa))
-                                            <span class="badge badge-danger"  style="font-size: 16px;">No MOA</span>
+                                            <span class="badge badge-danger" >No MOA</span>
                                         @else
-                                            <a href="javascript:void(0)" class="view-moa" data-toggle="modal" data-target="#moaModal" data-moa="{{ $student->moa }}">View MOA</a>
+                                            <span href="javascript:void(0)" class="badge badge-success with-data view-moa" data-toggle="modal" data-target="#moaModal" data-moa="{{ $student->moa }}">View MOA</span>
                                         @endif
                                         
                                     </td>
-                                    
-                                    
+                                    <td>
+                                        @if (empty($student->endorsement))
+                                            <span class="badge badge-danger" >No Endorsement letter</span>
+                                        @else
+                                        <span href="javascript:void(0)" 
+                                        class="badge badge-success with-data view-letter" 
+                                        data-toggle="modal" 
+                                        data-target="#letterModal" 
+                                        data-endorsement="{{ $student->endorsement }}">
+                                      View Endorsement Letter
+                                  </span>
+                                  
+
+                                  
+                                        @endif
+                                    </td>
                                     <td>
                                         @if ($student->application_status == 'pending')
-                                            <span class="badge badge-warning" style="font-size: 16px;">Pending</span>
+                                            <span class="badge badge-warning" >Pending</span>
                                         @elseif ($student->application_status == 'registered')
-                                            <span class="badge badge-success" style="font-size: 16px;">Registered</span>
+                                            <span class="badge badge-success" >Registered</span>
                                         @else
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
                                         @endif
                                     </td>
                                     <td class="text-right">
-                                        <button type="button" class="btn btn-danger btn-sm view-more data-id="{{ $student->id }}" 
-                                            data-toggle="modal" data-target="#exampleModal" 
-                                            data-id="{{  $student->id }}"
+                                        <div class="d-inline-block">
+                                            @if ($student->application_status == 'registered')
+                                             
+                                            @elseif ($student->application_status == 'pending')  
+                                            <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('PUT') <!-- For a PUT request -->
+                                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                                            </form>
+                                            @endif
+                                            
+                                            
+                                            <button type="button" class="btn btn-danger btn-sm view-more" 
+                                            data-id="{{ $student->id }}" 
+                                            data-endorsement="{{ $student->endorsement }}"
                                             data-fullname="{{ $student->fullname }}" 
                                             data-dob="{{ $student->dob }}" 
                                             data-idnumber="{{ $student->id_number }}" 
                                             data-department="{{ $student->department }}" 
                                             data-course="{{ $student->course }}" 
-                                            data-designation="{{ $student->designation }}"
-                                            data-applicationstatus="{{ $student->application_status }}">
+                                            data-designation="{{ $student->designation }}" 
+                                            data-applicationstatus="{{ $student->application_status }}"
+                                            data-moa="{{ $student->moa }}"
+                                            data-toggle="modal" 
+                                            data-target="#exampleModal">
                                             View More <i class="fas fa-chevron-right"></i>
                                         </button>
+                                        
+
+                                        </div>
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -192,7 +231,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('department-head.students.updateStatus', $student->id) }}" method="POST">
+                <form action="{{ route('department_head.students.updateStudentStatus', $student->id) }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
@@ -242,7 +281,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="modalIDNumber" class="badge text-black">Attach MOA</label>
-                            <select type="file"  name="moa" class="form-control" id="modalIDNumber" >
+                            <select type="file"  name="moa" id="modalMoa" value="modalMoa" class="form-control" id="modalIDNumber" >
                                 <option value="" hidden>Select MOA</option>
                                 @foreach ($moas as $moa)
                                     <option value="{{ $moa->moa_file }}">{{ $moa->moa_name }}</option>
@@ -262,7 +301,21 @@
     </div>
 </div>
 
-
+<div class="modal fade" id="letterModal" tabindex="-1" role="dialog" aria-labelledby="letterModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="letterModalLabel">Endorsement Letter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img id="endorsementImage" src="{{ asset($student->endorsement) }}" alt="Endorsement Letter" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
 
   
 @endsection
@@ -283,6 +336,7 @@ $(document).ready(function() {
         var course = $(this).data('course');
         var designation = $(this).data('designation');
         var applicationstatus = $(this).data('applicationstatus');
+        var moa = $(this).data('moa');
 
         // Populate the modal input fields
         $('#modalId').val(id);
@@ -293,9 +347,10 @@ $(document).ready(function() {
         $('#modalDepartment').val(department);
         $('#modalCourse').val(course);
         $('#modalApplicationStatus').val(applicationstatus);
+        $('#modalMoa').val(moa);
 
         // Update the form action with the correct student ID
-        var formAction = "{{ route('department-head.students.updateStatus', ':id') }}";
+        var formAction = "{{ route('department_head.students.updateStudentStatus', ':id') }}";
         formAction = formAction.replace(':id', id);
         $('form').attr('action', formAction);
     });
@@ -317,7 +372,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+$(document).on('click', '.view-letter', function() {
+    // Extract the 'endorsement' data from the clicked element
+    var endorsement = $(this).data('endorsement');
 
+    // Log to check if the correct endorsement letter is being passed
+    console.log('Endorsement: ', endorsement);
+
+    // Update the image source in the modal
+    $('#endorsementImage').attr('src', '/' + endorsement);
+
+    // Display the modal
+    $('#letterModal').modal('show');
+});
 
 </script>
 

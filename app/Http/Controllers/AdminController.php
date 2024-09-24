@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Agency;
+use App\Models\EndorsementLetter;
+use App\Models\Moa;
 use App\Models\Student;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -32,12 +34,23 @@ class AdminController extends Controller
      
          $agencies =  Agency::all();
 
+         $letters = EndorsementLetter::all();
+
+         $moas = Moa::all();
+
+         $no_agencies = Agency::all()->count();
+
+
+
          return view('admin.dashboard', [
              'filtered_students' => $filtered_students,
              'selectedFilter' => $status, // Pass the selected status as selectedFilter
              'registered_students_no' =>  $registered_students_no,
              'pending_students_no' => $pending_students_no,
              'agencies' => $agencies,
+             'letters' => $letters,
+             'moas' => $moas,
+             'no_agencies' => $no_agencies,
          ]);
      }
 
