@@ -202,9 +202,10 @@
                 <p><strong>Phone:</strong> {{ $student->phone }}</p>
                 <p><strong>Emergency Contact:</strong> {{ $student->emergency_contact }}</p>
             </div>
-        </div> --}}
+        </div> 
 
 
-    </div>
+    </div>--}}
+    
     <!---Container Fluid-->
 @endsection

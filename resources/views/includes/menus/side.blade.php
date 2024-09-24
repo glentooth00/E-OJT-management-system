@@ -13,13 +13,13 @@
     <div class="sidebar-heading">
         MENUS
     </div>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
             href="{{ route('admin.interns.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>
-    </li>
+    </li> --}}
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
             href="/admin/interns-evaluation">
@@ -27,12 +27,12 @@
             <span>Intern's Evaluation</span>
         </a>
     </li> --}}
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
             <i class="fas fa-fw fa-clock"></i>
             <span>Intern's Logs</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
             href="/admin/archive">
@@ -186,6 +186,13 @@
         <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
             <i class='fas fa-building'></i>
             <span>Agencies</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/endorsement') ? 'active' : '' }}"
+            href="{{ route('admin.endorsement.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Endorsement letter </span>
         </a>
     </li>
     <li class="nav-item">

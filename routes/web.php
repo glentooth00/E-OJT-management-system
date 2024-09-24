@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
@@ -174,6 +175,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
     Route::post('/admin/course/store', [CourseController::class, 'store'])->name('admin.course.store');
 
+    //Endorsement
+    Route::get('/admin/endorsement/index', [EndorsementLetterController::class,'index'])->name('admin.endorsement.index');
+    Route::post('/admin/endorsement/store', [EndorsementLetterController::class, 'store'])->name('admin.endorsement.store');
+    Route::put('/admin/student/updateStudentStatus', [StudentController::class, 'updateStudentStatus'])->name('admin.student.updateStudentStatus');
+
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
     Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
@@ -240,7 +246,9 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/department-head/school_year', [SchoolYearController::class, 'store'])->name('department_head.school_year.store');
 
-    Route::put('/department-head/students/updateStatus/{id}', [StudentController::class, 'updateStatus'])->name('department-head.students.updateStatus');
+    Route::put('/department_head/students/updateStudentStatus/{id}', [StudentController::class, 'updateStudentStatus'])->name('department_head.students.updateStudentStatus');
+
+
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
