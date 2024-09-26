@@ -14,6 +14,23 @@
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Gallery</h1>
         </div>
+        <form method="GET" action="{{ route('department_head.gallery.index') }}" class="form-inline mb-3">
+                <div class="input-group mr-2" style="flex: 1;">
+                    <input type="text" name="search" class="form-control" placeholder="Search by full name" value="{{ request('search') }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </div>
+            
+                <div class="form-group mr-2" style="flex: 1;">
+                    <label for="course" class="mr-2">Filter by Course:</label>
+                    <select name="course" id="course" class="form-control" onchange="this.form.submit()">
+                        <option value="">All Courses</option>
+                        <option value="BSIT" {{ request('course') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
+                        <option value="BSCS" {{ request('course') == 'BSCS' ? 'selected' : '' }}>BSCS</option>
+                    </select>
+                </div>
+            </form>
        <div class="row justify-content-start">
             <div class="col">
                 {{-- <h1 class="mb-3">School year</h1> --}}
@@ -29,7 +46,7 @@
                             <tr>
                                 <td>
                                     <div class="d-flex flex-wrap">
-                                        @foreach ($students as $student)
+                                        @forelse ($students as $student)
                                         <div class="card m-2" style="width: 18rem; overflow: hidden;">
                                             <div class="img-container" style="height: 200px; display: flex; justify-content: center; align-items: center; overflow: hidden; padding-top: 10px;">
                                                 <img src="/storage/{{ $student->id_attachment }}" class="card-img-top" alt="..." style="max-height: 160%; max-width: 100%; object-fit: contain; border-radius: 20px;">
@@ -113,8 +130,13 @@
 
                                             </div>
                                         </div>
+                                        @empty
+                                            NO STUDENT FOUND
+                                        @endforelse
+                                        {{-- @foreach ($students as $student) --}}
+
                                         
-                                        @endforeach
+                                        {{-- @endforeach --}}
                                     </div>
                                 </td>
                             </tr>
