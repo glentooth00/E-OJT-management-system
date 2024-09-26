@@ -260,6 +260,10 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/department_head/gallery/index', [GalleryController::class, 'index'])->name('department_head.gallery.index');
 
+    Route::get('/gallery/view/{id}', [GalleryController::class, 'show'])->name('gallery.view');
+
+    Route::get('/students/{id}/gallery/{weekNumber}', [GalleryController::class, 'show']);
+
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
