@@ -58,6 +58,13 @@ class DepartmentHeadController extends Controller
     ]);
     }
 
+    public function gallery(){
+        $test = 1;
+        return view('department_head.gallery.index', [
+            'test' => $test,
+        ]);
+    }
+
     public function departmentIndex(){
         $department_heads = DepartmentHead::all();
 

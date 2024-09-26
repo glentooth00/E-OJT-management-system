@@ -8,6 +8,7 @@ use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\WeeklyReport;
+use App\Models\YearLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -53,10 +54,13 @@ class StudentController extends Controller
 
         $departments = Department::all();
 
+        $yearLevels = YearLevel::all();
+
         return view('student.register',[
             'schoolYears' => $schoolYears,
             'courses' => $courses,
             'departments' => $departments,
+            'yearLevels' => $yearLevels,
         ]);
 
         

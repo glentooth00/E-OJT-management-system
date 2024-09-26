@@ -115,6 +115,16 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
+                                    <label for="" class="text-white">Year/Level</label>
+                                    <select name="year_level" id="" class="form-control">
+                                        <option value="" hidden>Select year and section</option>
+                                        @foreach ($yearLevels as $yearLevel )
+                                            <option value="{{ $yearLevel->year_level }} {{ $yearLevel->section }}"> {{ $yearLevel->year_level }} {{ $yearLevel->section }} </option>
+                                        @endforeach
+                                        
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mt-3">
                                     <label for="schoolYear" class="text-white">School year</label>
                                     <select name="school_year" id="schoolYear" class="form-control">
                                         @foreach ($schoolYears as $schoolYear)

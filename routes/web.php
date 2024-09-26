@@ -7,11 +7,13 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\StudentController;
@@ -204,7 +206,8 @@ Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])
 // Route for handling the form submission (POST request)
 Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
 
-
+Route::get('/admin/year_level/index', [YearLevelController::class , 'index'])->name('admin.year_level.index');
+Route::post('/admin/year_level/store', [YearLevelController::class,  'store'])->name('admin.year_level.store');
 
 
 Route::get('/admin/archives', [ArchiveController::class, 'index'])->name('admin.archives.index');
@@ -255,6 +258,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::put('/department_head/students/updateStudentStatus/{id}', [StudentController::class, 'updateStudentStatus'])->name('department_head.students.updateStudentStatus');
 
+    Route::get('/department_head/gallery/index', [GalleryController::class, 'index'])->name('department_head.gallery.index');
 
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');

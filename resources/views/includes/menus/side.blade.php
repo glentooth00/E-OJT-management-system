@@ -228,6 +228,14 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/year_level') ? 'active' : '' }}"
+            href="{{ route('admin.year_level.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Year/Level</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <form action="{{ route('admin.logout') }}" method="POST">
             @csrf
             <button type="submit" class="nav-link" style="background: none; border: none;">
