@@ -89,10 +89,9 @@
                                     <label for="" class="text-white">Department</label>
                                     <select name="department" id="" class="form-control">
                                         <option value="" hidden>Select Department </option>
-                                        <option value="CICS">CICS </option>
-                                        {{-- <option value="EDUCTATION">EDUCTATION</option>
-                                        <option value="ENGINEERING">ENGINEERING</option>
-                                        <option value="TOURISM">TOURISM</option> --}}
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>}
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">

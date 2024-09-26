@@ -1,7 +1,7 @@
 @extends('includes.layouts.department')
 
 
-@section('page-title', 'OJT Supervisor')
+@section('page-title', 'Gallery')
 
 @section('content')
 <style>
@@ -12,10 +12,10 @@
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800">Gallery</h1>
         </div>
 
-        <section>
+        {{-- <section>
             <div class="row">
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card h-100">
@@ -24,7 +24,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Registered Interns
                                     </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800">{{ $registered_students_no }}</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                     </div>
                                 </div>
@@ -42,7 +42,7 @@
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Pending Interns
                                     </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800">{{ $pending_students_no }}</div>
+                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
                                     <div class="mt-2 mb-0 text-muted text-xs">
                                     </div>
                                 </div>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <section class="mt-5">
             <div class="card">

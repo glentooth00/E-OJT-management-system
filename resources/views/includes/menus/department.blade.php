@@ -32,10 +32,10 @@
      </li>
 
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('department_head/archive*') ? 'active' : '' }}"
-             href="{{ route('department_head.archives.index') }}">
+         <a class="nav-link {{ request()->is('department_head/gallery*') ? 'active' : '' }}"
+             href="{{ route('department_head.gallery.index') }}">
              <i class="fas fa-fw fa-file"></i>
-             <span>Archives</span>
+             <span>Gallery</span>
          </a>
      </li>
 

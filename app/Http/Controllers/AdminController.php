@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\Agency;
+use App\Models\Department;
 use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Student;
@@ -40,6 +41,7 @@ class AdminController extends Controller
 
          $no_agencies = Agency::all()->count();
 
+      
 
 
          return view('admin.dashboard', [
@@ -51,6 +53,7 @@ class AdminController extends Controller
              'letters' => $letters,
              'moas' => $moas,
              'no_agencies' => $no_agencies,
+            
          ]);
      }
 

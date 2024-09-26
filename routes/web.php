@@ -4,6 +4,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\MoaController;
@@ -180,6 +181,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/endorsement/store', [EndorsementLetterController::class, 'store'])->name('admin.endorsement.store');
     Route::put('/admin/student/updateStudentStatus', [StudentController::class, 'updateStudentStatus'])->name('admin.student.updateStudentStatus');
 
+
+    //Add department
+    Route::get('/admin/department/index', [DepartmentController::class, 'index'])->name('admin.department.index');
+    Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
+
+    
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
     Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
@@ -228,7 +235,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
 
-    Route::get('/department_head/archives', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.archives.index');
+    Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
     Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
 
     Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
