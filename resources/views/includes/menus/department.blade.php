@@ -32,10 +32,10 @@
      </li>
 
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('department_head/archive*') ? 'active' : '' }}"
-             href="{{ route('department_head.archives.index') }}">
+         <a class="nav-link {{ request()->is('department_head/gallery*') ? 'active' : '' }}"
+             href="{{ route('department_head.gallery.index') }}">
              <i class="fas fa-fw fa-file"></i>
-             <span>Archives</span>
+             <span>Gallery</span>
          </a>
      </li>
 
@@ -106,7 +106,7 @@
         </a>
     </li> --}}
     <li class="nav-item">
-        <form action="{{ route('admin.logout') }}" method="POST">
+        <form action="{{ route('department_head.logout') }}" method="POST">
             @csrf
             <button type="submit" class="nav-link" style="background: none; border: none;">
                 <i class="fas fa-sign-out-alt"></i>

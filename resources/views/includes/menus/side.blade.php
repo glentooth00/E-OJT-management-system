@@ -13,13 +13,13 @@
     <div class="sidebar-heading">
         MENUS
     </div>
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns') ? 'active' : '' }}"
             href="{{ route('admin.interns.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>
-    </li>
+    </li> --}}
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
             href="/admin/interns-evaluation">
@@ -27,12 +27,12 @@
             <span>Intern's Evaluation</span>
         </a>
     </li> --}}
-    <li class="nav-item">
+    {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
             <i class="fas fa-fw fa-clock"></i>
             <span>Intern's Logs</span>
         </a>
-    </li>
+    </li> --}}
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
             href="/admin/archive">
@@ -64,6 +64,14 @@
             href="{{ route('admin.supervisor.supervisor') }}">
             <i class='fas fa-building'></i>
             <span>Supervisor</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
+            href="{{ route('admin.supervisor.supervisor') }}">
+            <i class='fas fa-building'></i>
+            <span>Chairpersons</span>
         </a>
     </li>
 
@@ -189,18 +197,41 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/endorsement') ? 'active' : '' }}"
+            href="{{ route('admin.endorsement.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Endorsement letter </span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}"
             href="{{ route('admin.moa.index') }}">
             <i class='fas fa-building'></i>
             <span>Upload MOA</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/department') ? 'active' : '' }}"
+            href="{{ route('admin.department.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Add Department</span>
+        </a>
+    </li>
 
+    
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}"
             href="{{ route('admin.course.index') }}">
             <i class='fas fa-building'></i>
             <span>Course</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/year_level') ? 'active' : '' }}"
+            href="{{ route('admin.year_level.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Year/Level</span>
         </a>
     </li>
 

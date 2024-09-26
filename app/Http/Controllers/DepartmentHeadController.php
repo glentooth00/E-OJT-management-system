@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
@@ -37,9 +38,13 @@ class DepartmentHeadController extends Controller
 
     $moas = Moa::all();
 
+    $letters =  EndorsementLetter::all();
+
     // Other data you may need to pass to the view
     $registered_students_no = Student::where('application_status', 'registered')->count();
     $pending_students_no = Student::where('application_status', 'pending')->count();
+
+    $no_agencies = Agency::all()->count();
 
     return view('department_head.dashboard', [
         'filtered_students' => $filtered_students,
@@ -48,7 +53,16 @@ class DepartmentHeadController extends Controller
         'pending_students_no' => $pending_students_no,
         'agencies' => $agencies,
         'moas' => $moas,
+        'no_agencies' => $no_agencies,
+        'letters' => $letters,
     ]);
+    }
+
+    public function gallery(){
+        $test = 1;
+        return view('department_head.gallery.index', [
+            'test' => $test,
+        ]);
     }
 
     public function departmentIndex(){
@@ -67,7 +81,7 @@ class DepartmentHeadController extends Controller
         // Get all students
         $students = Student::all();
     
-        return view('department_head.archives.index', [
+        return view('department_head.gallery.index', [
             'school_years' => $school_years,
             'students' => $students,
         ]);
