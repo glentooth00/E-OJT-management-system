@@ -4,13 +4,16 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\StudentController;
@@ -180,6 +183,12 @@ Route::middleware('auth:admin')->group(function () {
     Route::post('/admin/endorsement/store', [EndorsementLetterController::class, 'store'])->name('admin.endorsement.store');
     Route::put('/admin/student/updateStudentStatus', [StudentController::class, 'updateStudentStatus'])->name('admin.student.updateStudentStatus');
 
+
+    //Add department
+    Route::get('/admin/department/index', [DepartmentController::class, 'index'])->name('admin.department.index');
+    Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
+
+    
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
     Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
@@ -197,7 +206,8 @@ Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])
 // Route for handling the form submission (POST request)
 Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
 
-
+Route::get('/admin/year_level/index', [YearLevelController::class , 'index'])->name('admin.year_level.index');
+Route::post('/admin/year_level/store', [YearLevelController::class,  'store'])->name('admin.year_level.store');
 
 
 Route::get('/admin/archives', [ArchiveController::class, 'index'])->name('admin.archives.index');
@@ -228,7 +238,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
 
-    Route::get('/department_head/archives', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.archives.index');
+    Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
     Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
 
     Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
@@ -248,6 +258,11 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::put('/department_head/students/updateStudentStatus/{id}', [StudentController::class, 'updateStudentStatus'])->name('department_head.students.updateStudentStatus');
 
+    Route::get('/department_head/gallery/index', [GalleryController::class, 'index'])->name('department_head.gallery.index');
+
+    Route::get('/gallery/view/{id}', [GalleryController::class, 'show'])->name('gallery.view');
+
+    Route::get('/students/{id}/gallery/{weekNumber}', [GalleryController::class, 'show']);
 
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');

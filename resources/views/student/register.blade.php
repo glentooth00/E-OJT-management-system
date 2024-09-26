@@ -89,10 +89,9 @@
                                     <label for="" class="text-white">Department</label>
                                     <select name="department" id="" class="form-control">
                                         <option value="" hidden>Select Department </option>
-                                        <option value="CICS">CICS </option>
-                                        {{-- <option value="EDUCTATION">EDUCTATION</option>
-                                        <option value="ENGINEERING">ENGINEERING</option>
-                                        <option value="TOURISM">TOURISM</option> --}}
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>}
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
@@ -113,6 +112,16 @@
                                         <option value="">---- Select ----</option>
                                         <option value="MALE"> MALE </option>
                                         <option value="FEMALE"> FEMALE </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mt-3">
+                                    <label for="" class="text-white">Year/Level</label>
+                                    <select name="year_level" id="" class="form-control">
+                                        <option value="" hidden>Select year and section</option>
+                                        @foreach ($yearLevels as $yearLevel )
+                                            <option value="{{ $yearLevel->year_level }} {{ $yearLevel->section }}"> {{ $yearLevel->year_level }} {{ $yearLevel->section }} </option>
+                                        @endforeach
+                                        
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">

@@ -67,6 +67,14 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
+            href="{{ route('admin.supervisor.supervisor') }}">
+            <i class='fas fa-building'></i>
+            <span>Chairpersons</span>
+        </a>
+    </li>
+
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
             href="{{ route('admin.questionnaire.index') }}">
@@ -202,12 +210,28 @@
             <span>Upload MOA</span>
         </a>
     </li>
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/department') ? 'active' : '' }}"
+            href="{{ route('admin.department.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Add Department</span>
+        </a>
+    </li>
 
+    
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}"
             href="{{ route('admin.course.index') }}">
             <i class='fas fa-building'></i>
             <span>Course</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/year_level') ? 'active' : '' }}"
+            href="{{ route('admin.year_level.index') }}">
+            <i class='fas fa-building'></i>
+            <span>Year/Level</span>
         </a>
     </li>
 

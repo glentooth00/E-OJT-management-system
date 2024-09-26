@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Department;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\WeeklyReport;
+use App\Models\YearLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -50,9 +52,15 @@ class StudentController extends Controller
 
         $courses =  Course::all();
 
+        $departments = Department::all();
+
+        $yearLevels = YearLevel::all();
+
         return view('student.register',[
             'schoolYears' => $schoolYears,
             'courses' => $courses,
+            'departments' => $departments,
+            'yearLevels' => $yearLevels,
         ]);
 
         
@@ -134,6 +142,7 @@ class StudentController extends Controller
             'moa' => 'nullable|string',
             'endorsement' => 'nullable|string',
         ]);
+
 
         // Find the student by ID
         $student = Student::findOrFail($id);
