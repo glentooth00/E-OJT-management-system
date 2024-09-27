@@ -30,6 +30,6 @@
     <link href="{{ asset('admin/css/style/style.css') }}" rel="stylesheet">
     @stack('styles')
 </head>
-
+ 
 <body id="page-top">
     <div id="wrapper">
