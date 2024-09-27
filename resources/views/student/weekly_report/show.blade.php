@@ -14,7 +14,7 @@
             <div class="row">
                 @foreach ($weeklyReports as $report)
                     @if ($report->student_id == auth()->user()->id)
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-4 mb-3" style="flex: 0 1 200px; max-width: 200px; height: 200px; overflow: hidden; position: relative; cursor: pointer;">
                             <img src="{{ asset('storage/' . $report->file_path) }}" class="img-fluid" alt="Activity Photo">
                         </div>
                     @endif

@@ -39,7 +39,10 @@
                                     data-toggle="modal" 
                                     data-target="#imageModal" 
                                     data-full="{{ asset('storage/' . $image->file_path) }}">
-                            </div>
+                                </div>
+                                {{-- <div>
+                                    <p>{{$image->activity_description}}</p>
+                                </div> --}}
                         @endforeach
                     @endif
                 </div>
@@ -50,14 +53,23 @@
 
 <!-- Modal for displaying full image -->
 <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="imageModalLabel">Full Image</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <img src="" id="fullImage" alt="Full Image" class="img-fluid">
+                <div class="row">
+                    <div class="col-lg-8 pull-right">
+                         <img src="" id="fullImage" alt="Full Image" width="740">
+                    </div>
+                    <div class="col-lg-4">
+                        <div>
+                            <h5>{{$image->activity_description}}</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
