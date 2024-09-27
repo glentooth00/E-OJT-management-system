@@ -24,7 +24,7 @@
 
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
-            href="{{ route('supervisor.intern.index') }}">
+            href="{{ route('supervisor.interns.index') }}">
             <i class="fas fa-fw fa-file"></i>
             <span>Activity Logs</span>
         </a>

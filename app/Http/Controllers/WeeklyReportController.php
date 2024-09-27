@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +23,7 @@ class WeeklyReportController extends Controller
         $studentId = $student->id;
 
         // Fetch the weekly reports for the logged-in student
-        $weeklyReports = WeeklyReport::where('student_id', $studentId)->get();
+        $weeklyReports = weeklyReport::where('student_id', $studentId)->get();
 
         // Pass the data to the view
         return view('student.dashboard', [
@@ -63,7 +63,7 @@ class WeeklyReportController extends Controller
         $startDate = now()->subDays(7); // Date 7 days ago
     
         // Get all images for the student from the latest week in descending order
-        $images = WeeklyReport::where('student_id', $id)
+        $images = weeklyReport::where('student_id', $id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc') // Order by created_at in descending order
             ->get();
@@ -121,7 +121,7 @@ class WeeklyReportController extends Controller
                 $filePath = $file->storeAs('activity_photos', $fileName, 'public');
     
                 // Save the report for each uploaded photo
-                $weeklyReport = new WeeklyReport();
+                $weeklyReport = new weeklyReport();
                 $weeklyReport->student_id = $studentId;
                 $weeklyReport->week_number = $weekNumber;
                 $weeklyReport->studentname = $studentName;
@@ -147,7 +147,7 @@ class WeeklyReportController extends Controller
     public function show($weekNumber)
     {
         // Fetch weekly reports with the given week_number
-        $weeklyReports = WeeklyReport::where('week_number', $weekNumber)->get();
+        $weeklyReports = weeklyReport::where('week_number', $weekNumber)->get();
     
         // Pass the weekly report data to the view
         return view('student.weekly_report.show', compact('weeklyReports', 'weekNumber'));
@@ -159,7 +159,7 @@ class WeeklyReportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(WeeklyReport $weeklyReport)
+    public function edit(weeklyReport $weeklyReport)
     {
         // Return the view to edit the weekly report
         return view('student.weekly_report.edit', compact('weeklyReport'));
@@ -168,7 +168,7 @@ class WeeklyReportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, WeeklyReport $weeklyReport)
+    public function update(Request $request, weeklyReport $weeklyReport)
     {
         $request->validate([
             'week_number' => 'required|integer',
@@ -185,7 +185,7 @@ class WeeklyReportController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(WeeklyReport $weeklyReport)
+    public function destroy(weeklyReport $weeklyReport)
     {
         $weeklyReport->delete();
 

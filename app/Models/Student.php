@@ -14,7 +14,7 @@ class Student extends Authenticatable
 
     public function weeklyReports()
     {
-        return $this->hasMany(WeeklyReport::class);
+        return $this->hasMany(weeklyReport::class);
     }
 
     public function evaluations()

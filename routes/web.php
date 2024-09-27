@@ -339,7 +339,8 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
 
-    Route::get('/supervisor/intern/index/', [ActivityLogsController::class, 'index'])->name('supervisor.intern.index');
+    Route::get('/supervisor/interns/index', [ActivityLogsController::class, 'index'])->name('supervisor.interns.index');
+
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

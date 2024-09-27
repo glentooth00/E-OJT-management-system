@@ -7,7 +7,7 @@ use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
 use Illuminate\Http\Request;
@@ -79,7 +79,7 @@ class DepartmentHeadController extends Controller
         $startDate = now()->subDays(7); // Date 7 days ago
     
         // Get all images for the student from the latest week in descending order
-        $images = WeeklyReport::where('student_id', $id)
+        $images = weeklyReport::where('student_id', $id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc') // Order by created_at in descending order
             ->get();

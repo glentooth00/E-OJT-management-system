@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
@@ -41,7 +41,7 @@ class GalleryController extends Controller
         $startDate = now()->subDays(7); // Date 7 days ago
     
         // Get all images for the student from the latest week in descending order
-        $images = WeeklyReport::where('student_id', $id)
+        $images = weeklyReport::where('student_id', $id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc') // Order by created_at in descending order
             ->get();
@@ -65,7 +65,7 @@ class GalleryController extends Controller
         $startDate = now()->subDays(7); // Date 7 days ago
     
         // Get all images for the student from the latest week in descending order
-        $images = WeeklyReport::where('student_id', $id)
+        $images = weeklyReport::where('student_id', $id)
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc') // Order by created_at in descending order
             ->get();

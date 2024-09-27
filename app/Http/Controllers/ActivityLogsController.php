@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ActivityLogs;
+use App\Models\Student;
+use App\Models\weeklyReport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ActivityLogsController extends Controller
 {
@@ -12,8 +14,20 @@ class ActivityLogsController extends Controller
      */
     public function index()
     {
-        return view('supervisor.interns.index');
+
+        $supervisor = Auth::guard('supervisor')->user();
+        $office = $supervisor->office;
+
+        $students = Student::where('application_status', 'Registered' )
+                            ->where('designation', $office)
+                            ->get();
+
+        return view('supervisor.interns.index', [
+            'students' => $students,
+        ]);
+
     }
+    
 
     /**
      * Show the form for creating a new resource.

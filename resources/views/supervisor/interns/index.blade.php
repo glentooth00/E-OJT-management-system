@@ -15,28 +15,28 @@
                         <thead class="thead-light">
                             <tr>
                                 <th>Name</th>
-                                <th>ID Number</th>
+                                <th>Course</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($interns as $intern)
+                            @foreach ($students as $student)
                                 <tr>
-                                    <td>{{ $intern->fullname }}</td>
-                                    <td>{{ $intern->id_number }}</td>
-                                    <td>{{ $intern->department }}</td>
-                                    <td>{{ $intern->course }}</td>
+                                    <td>{{ $student->fullname}}</td>
+                                    <td>{{ $student->course}}</td>
+                                    <td>{{ $student->department}}</td>
+                                    {{-- <td>{{ $activitylog->id_number }}</td>
+                                    <td>{{ $activitylog->department }}</td>
+                                    <td>{{ $activitylog->course }}</td>
                                     <td>
                                     <a href="{{ route('supervisor.evaluation.evaluate', $intern->id) }}" class="btn btn-success btn-sm">
                                         <i class="fas fa-list"></i> Evaluate
                                     </a>  
-                                    </td>
-
-                                    
+                                    </td> --}}
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
