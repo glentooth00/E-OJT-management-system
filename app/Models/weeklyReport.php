@@ -13,9 +13,8 @@ class WeeklyReport extends Model
     protected $table = 'weekly_reports';
 
     // Define the fillable attributes for mass assignment
-    protected $fillable = [
-        'studentname','student_id', 'week_number', 'activity_description', 'file_path',
-    ];
+
+    protected $guarded = [];
 
     protected $casts = [
         'photos' => 'array',

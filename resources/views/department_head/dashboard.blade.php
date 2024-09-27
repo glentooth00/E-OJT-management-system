@@ -1,7 +1,7 @@
 @extends('includes.layouts.department')
 
 
-@section('page-title', 'OJT Supervisor')
+@section('page-title', 'Chairperson')
 
 @section('content')
 <style>

@@ -22,7 +22,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($interns as $intern)
+                            {{-- @foreach ($interns as $intern)
                                 <tr>
                                     <td>{{ $intern->fullname }}</td>
                                     <td>{{ $intern->id_number }}</td>
@@ -36,7 +36,7 @@
 
                                     
                                 </tr>
-                            @endforeach
+                            @endforeach --}}
                         </tbody>
                     </table>
                 </div>

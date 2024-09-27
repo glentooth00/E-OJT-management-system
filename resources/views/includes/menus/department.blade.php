@@ -25,7 +25,7 @@
      </li>
      <li class="nav-item">
          <a class="nav-link {{ request()->is('department_head/weekly_reports*') ? 'active' : '' }}"
-             href="{{ route('department_head.weekly_reports') }}">
+             href="{{ route('department_head.weekly_reports.reports') }}">
              <i class="fas fa-fw fa-tachometer-alt"></i>
              <span>Weekly Reports</span>
          </a>

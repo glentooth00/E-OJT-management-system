@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
@@ -264,6 +265,11 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/students/{id}/gallery/{weekNumber}', [GalleryController::class, 'show']);
 
+    Route::get('/department_head/weekly_reports/reports', [WeeklyReportController::class, 'reports'])->name('department_head.weekly_reports.reports');
+
+    Route::get('/weekly_reports/view/{id}', [WeeklyReportController::class, 'showReports'])->name('weekly_reports.view');
+
+
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
@@ -333,6 +339,7 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
 
+    Route::get('/supervisor/intern/index/', [ActivityLogsController::class, 'index'])->name('supervisor.intern.index');
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

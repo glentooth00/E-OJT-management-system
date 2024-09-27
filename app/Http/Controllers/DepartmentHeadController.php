@@ -7,6 +7,7 @@ use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
+use App\Models\WeeklyReport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
 use Illuminate\Http\Request;
@@ -62,6 +63,30 @@ class DepartmentHeadController extends Controller
         $test = 1;
         return view('department_head.gallery.index', [
             'test' => $test,
+        ]);
+    }
+
+    public function showReports($id) {
+        // Get the student by ID
+        $students = Student::where('id', $id)->get();
+    
+        if ($students->isEmpty()) {
+            return redirect()->back()->with('error', 'Student not found.');
+        }
+    
+        // Get the start and end date of the latest week
+        $endDate = now(); // Current date
+        $startDate = now()->subDays(7); // Date 7 days ago
+    
+        // Get all images for the student from the latest week in descending order
+        $images = WeeklyReport::where('student_id', $id)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'desc') // Order by created_at in descending order
+            ->get();
+    
+        return view('department_head.weekly_reports.show', [
+            'students' => $students,
+            'images' => $images,
         ]);
     }
 
