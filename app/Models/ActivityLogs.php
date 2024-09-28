@@ -5,9 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Users extends Model
+class ActivityLogs extends Model
 {
     use HasFactory;
-
-    // You can add additional properties or methods here
 }

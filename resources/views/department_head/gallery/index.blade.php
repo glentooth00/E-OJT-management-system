@@ -142,16 +142,11 @@
                             </tr>
                         </tbody>
                     </table>
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    <!-- Pagination Links -->
+            <div class="d-flex justify-content-center">
+                {{ $students->appends(request()->query())->links() }}
+            </div>
+   
             </div>
         </div> 
     </div>

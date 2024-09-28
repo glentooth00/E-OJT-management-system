@@ -41,7 +41,7 @@
                     <!-- Display success message -->
 
                 </div>
-                <div class="col-lg-4 pt-5 btns bg-primary">
+                <div class="col-lg-4 pt-5 btns" style="background-color: #4267B2;">
                     <div class="">
                         <div class="card-body">
                             @if (session('success'))

@@ -7,7 +7,7 @@ use App\Models\Department;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use App\Models\YearLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +34,7 @@ class StudentController extends Controller
             ->get();
 
         // Get the full weekly reports based on the maximum IDs found in the subquery
-        $weeklyReports = WeeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
+        $weeklyReports = weeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
 
         return view('student.dashboard', [
             'weeklyReports' => $weeklyReports,

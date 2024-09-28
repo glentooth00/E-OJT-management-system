@@ -31,7 +31,7 @@
                         <h1>E-OJT MANAGEMENT SYSTEM</h1>
                     </div>
                 </div>
-                <div class="col-lg-4 pt-5 btns bg-primary">
+                <div class="col-lg-4 pt-5 btns" style="background-color: #4267B2;">
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
