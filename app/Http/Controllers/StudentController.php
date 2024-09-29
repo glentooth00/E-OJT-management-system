@@ -9,6 +9,7 @@ use App\Models\Schoolyear;
 use App\Models\Student;
 use App\Models\weeklyReport;
 use App\Models\YearLevel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -84,7 +85,8 @@ class StudentController extends Controller
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
             'application_status' => 'nullable|string',
-            'school_year' => 'nullable|string|max:255'
+            'school_year' => 'nullable|string|max:255',
+            'year_level' => 'nullable|string|max:255'
         ]);
         // dd($validatedData);
 
@@ -166,6 +168,7 @@ class StudentController extends Controller
     
         // Update the student's status to 'registered'
         $student->application_status = 'registered';
+        $student->date_registered = Carbon::now('Asia/Manila');
     
         // Save the changes
         $student->save();
@@ -216,11 +219,15 @@ class StudentController extends Controller
     public function weeklyReportIndex()
     {
         $student = Auth::guard('student')->user();
+
         if ($student) {
             $studentId = $student->id;
             $studentName = $student->fullname; // Adjust based on your actual column name for the student's name
-    
-            return view('student.weekly_report.index', compact('studentId', 'studentName'));
+            $registeredDate = Carbon::parse($student->date_registered);
+
+            $weeksPassed = $registeredDate->diffInWeeks(Carbon::now('Asia/Manila'));
+
+            return view('student.weekly_report.index', compact('studentId', 'studentName', 'weeksPassed'));
         }
     
         return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);

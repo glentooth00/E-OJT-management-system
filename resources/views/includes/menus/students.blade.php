@@ -61,7 +61,7 @@
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
              href="{{ route('student.weeklyReportIndex') }}">
              <i class="fa fa-clock"></i>
-             <span>Weekly Logs</span>
+             <span>Daily Logs</span>
          </a>
      </li>
      <li class="nav-item">

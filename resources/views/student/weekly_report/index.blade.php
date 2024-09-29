@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <label for="weekNumber">Number of Week:</label>
-                        <input type="number" class="form-control" id="weekNumber" name="week_number" required>
+                        <input type="number" class="form-control" id="weekNumber" name="week_number" value="{{ $weeksPassed }}" required readonly>
                     </div>
                     <div class="form-group">
                         <label for="activityPhotos">Activity Photos:</label>

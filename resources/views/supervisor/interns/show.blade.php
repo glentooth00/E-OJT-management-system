@@ -1,41 +1,51 @@
-@extends('includes.layouts.app')
-
+@extends('includes.layouts.supervisor')
 
 @section('content')
-    <!-- Container Fluid-->
-    <div class="container-fluid" id="container-wrapper">
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Interns</h1>
-        </div>
-        <section class="mt-5">
-            <div class="card">
-                <div class="table-responsive">
-                    <table class="table align-items-center table-flush">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>DOB</th>
-                                <th>ID Number</th>
-                                <th>Department</th>
-                                <th>Course and Year</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Cardo Dalisay</td>
-                                <td>10/20/1998</td>
-                                <td>29-12</td>
-                                <td>CICS</td>
-                                <td>BSIT. 4rth Year</td>
-                                <td class="text-right">
-                                    <a href="/admin/interns-evaluation/create" class="btn btn-success btn-sm"><i class="fas fa-list"></i> Evaluate</a>
-                                </td> 
-                            </tr>
-                        </tbody>
-                    </table>
+    <div class="container">
+
+        @if ($activity_logs->isEmpty())
+            <p>No weekly reports available for this week.</p>
+        @else
+            <h1>Student Activity</h1>
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    {{-- Flex container for student name and activity status --}}
+                    <div class="d-flex align-items-center ">
+                        <p class="mr-3">
+                            <label class="badge p-2" style="font-size: 15px;">Student:</label> 
+                            {{ $activity_logs[0]->studentname }}
+                        </p>
+                        
+                        <p>
+                            <label class="badge p-2" style="font-size: 15px;">Activity Status:</label> 
+                            <span class="badge badge-warning bg-warning text-light p-2">{{ $activity_logs[0]->status }}</span>
+                        </p>
+                    </div>
+            
+                    {{-- Description below the name and status --}}
+                    <p class="mt-1">
+                        <label class="badge p-2" style="font-size: 15px;">Description:</label> 
+                        {{ $activity_logs[0]->activity_description }}
+                    </p>
                 </div>
-        </section>
+            </div>
+            
+            <div class="row">
+                @foreach ($activity_logs as $report)
+                 
+                        <div class="col-md-4 mb-3" style="flex: 0 1 200px; max-width: 200px; height: 200px; overflow: hidden; position: relative; cursor: pointer;">
+                            <img src="{{ asset('storage/' . $report->file_path) }}" class="img-fluid" alt="Activity Photo">
+                        </div>
+                  
+                @endforeach
+            </div>
+        @endif
+
+
+        
+        
+        
+
+        <a href="{{ route('supervisor.interns.index') }}" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-    <!---Container Fluid-->
 @endsection
