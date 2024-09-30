@@ -1,5 +1,7 @@
 @extends('includes.layouts.supervisor')
 
+@section('page-title', 'Activities')
+
 @section('content')
     <div class="container">
 
@@ -18,12 +20,11 @@
                         
                         <p>
                             <label class="badge p-2" style="font-size: 15px;">Activity Status:</label> 
-    
-                                @if ( $activity_logs[0]->status  == 'Approve')
-                                    <span class="badge badge-success text-light">{{ $activity_logs[0]->status }}</span>
-                                @else
-                                    <span>{{ $activity_logs[0]->status }}</span>
-                                @endif
+                            @if ( $activity_logs[0]->status == 'Approved' )
+                                    <span class="badge badge-success p-2">{{  $activity_logs[0]->status }}</span>
+                            @else
+                            <span class="badge badge-secondary p-2">{{  $activity_logs[0]->status }}</span>
+                            @endif
 
                         </p>
                     </div>
