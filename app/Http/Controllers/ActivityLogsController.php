@@ -71,7 +71,9 @@ class ActivityLogsController extends Controller
 
     public function approve($id){
 
-        $daily_activity
+        $daily_activity = weeklyReport::where('student_id', $id);
+
+        dd($daily_activity);
 
     }
     
