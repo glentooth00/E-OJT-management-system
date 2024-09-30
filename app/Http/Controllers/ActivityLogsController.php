@@ -13,16 +13,22 @@ class ActivityLogsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
 
         $supervisor = Auth::guard('supervisor')->user();
 
         $office = $supervisor->office;
 
-        $students = Student::where('application_status', 'registered' )
-                            ->where('designation', $office)
-                            ->get();
+        // $students = Student::where('application_status', 'registered' )
+        //                     ->where('designation', $office)
+        //                     ->get();
+
+        $students = Student::where('application_status', 'registered')
+            ->where('designation', $office)
+            ->with('weeklyReports') // Eager load the weeklyReports relationship
+            ->get();
+
 
         return view('supervisor.interns.index', [
             'students' => $students,
@@ -56,7 +62,6 @@ class ActivityLogsController extends Controller
     
         // Retrieve all matching records as a collection
         $activity_logs = weeklyReport::where('student_id', $student_id)
-                                     ->where('status', 'Pending')
                                      ->get();
     
         // If activity_logs is not empty, get the week_number from the first log
@@ -69,13 +74,32 @@ class ActivityLogsController extends Controller
     }
     
 
-    public function approve($id){
-
-        $daily_activity = weeklyReport::where('student_id', $id);
-
-        dd($daily_activity);
-
+    public function approve($id)
+    {
+        // Find the student by ID
+        $student = Student::find($id);
+    
+        // Check if the student exists
+        if (!$student) {
+            return redirect()->back()->with('error', 'Student not found.');
+        }
+    
+        // Find all pending weekly reports for the student
+        $updatedRows = weeklyReport::where('student_id', $student->id)
+            ->where('status', 'Pending') // Ensure you are only updating 'pending' status
+            ->update(['status' => 'Approved']); // Update status to 'Approve'
+    
+        // Check if any rows were updated
+        if ($updatedRows > 0) {
+            return redirect()->back()->with('success', 'All pending records updated to approved successfully!');
+        }
+    
+        return redirect()->back()->with('error', 'No pending records found for this student.');
     }
+    
+    
+    
+    
     
 
     /**

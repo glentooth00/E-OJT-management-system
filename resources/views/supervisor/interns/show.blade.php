@@ -18,7 +18,13 @@
                         
                         <p>
                             <label class="badge p-2" style="font-size: 15px;">Activity Status:</label> 
-                            <span class="badge badge-warning bg-warning text-light p-2">{{ $activity_logs[0]->status }}</span>
+    
+                                @if ( $activity_logs[0]->status  == 'Approve')
+                                    <span class="badge badge-success text-light">{{ $activity_logs[0]->status }}</span>
+                                @else
+                                    <span>{{ $activity_logs[0]->status }}</span>
+                                @endif
+
                         </p>
                     </div>
             

@@ -343,6 +343,7 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::get('/supervisor/show/{id}', [ActivityLogsController::class, 'show'])->name('supervisor.interns.show');
 
     Route::post('/supervisor/interns/{id}/approve', [ActivityLogsController::class, 'approve'])->name('supervisor.interns.approve');
+
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');
 });

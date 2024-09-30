@@ -227,10 +227,16 @@ class StudentController extends Controller
 
             $weeksPassed = $registeredDate->diffInWeeks(Carbon::now('Asia/Manila'));
 
-            return view('student.weekly_report.index', compact('studentId', 'studentName', 'weeksPassed'));
+            $weeksPassed = ($weeksPassed == 0) ? 1 : $weeksPassed;
+          
+            return view('student.weekly_report.index',[
+                'studentId' => $studentId,
+                'studentName' => $studentName,
+                'weeksPassed' => $weeksPassed,
+            ]);
         }
     
-        return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
+        // return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
     }
     
 
