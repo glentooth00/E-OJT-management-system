@@ -24,25 +24,23 @@ class StudentController extends Controller
     {
         $student = Auth::guard('student')->user();
         $studentId = $student->id;
-
-  
-
-        // Retrieve the latest weekly report for each week using a subquery
+    
+        // Retrieve the latest weekly report for each week and day using a subquery
         $latestReports = DB::table('weekly_reports')
-            ->select('week_number', DB::raw('MAX(id) as max_id'))
+            ->select('week_number', 'day_no', DB::raw('MAX(id) as max_id'))
             ->where('student_id', $studentId)
-            ->groupBy('week_number')
+            ->groupBy('week_number', 'day_no')  // Group by both week_number and day_no
             ->get();
-
+    
         // Get the full weekly reports based on the maximum IDs found in the subquery
-        $weeklyReports = weeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
-
+        $weeklyReports = weeklyReport::whereIn('id', $latestReports->pluck('max_id'))->orderBy('day_no', 'asc')->get();
+    
         return view('student.dashboard', [
             'weeklyReports' => $weeklyReports,
             'studentId' => $studentId,
-    
         ]);
     }
+    
 
     /**
      * Show the form for creating a new student.
@@ -115,6 +113,27 @@ class StudentController extends Controller
     public function show(string $id)
     {
         // Implementation here if needed
+    }
+
+    public function summary($student_id, $day_no, $day)
+    {
+// Remove 'day_no' first and check if results are returned
+    $activity_logs = weeklyReport::where('student_id', $student_id)
+        ->where('day', $day)
+        ->where('day_no', $day_no)
+        ->get();
+         
+        $day = $day;
+        $day_no = $day_no;
+
+    //  dd($day);
+
+        return view('student.weekly_report.summary', [
+            'activity_logs' =>  $activity_logs,
+            'day' => $day,
+            'day_no' => $day_no,
+        ]);
+
     }
 
     /**

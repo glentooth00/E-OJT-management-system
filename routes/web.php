@@ -269,7 +269,10 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/weekly_reports/view/{id}', [WeeklyReportController::class, 'showReports'])->name('weekly_reports.view');
 
+    Route::get('/weekly-report/{student_id}/{day_no}/{day}', [WeeklyReportController::class, 'summary'])->name('department_head.summary.summary');
 
+
+    Route::get('/department_head/weekly_reports/reports', [WeeklyReportController::class, 'reports'])->name('department_head.weekly_reports.reports');
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
@@ -297,6 +300,9 @@ Route::middleware('auth:student')->group(function () {
     Route::post('/weekly-report/upload-images', [WeeklyReportController::class, 'store'])->name('weeklyReport.uploadImgs');
 
     Route::get('/weekly-report/{weekNumber}', 'WeeklyReportController@show')->name('weeklyReport.show');
+
+    // Route in web.php
+Route::get('/weekly-report/{day}/{student_id}/{day_no}/', [StudentController::class, 'summary'])->name('weeklyReport.summary');
 
     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
     // routes/web.php

@@ -136,6 +136,22 @@ class WeeklyReportController extends Controller
     }
     
     
+    public function summary($student_id, $day_no, $day)
+    {
+  
+
+        $activity_logs = weeklyReport::where('student_id', $student_id)
+        ->where('day_no', 'Thursday')
+        ->get();  // Check if this works
+    dd($activity_logs);
+
+        // Once you're done debugging, return the view with the necessary data
+        // return view('department_head.weekly_reports.summary', [
+        //     'activity_logs' => $activity_logs,
+        //     'day' => $day,
+        //     'day_no' => $day_no,
+        // ]);
+    }
     
     
     
@@ -144,14 +160,14 @@ class WeeklyReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($weekNumber)
-    {
-        // Fetch weekly reports with the given week_number
-        $weeklyReports = weeklyReport::where('week_number', $weekNumber)->get();
+    // public function show($weekNumber)
+    // {
+    //     // Fetch weekly reports with the given week_number
+    //     $weeklyReports = weeklyReport::where('week_number', $weekNumber)->get();
     
-        // Pass the weekly report data to the view
-        return view('student.weekly_report.show', compact('weeklyReports', 'weekNumber'));
-    }
+    //     // Pass the weekly report data to the view
+    //     return view('department_head.weekly_reports.show', compact('weeklyReports', 'weekNumber'));
+    // }
     
     
     

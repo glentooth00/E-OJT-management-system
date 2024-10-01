@@ -137,7 +137,7 @@ class DepartmentHeadController extends Controller
         ]);
     }
     
-    public function weekly_reports()
+    public function weekly_reports($id)
     {
         return view('department_head.weekly_reports.index');
     }

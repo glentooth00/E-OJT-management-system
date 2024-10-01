@@ -102,9 +102,10 @@
                                     </div>
 
                                     {{-- Button to view more images --}}
-                                    <button class="btn btn-block mt-3 text-light" style="background-color: #4267B2;" data-toggle="modal" data-target="#weekModal" data-week="{{ $week }}">
-                                        View Images for Week {{ $week }}
-                                    </button>
+                                    <a href="{{ route('department_head.summary.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
+                                        View Reports for Week {{ $week }}
+                                    </a>
+                                    
                                 @endif
                             </div>
                         </div>
