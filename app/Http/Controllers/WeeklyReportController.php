@@ -64,6 +64,7 @@ class WeeklyReportController extends Controller
     
         // Get all images for the student from the latest week in descending order
         $images = weeklyReport::where('student_id', $id)
+            ->where('status', 'Approved')
             ->whereBetween('created_at', [$startDate, $endDate])
             ->orderBy('created_at', 'desc') // Order by created_at in descending order
             ->get();
@@ -108,11 +109,16 @@ class WeeklyReportController extends Controller
             'week_number' => 'required|integer',
             'activityPhotos.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'activityDescription' => 'required|string',
+            'day' => 'required|string',
+            'day_no' =>  'required|integer',
         ]);
+        // dd($validatedData);
     
         $studentId = $request->input('student_id');
         $studentName = $request->input('studentname'); // Corrected variable name
         $weekNumber = $request->input('week_number');
+        $day = $request->input('day');
+        $day_no = $request->input('day_no');
         $activityDescription = $request->input('activityDescription');
     
         if ($request->hasFile('activityPhotos')) {
@@ -127,6 +133,8 @@ class WeeklyReportController extends Controller
                 $weeklyReport->studentname = $studentName;
                 $weeklyReport->activity_description = $activityDescription;
                 $weeklyReport->file_path = $filePath; // Store the file path
+                $weeklyReport->day = $day;
+                $weeklyReport->day_no = $day_no;
                 $weeklyReport->status = 'Pending'; // Set status to Pending
                 $weeklyReport->save();
             }
@@ -136,21 +144,25 @@ class WeeklyReportController extends Controller
     }
     
     
-    public function summary($student_id, $day_no, $day)
+    public function summary($student_id, $day_no, $day, $week_number)
     {
   
+        // $id = $student_id;
 
         $activity_logs = weeklyReport::where('student_id', $student_id)
-        ->where('day_no', 'Thursday')
+        ->where('day', $day)
+        ->where('day_no', $day_no)
+        ->where('status' , 'Approved')
+        ->where('week_number', $week_number)
         ->get();  // Check if this works
-    dd($activity_logs);
+
 
         // Once you're done debugging, return the view with the necessary data
-        // return view('department_head.weekly_reports.summary', [
-        //     'activity_logs' => $activity_logs,
-        //     'day' => $day,
-        //     'day_no' => $day_no,
-        // ]);
+        return view('department_head.weekly_reports.summary', [
+            'activity_logs' => $activity_logs,
+            'day' => $day,
+            'day_no' => $day_no,
+        ]);
     }
     
     

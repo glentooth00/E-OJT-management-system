@@ -23,6 +23,7 @@ class StudentController extends Controller
     public function index()
     {
         $student = Auth::guard('student')->user();
+
         $studentId = $student->id;
     
         // Retrieve the latest weekly report for each week and day using a subquery
@@ -115,18 +116,20 @@ class StudentController extends Controller
         // Implementation here if needed
     }
 
-    public function summary($student_id, $day_no, $day)
+    public function summary($student_id, $day_no, $day, $week_number)
     {
-// Remove 'day_no' first and check if results are returned
-    $activity_logs = weeklyReport::where('student_id', $student_id)
-        ->where('day', $day)
+        // dd( $student_id, $day_no, $day);
+        // Remove 'day_no' first and check if results are returned
+        $activity_logs = weeklyReport::where('student_id', $student_id)
         ->where('day_no', $day_no)
-        ->get();
+        ->where('day', $day)
+        ->where('week_number', $week_number)
+        ->get();  // Check if this works
          
         $day = $day;
         $day_no = $day_no;
 
-    //  dd($day);
+    //  dd( $activity_logs);
 
         return view('student.weekly_report.summary', [
             'activity_logs' =>  $activity_logs,

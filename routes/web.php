@@ -239,8 +239,9 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
 
-    Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
-    Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
+    // Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
+
+    Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('department_head.filter.students');
 
     Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
 
@@ -269,7 +270,11 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/weekly_reports/view/{id}', [WeeklyReportController::class, 'showReports'])->name('weekly_reports.view');
 
-    Route::get('/weekly-report/{student_id}/{day_no}/{day}', [WeeklyReportController::class, 'summary'])->name('department_head.summary.summary');
+    // routes/web.php
+
+Route::get('/department-head/weekly-report/{student_id}/{day_no}/{day}/{week_number}', [WeeklyReportController::class, 'summary'])
+->name('department_head.weekly_reports.summary');
+
 
 
     Route::get('/department_head/weekly_reports/reports', [WeeklyReportController::class, 'reports'])->name('department_head.weekly_reports.reports');
@@ -302,7 +307,8 @@ Route::middleware('auth:student')->group(function () {
     Route::get('/weekly-report/{weekNumber}', 'WeeklyReportController@show')->name('weeklyReport.show');
 
     // Route in web.php
-Route::get('/weekly-report/{day}/{student_id}/{day_no}/', [StudentController::class, 'summary'])->name('weeklyReport.summary');
+    Route::get('/student/weekly-report/{student_id}/{day_no}/{day}/', [StudentController::class, 'summary'])->name('student.weeklyReport.summary');
+
 
     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
     // routes/web.php
@@ -341,7 +347,7 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
   
-    Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
+    // Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
 
     Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
 
@@ -349,6 +355,12 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::get('/supervisor/show/{id}', [ActivityLogsController::class, 'show'])->name('supervisor.interns.show');
 
     Route::post('/supervisor/interns/{id}/approve', [ActivityLogsController::class, 'approve'])->name('supervisor.interns.approve');
+
+    Route::get('/supervisor/weekly_report/{student_id}/{day_no}/{day}', [SupervisorController::class, 'studentActivities'])->name('supervisor.weekly_reports.summary');
+
+    Route::get('/supervisor/interns/{student_id}/{day_no}/{day}/{week_number}', [ActivityLogsController::class, 'supervisorSummary'])
+    ->name('supervisor.interns.summary');
+
 
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');

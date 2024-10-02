@@ -54,7 +54,15 @@
 
                 </td>
                 <td>
-                    <a href="{{ route('weeklyReport.summary', [$weeklyReport->student_id, $weeklyReport->day_no, $weeklyReport->day]) }}" class="btn btn-primary btn-sm">View</a>
+                    @if (isset($weeklyReport->student_id, $weeklyReport->day_no, $weeklyReport->day))
+                    <a href="{{ route('student.weeklyReport.summary', [$weeklyReport->student_id, $weeklyReport->day_no, $weeklyReport->day, $weeklyReport->week_number]) }}" 
+                       class="btn btn-primary btn-sm">View Activity</a>
+                @else
+                    <p>Missing required data to view activity.</p>
+                @endif
+                
+                     
+
 
                 </td>
             </tr>

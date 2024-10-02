@@ -102,9 +102,11 @@
                                     </div>
 
                                     {{-- Button to view more images --}}
-                                    <a href="{{ route('department_head.summary.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
+                                    <a href="{{ route('department_head.weekly_reports.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
                                         View Reports for Week {{ $week }}
                                     </a>
+                                    
+                                    
                                     
                                 @endif
                             </div>

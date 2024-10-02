@@ -80,6 +80,10 @@ class SupervisorController extends Controller
         return redirect()->back()->with('success', 'Supervisor account created successfully.');
     }
 
+    public function studentActivities($student_id, $day, $day_no){
+        dd($student_id, $day, $day_no);
+    }
+
     public function show(Supervisor $supervisor)
     {
         //

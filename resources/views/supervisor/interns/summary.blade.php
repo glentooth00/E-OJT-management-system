@@ -1,4 +1,4 @@
-@extends('includes.layouts.students')
+@extends('includes.layouts.supervisor')
 
 @section('page-title', 'Reports')
 
@@ -27,10 +27,6 @@
                             <span class="badge badge-secondary p-2">{{ $activity_logs[0]->status }}</span>
                         @endif
                     </p>
-                    <p class="mr-3">
-                        <label class="badge p-2" style="font-size: 15px;">Day:</label> 
-                        {{ $activity_logs[0]->day }} /  Day {{ $activity_logs[0]->day_no }}
-                    </p>
                 </div>
         
                 {{-- Description below the name and status --}}
@@ -44,17 +40,24 @@
         <div class="row">
             @foreach ($activity_logs as $report)
                 {{-- Filter images based on day and day_no --}}
-              
+                @if ($report->day == $day && $report->day_no == $day_no)
                     <div class="col-md-4 mb-3" style="flex: 0 1 200px; max-width: 200px; height: 200px; overflow: hidden; position: relative; cursor: pointer;">
                         <img src="{{ asset('storage/' . $report->file_path) }}" class="img-fluid" alt="Activity Photo">
-
                     </div>
-                {{-- @endif --}}
+                @endif
             @endforeach
         </div>
     @endif
 
-    <a href="{{ route('student.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+    <a href="javascript:void(0);" class="btn btn-secondary" onclick="goBack()">Back to Dashboard</a>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
+
 </div>
 
 @endsection
