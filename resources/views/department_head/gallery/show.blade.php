@@ -1,6 +1,6 @@
 @extends('includes.layouts.department')
 
-@section('page-title', 'Gallery')
+@section('page-title', 'Reports')
 
 @section('content')
 <style>
@@ -60,7 +60,7 @@
         <div class="col">
             {{-- Loop through students --}}
             @foreach ($students as $student)
-                <h1 class="mb-3">{{ $student->fullname }}'s Gallery</h1>
+                <h1 class="mb-3 border p-3 border">{{ $student->fullname }}'s Weekly Reports</h1>
             @endforeach
 
             @php
@@ -68,39 +68,56 @@
                 $groupedImages = $images->groupBy('week_number');
             @endphp
 
-            {{-- Weekly reports arranged from left to right --}}
-            <div class="weekly-reports-container">
-                {{-- Loop through each week --}}
-                @foreach ($groupedImages as $week => $imagesForWeek)
-                    <div class="card weekly-report-card">
-                        <h5 class="card-header text-white" style="background-color: #4267B2;">Week {{ $week }}</h5>
-                        <div class="card-body">
-                            @if($imagesForWeek->isEmpty())
-                                <p>No images available for Week {{ $week }}.</p>
-                            @else
-                                {{-- Show only the first image as a thumbnail --}}
-                                @php
-                                    $firstImage = $imagesForWeek->first();
-                                @endphp
-                                <div class="image-container">
-                                    <img src="{{ asset('storage/' . $firstImage->file_path) }}" alt="Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;" 
-                                        data-toggle="modal" 
-                                        data-target="#weekModal" 
-                                        data-week="{{ $week }}">
-                                </div>
+            @if($groupedImages->isEmpty())
+                {{-- If no reports found --}}
+                <div class="alert alert-warning">
+                    <h4>No reports found for this student.</h4>
+                </div>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+            @else
+                {{-- Weekly reports arranged from left to right --}}
+                <div class="weekly-reports-container">
+                    {{-- Loop through each week --}}
+                    @foreach ($groupedImages as $week => $imagesForWeek)
+                        <div class="card weekly-report-card">
+                            <h5 class="card-header text-white" style="background-color: #4267B2;">Week {{ $week }}</h5>
+                            <div class="card-body">
+                                @if($imagesForWeek->isEmpty())
+                                    <p>No images available for Week {{ $week }}.</p>
+                                @else
+                                    {{-- Show only the first image as a thumbnail --}}
+                                    @php
+                                        $firstImage = $imagesForWeek->first();
+                                    @endphp
+                                    <div class="image-container">
+                                        <img src="{{ asset('storage/' . $firstImage->file_path) }}" alt="Image" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;" 
+                                            data-toggle="modal" 
+                                            data-target="#weekModal" 
+                                            data-week="{{ $week }}">
+                                    </div>
 
-                                {{-- Button to view more images --}}
-                                <button class="btn btn-block text-white mt-3" style="background-color: #4267B2;" data-toggle="modal" data-target="#weekModal" data-week="{{ $week }}">
-                                    View Images for Week {{ $week }}
-                                </button>
-                            @endif
+                                    {{-- Add description section below thumbnail --}}
+                                    <div class="mt-2">
+                                        <p>{{ $firstImage->activity_description }}</p>
+                                    </div>
+
+                                    {{-- Button to view more images --}}
+                                    <a href="{{ route('department_head.weekly_reports.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
+                                        View Reports for Week {{ $week }}
+                                    </a>
+                                    
+                                    
+                                    
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </div>
+
 
 <!-- Modal for displaying all images for the week -->
 <div class="modal fade" id="weekModal" tabindex="-1" aria-labelledby="weekModalLabel" aria-hidden="true">

@@ -62,7 +62,7 @@ class ActivityLogsController extends Controller
         $students = Student::where('id', $id)->get();
     
         // Retrieve all activity logs or images related to the student
-        $images = weeklyReport::where('student_id', $id)->get();
+        $images = weeklyReport::where('student_id', $id)->get()->sortDesc();
     
         // If images are not empty, get the week number from the first image
         $weekNumber = $images->isNotEmpty() ? $images[0]->week_number : 'N/A';
@@ -78,20 +78,26 @@ class ActivityLogsController extends Controller
     public function supervisorSummary($student_id, $day, $day_no, $week_number)
     {
         // dd($student_id, $day_no, $day, $week_number);
-    
+        // Get the activity logs for the entire week for the student
         $activity_logs = weeklyReport::where('student_id', $student_id)
-            ->where('day', $day_no)
-            ->where('day_no', $day)
+            ->where('status', 'Approved')
             ->where('week_number', $week_number)
-            ->whereIn('status', ['Approved', 'Pending']) // Change here
-            ->get();  // Check if this works
-
-            // dd($activity_logs);
+            ->get();
     
+        // Check if activity logs are empty
+        if ($activity_logs->isEmpty()) {
+            return redirect()->back()->with('error', 'No reports available for this week.');
+        }
+    
+        // Group by day and take the first activity log for each day
+        $grouped_logs = $activity_logs->groupBy('day')->map(function ($group) {
+            return $group->first();
+        });
+    
+        // Pass all the necessary data to the view
         return view('supervisor.interns.summary', [
-            'activity_logs' => $activity_logs,
-            'day' => $day_no,
-            'day_no' => $day,
+            'activity_logs' => $grouped_logs,
+            'week_number' => $week_number
         ]);
     }
     

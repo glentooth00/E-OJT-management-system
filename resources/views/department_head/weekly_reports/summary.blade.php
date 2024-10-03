@@ -1,53 +1,48 @@
 @extends('includes.layouts.department')
 
-@section('page-title', 'Reports')
+@section('page-title', 'Student Reports')
 
 @section('content')
+<style>
+    .card-img-top {
+        height: 200px; /* Set a fixed height */
+        object-fit: cover; /* Ensures the image covers the area without stretching */
+    }
+</style>
 
 <div class="container">
-
-    @if ($activity_logs->isEmpty())
-        <p>No weekly reports available for this student.</p>
-    @else
-        <h1>Student Activity</h1>
-        <div class="row mb-4">
-            <div class="col-md-12">
-                {{-- Flex container for student name and activity status --}}
-                <div class="d-flex align-items-center">
-                    <p class="mr-3">
-                        <label class="badge p-2" style="font-size: 15px;">Student:</label> 
-                        {{ $activity_logs[0]->studentname }}
-                    </p>
+    <div class="row">
+        @foreach ($activity_logs as $activity_log)
+            <div class="col-md-3 mb-4"> <!-- Use col-md-3 for 4 cards per row -->
+                <div class="card box-shadow">
+                    {{-- Display the week number and day --}}
+                    <label class="p-2 mr-2 pt-4" style="font-size: 15px;">
+                        <b>Week no. {{ $activity_log->week_number }} - {{ ucfirst($activity_log->day) }} - Day {{ $activity_log->day_no }}</b>
+                        <hr>
+                    </label>
+         
+                    {{-- Placeholder image or actual image if available --}}
+                    <img class="card-img-top" src="{{ asset('storage/'.$activity_log->file_path) }}" alt="Card image cap">
                     
-                    <p>
-                        <label class="badge p-2" style="font-size: 15px;">Activity Status:</label> 
-                        @if ($activity_logs[0]->status == 'Approved')
-                            <span class="badge badge-success p-2">{{ $activity_logs[0]->status }}</span>
-                        @else
-                            <span class="badge badge-secondary p-2">{{ $activity_logs[0]->status }}</span>
-                        @endif
-                    </p>
-                </div>
-        
-                {{-- Description below the name and status --}}
-                <p class="mt-1">
-                    <label class="badge p-2" style="font-size: 15px;">Description:</label> 
-                    {{ $activity_logs[0]->activity_description }}
-                </p>
-            </div>
-        </div>
-        
-        <div class="row">
-            @foreach ($activity_logs as $report)
-                {{-- Filter images based on day and day_no --}}
-                @if ($report->day == $day && $report->day_no == $day_no)
-                    <div class="col-md-4 mb-3" style="flex: 0 1 200px; max-width: 200px; height: 200px; overflow: hidden; position: relative; cursor: pointer;">
-                        <img src="{{ asset('storage/' . $report->file_path) }}" class="img-fluid" alt="Activity Photo">
+                    <div class="card-body">
+                        {{-- Description or any relevant text for the activity --}}
+                        <p class="card-text">{{ $activity_log->description }}</p>
+                        
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{{ route('department_head.weekly_reports.view',[ $activity_log->student_id, $activity_log->week_number, $activity_log->day ]) }}" type="button" class="btn btn-sm btn-outline-primary">View</a>
+                                {{-- Uncomment if you want to add edit functionality --}}
+                                {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> --}}
+                            </div>
+            
+                            {{-- Display time (you can format this based on your requirements) --}}
+                            <small class="text-muted">{{ \Carbon\Carbon::parse($activity_log->created_at)->diffForHumans() }}</small>
+                        </div>
                     </div>
-                @endif
-            @endforeach
-        </div>
-    @endif
+                </div>
+            </div>
+        @endforeach
+    </div>
 
     <a href="javascript:void(0);" class="btn btn-secondary" onclick="goBack()">Back to Dashboard</a>
 

@@ -144,26 +144,54 @@ class WeeklyReportController extends Controller
     }
     
     
-    public function summary($student_id, $day_no, $day, $week_number)
+    // public function summary($student_id, $week_number)
+    // {
+    //     // Get the activity logs for the entire week for the student
+    //     $activity_logs = weeklyReport::where('student_id', $student_id)
+    //         ->where('status', 'Approved')
+    //         ->where('week_number', $week_number)
+    //         ->get();
+    
+    //     // Check if activity logs are empty
+    //     if ($activity_logs->isEmpty()) {
+    //         return redirect()->back()->with('error', 'No reports available for this week.');
+    //     }
+    
+    //     // Pass all the necessary data to the view
+    //     return view('department_head.weekly_reports.summary', [
+    //         'activity_logs' => $activity_logs,
+    //         'week_number' => $week_number
+    //     ]);
+    // }
+
+    public function summary($student_id, $week_number)
     {
-  
-        // $id = $student_id;
-
+        // Get the activity logs for the entire week for the student
         $activity_logs = weeklyReport::where('student_id', $student_id)
-        ->where('day', $day)
-        ->where('day_no', $day_no)
-        ->where('status' , 'Approved')
-        ->where('week_number', $week_number)
-        ->get();  // Check if this works
-
-
-        // Once you're done debugging, return the view with the necessary data
+            ->where('status', 'Approved')
+            ->where('week_number', $week_number)
+            ->get();
+    
+        // Check if activity logs are empty
+        if ($activity_logs->isEmpty()) {
+            return redirect()->back()->with('error', 'No reports available for this week.');
+        }
+    
+        // Group by day and take the first activity log for each day
+        $grouped_logs = $activity_logs->groupBy('day')->map(function ($group) {
+            return $group->first();
+        });
+    
+        // Pass all the necessary data to the view
         return view('department_head.weekly_reports.summary', [
-            'activity_logs' => $activity_logs,
-            'day' => $day,
-            'day_no' => $day_no,
+            'activity_logs' => $grouped_logs,
+            'week_number' => $week_number
         ]);
     }
+    
+
+    
+    
     
     
     

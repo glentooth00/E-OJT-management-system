@@ -19,7 +19,7 @@
                                 <th>Department</th>
                                 <th>Course and Year</th>
                                 <th>Office assigned</th>
-                                <th>Status</th>
+                                <th></th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -38,40 +38,42 @@
                                 <td>{{ $student->designation }}</td>
                                 <td>
                                     @php
-                                    // Check if there are any weekly reports uploaded
-                                    $hasWeeklyReports = $student->weeklyReports->isNotEmpty();
-                                
-                                    // Check if any of the weekly reports has the status 'Approve'
-                                    $isApproved = $hasWeeklyReports ? $student->weeklyReports->contains('status', 'Approved') : false;
-                                @endphp
-                                
-                                @if (!$hasWeeklyReports)
-                                    <!-- Display message if no activity has been uploaded -->
-                                    <label class="badge badge-danger p-2 btn-sm">No Activity Uploaded</label>
-                                @elseif (!$isApproved)
-                                    <!-- Display Approved badge if at least one report is approved -->
-                                      <label class="badge badge-warning p-2 btn-sm">Pending</label>
-                                @else
-                                    <!-- Display Pending badge if reports exist but none are approved -->
-                                  
-                                    <label class="badge badge-success p-2 btn-sm">Approved</label>
-                                @endif
-                                
+                                        // Check if there are any weekly reports uploaded
+                                        $hasWeeklyReports = $student->weeklyReports->isNotEmpty();
+                                    
+                                        // Check if any of the weekly reports has the status 'Approved'
+                                        $isApproved = $hasWeeklyReports ? $student->weeklyReports->contains('status', 'Pending') : false;
+                                    @endphp
+    
+                                    
+                                    @if (!$hasWeeklyReports)
+                                        <!-- Display message if no activity has been uploaded -->
+                                        <label class="badge badge-danger p-2 btn-sm">No Activity Uploaded</label>
+                                    @elseif (!$isApproved)
+                                        <!-- Display Approved badge if at least one report is approved -->
+                                        {{-- <label class="badge badge-success p-2 btn-sm">Approved</label> --}}
+{{-- <label class="badge badge-warning p-2 btn-sm">New Activity uploaded</label> --}}
+                                      @else
+                                        <!-- Display Pending badge if reports exist but none are approved -->
+                                         <label class="badge badge-warning p-2 btn-sm">New Activity uploaded</label>
+          
+                                    @endif
                                 </td>
+                                
                                 <td>
 
                                     @if (!$hasWeeklyReports)
                                     <!-- Display message if no activity has been uploaded -->
                                   
-                                    @elseif ($isApproved)
+                                    @elseif ($isApproved == 'Approved')
                                         <!-- Display Approved badge if at least one report is approved -->
                                         <a href="{{ route('supervisor.interns.show', $student->id) }}" class="btn btn-primary btn-sm">View</a>
                                     @else
                                         <!-- Display Pending badge if reports exist but none are approved -->
-                                        <form action="{{ route('supervisor.interns.approve', $student->id) }}" method="POST" style="display:inline;">
+                                        {{-- <form action="{{ route('supervisor.interns.approve', $student->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             <button type="submit" class="btn btn-success btn-sm">Approve</button>
-                                        </form>
+                                        </form> --}}
                                         <a href="{{ route('supervisor.interns.show', $student->id) }}" class="btn btn-primary btn-sm">View</a>
                                     @endif
 

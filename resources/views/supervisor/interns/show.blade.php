@@ -101,14 +101,27 @@
                                         <p>{{ $firstImage->activity_description }}</p>
                                     </div>
 
-                                    {{-- Button to view more images --}}
-                                    <a href="{{ route('supervisor.interns.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" 
-                                        class="btn btn-block mt-3 text-light" 
-                                        style="background-color: #4267B2;">
-                                        View Reports for Week {{ $week }}
-                                     </a>
-                                     
+                                    <div>
+                                        <!-- View Reports Button -->
+                                        <a href="{{ route('supervisor.interns.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" 
+                                           class="btn mt-3 btn-sm text-light w-100" 
+                                           style="background-color: #4267B2;">
+                                           View Reports for Week {{ $week }}
+                                        </a>
+                                        
+                                        <!-- Approve Button, shown if the status is Pending -->
+                                        @if ($firstImage->status == 'Pending')
+                                            <form action="{{ route('supervisor.interns.approve', $student->id) }}" method="POST" style="display:inline;">
+                                                @csrf
+                                                <button type="submit" class="btn mt-3 btn-success btn-sm w-100">Approve</button>
+                                            </form>
+                                        @endif
+                                    </div>
                                     
+                                    
+                                    {{-- Button to view more images --}}
+                                   
+                                     
                                     
                                     
                                 @endif

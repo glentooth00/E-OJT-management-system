@@ -270,9 +270,11 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/weekly_reports/view/{id}', [WeeklyReportController::class, 'showReports'])->name('weekly_reports.view');
 
+    Route::get('/department_head/weekly_reports/{id}/{week_number}/{day}', [DepartmentHeadController::class, 'view'])->name('department_head.weekly_reports.view');
+
     // routes/web.php
 
-Route::get('/department-head/weekly-report/{student_id}/{day_no}/{day}/{week_number}', [WeeklyReportController::class, 'summary'])
+Route::get('/department-head/weekly-report/{student_id}/{week_number}', [WeeklyReportController::class, 'summary'])
 ->name('department_head.weekly_reports.summary');
 
 

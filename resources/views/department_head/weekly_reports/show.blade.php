@@ -70,10 +70,13 @@
 
             @if($groupedImages->isEmpty())
                 {{-- If no reports found --}}
-                <div class="alert alert-warning">
-                    <h4>No reports found for this student.</h4>
+                <div class="border bg-warning p-2 border-danger">
+                    <p class="text-white display-4">No reports found.</p>
                 </div>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+                <br>
+                <a href="javascript:void(0);" class="btn btn-secondary" onclick="goBack()">Back</a>
+
+
             @else
                 {{-- Weekly reports arranged from left to right --}}
                 <div class="weekly-reports-container">
@@ -102,11 +105,12 @@
                                     </div>
 
                                     {{-- Button to view more images --}}
-                                    <a href="{{ route('department_head.weekly_reports.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
+                                    {{-- <a href="{{ route('department_head.weekly_reports.summary', [$firstImage->student_id, $firstImage->day_no, $firstImage->day, $firstImage->week_number]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
+                                        View Reports for Week {{ $week }}
+                                    </a> --}}
+                                    <a href="{{ route('department_head.weekly_reports.summary', [$firstImage->student_id, $firstImage->week_number]) }}" class="btn btn-block mt-3 text-light" style="background-color: #4267B2;">
                                         View Reports for Week {{ $week }}
                                     </a>
-                                    
-                                    
                                     
                                 @endif
                             </div>
@@ -157,6 +161,10 @@
             });
         });
     });
+
+    function goBack() {
+        window.history.back();
+    }
 </script>
 
 @endsection
