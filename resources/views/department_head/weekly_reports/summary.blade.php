@@ -49,7 +49,14 @@
         </div>
     @endif
 
-    <a href="{{ route('department_head.weekly_reports.reports') }}" class="btn btn-secondary">Back to Dashboard</a>
+    <a href="javascript:void(0);" class="btn btn-secondary" onclick="goBack()">Back to Dashboard</a>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    
 </div>
 
 @endsection

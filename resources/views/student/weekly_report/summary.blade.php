@@ -9,16 +9,16 @@
     @if ($activity_logs->isEmpty())
         <p>No weekly reports available for this student.</p>
     @else
-        <h1>Student Activity</h1>
+        <h1>Student Activity</h1><br>
         <div class="row mb-4">
             <div class="col-md-12">
                 {{-- Flex container for student name and activity status --}}
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center"><br>
                     <p class="mr-3">
                         <label class="badge p-2" style="font-size: 15px;">Student:</label> 
                         {{ $activity_logs[0]->studentname }}
                     </p>
-                    
+                    <br>
                     <p>
                         <label class="badge p-2" style="font-size: 15px;">Activity Status:</label> 
                         @if ($activity_logs[0]->status == 'Approved')
@@ -30,6 +30,10 @@
                     <p class="mr-3">
                         <label class="badge p-2" style="font-size: 15px;">Day:</label> 
                         {{ $activity_logs[0]->day }} /  Day {{ $activity_logs[0]->day_no }}
+                    </p>
+                    <p class="mr-3">
+                        <label class="badge p-2" style="font-size: 15px;">Week #:</label> 
+                        Week no. {{ $activity_logs[0]->week_number }}
                     </p>
                 </div>
         

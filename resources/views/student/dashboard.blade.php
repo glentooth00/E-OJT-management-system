@@ -30,6 +30,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>WEEK</th>
             <th>DAY</th>
             <th>DAY NO.</th>
             <th>DESCRIPTION</th>
@@ -41,13 +42,14 @@
         @foreach ($weeklyReports as $weeklyReport)
             <tr>
                 <!-- Map day_no (integer) to corresponding day name -->
+                <td>Week - {{ $weeklyReport->week_number  }}</td>
                 <td>{{ $daysOfWeek[$weeklyReport->day_no] ?? 'Unknown' }}</td>
                 <td>Day {{ $weeklyReport->day_no }}</td>
                 <td>{{ $weeklyReport->activity_description }}</td>
                 <td>
                     
                     @if ($weeklyReport->status == 'Approved')
-                        <label for="" class="badge badge-primary p-2">{{ $weeklyReport->status }}</label>
+                        <label for="" class="badge badge-success p-2">{{ $weeklyReport->status }}</label>
                     @else
                         <label for="" class="badge badge-warning p-2">{{ $weeklyReport->status }}</label>
                     @endif

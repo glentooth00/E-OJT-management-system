@@ -307,7 +307,7 @@ Route::middleware('auth:student')->group(function () {
     Route::get('/weekly-report/{weekNumber}', 'WeeklyReportController@show')->name('weeklyReport.show');
 
     // Route in web.php
-    Route::get('/student/weekly-report/{student_id}/{day_no}/{day}/', [StudentController::class, 'summary'])->name('student.weeklyReport.summary');
+    Route::get('/student/weekly-report/{student_id}/{day_no}/{day}/{week_number}', [StudentController::class, 'summary'])->name('student.weeklyReport.summary');
 
 
     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
