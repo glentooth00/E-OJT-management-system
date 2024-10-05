@@ -23,7 +23,7 @@
                     </label>
          
                     {{-- Placeholder image or actual image if available --}}
-                    <img class="card-img-top" src="{{ asset('storage/'.$activity_log->file_path) }}" alt="Card image cap">
+                    <img class="card-img-top p-3" src="{{ asset('storage/'.$activity_log->file_path) }}" alt="Card image cap">
                     
                     <div class="card-body">
                         {{-- Description or any relevant text for the activity --}}
@@ -32,7 +32,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 {{-- {{ route('department_head.weekly_reports.view',[ $activity_log->student_id, $activity_log->week_number, $activity_log->day ]) }} --}}
-                                <a href="" type="button" class="btn btn-sm btn-outline-primary">View</a>
+                                <a href="{{ route('supervisor.interns.view',[ $activity_log->student_id, $activity_log->week_number, $activity_log->day ]) }} " type="button" class="btn btn-sm btn-outline-primary">View</a>
                                 {{-- Uncomment if you want to add edit functionality --}}
                                 {{-- <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button> --}}
                             </div>

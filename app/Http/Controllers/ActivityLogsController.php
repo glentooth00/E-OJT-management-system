@@ -100,6 +100,20 @@ class ActivityLogsController extends Controller
             'week_number' => $week_number
         ]);
     }
+
+    public function view($student_id, $week_number, $day){
+        
+        $activity_logs = weeklyReport::where('student_id', $student_id)
+         ->where('week_number', $week_number)
+         ->where('day', $day)
+         ->get();
+ 
+ 
+         return view('supervisor.interns.view', [
+             'activity_logs' => $activity_logs,
+         ]);
+ 
+     }
     
 
     public function approve($id)

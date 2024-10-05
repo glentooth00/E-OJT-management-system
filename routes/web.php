@@ -364,6 +364,10 @@ Route::middleware('auth:supervisor')->group(function () {
     ->name('supervisor.interns.summary');
 
 
+    Route::get('/supervisor/interns/{id}/{week_number}/{day}', [ActivityLogsController::class, 'view'])->name('supervisor.interns.view');
+
+    Route::get('/supervisor/list/index', [SupervisorController::class, 'internList'])->name('supervisor.list.index');
+
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');
 });

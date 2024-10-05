@@ -15,8 +15,8 @@
         MENUS
     </div>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('supervisor/interns') ? 'active' : '' }}"
-            href="{{ route('supervisor.interns.index') }}">
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
+            href="{{ route('supervisor.list.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>

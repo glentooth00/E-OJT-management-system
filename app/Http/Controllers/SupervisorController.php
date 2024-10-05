@@ -22,6 +22,28 @@ class SupervisorController extends Controller
         ]);
     }
 
+    public function internList(Request $request) {
+    
+        $searchTerm = $request->input('search');
+        $course = $request->input('course');
+    
+        $students = Student::when($searchTerm, function ($query, $searchTerm) {
+            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+        })->when($course, function ($query, $course) {
+            return $query->where('course', $course);
+        })
+        // Add condition to filter by MDRRMO designation
+        ->where('designation', 'MDRRMO')
+        ->paginate(10);
+    
+        return view('supervisor.list.index', [
+            'students' => $students,
+            'searchTerm' => $searchTerm,
+            'course' => $course,
+        ]);
+    }
+    
+
     public function internsLIst()
     {
         $loggedInUser = Auth::user();
