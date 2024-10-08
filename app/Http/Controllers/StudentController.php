@@ -22,9 +22,9 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Auth::guard('student')->user();
+        $students = Auth::guard('student')->user();
 
-        $studentId = $student->id;
+        $studentId = $students->id;
     
         // Retrieve the latest weekly report for each week and day using a subquery
         $latestReports = DB::table('weekly_reports')

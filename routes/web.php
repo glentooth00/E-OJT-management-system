@@ -8,6 +8,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
@@ -318,6 +319,9 @@ Route::middleware('auth:student')->group(function () {
 // Route::get('/weekly_report/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
+    Route::get('/student/experience/index', [ExperienceController::class, 'index'])->name('student.experience.index');
+    Route::put('/student/experience/update/{studentId}', [ExperienceController::class , 'update'])->name('student.experience.update');
+    Route::post('/student/experience/timeIn', [ExperienceController::class, 'timeIn'])->name('student.experience.timeIn');
 
     Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
 

@@ -26,6 +26,7 @@
                     <img class="card-img-top p-3" src="{{ asset('storage/'.$activity_log->file_path) }}" alt="Card image cap">
                     
                     <div class="card-body">
+                        
                         {{-- Description or any relevant text for the activity --}}
                         <p class="card-text">{{ $activity_log->description }}</p>
                         

@@ -5,7 +5,7 @@
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid">
-        <h1>Weekly Report</h1>
+        <h1>Daily Report</h1>
         @error('student_id')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
