@@ -159,7 +159,7 @@
                                             @if ($student->application_status == 'registered')
                                              
                                             @elseif ($student->application_status == 'pending')  
-                                            <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('department_head.approveStudent', $student->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT') <!-- For a PUT request -->
                                                 <button type="submit" class="btn btn-sm btn-success">Approve</button>

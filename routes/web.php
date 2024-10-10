@@ -238,7 +238,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/department_head-logout', [DepartmentHeadController::class, 'logout'])->name('department_head.logout');
 
-    Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
+    Route::put('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
 
     // Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
 
