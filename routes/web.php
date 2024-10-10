@@ -320,8 +320,9 @@ Route::middleware('auth:student')->group(function () {
 Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
     Route::get('/student/experience/index', [ExperienceController::class, 'index'])->name('student.experience.index');
-    Route::put('/student/experience/update/{studentId}', [ExperienceController::class , 'update'])->name('student.experience.update');
+    Route::put('/student/experience/update/{id}', [ExperienceController::class , 'update'])->name('student.experience.update');
     Route::post('/student/experience/timeIn', [ExperienceController::class, 'timeIn'])->name('student.experience.timeIn');
+    Route::post('/student/experience/logOut', [ExperienceController::class, 'timeOut'])->name('student.experience.logOut');
 
     Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
 

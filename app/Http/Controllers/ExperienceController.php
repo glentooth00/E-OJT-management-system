@@ -21,35 +21,43 @@ class ExperienceController extends Controller
         if (!$student) {
             return redirect()->route('login')->with('error', 'Please log in to access this page.');
         }
-        
-
+    
         $studentDatas = $student->fullname;
         $studentId = $student->id;
-        // dd($studentDatas);
+    
+        // Get the latest approved experience
+        $experience = Experience::where('studentId', $student->id)
+            ->where('status', 'Approved')
+            ->first();
+    
+        // Get all experiences for the student with status Approved or Logged Out, ordered by latest
+        $dailyExperiences = Experience::where('studentId', $student->id)
+            ->whereIn('status', ['Approved', 'Logged-Out'])
+            ->latest()
+            ->get();
 
-        $experiences = Experience::where('studentId' , $student->id)->get();
+    // Get the attendance record
+        $in = Experience::where('studentId', $student->id)
+        ->where('attendance', 'in')
+        ->first(); // Retrieve a single record with 'attendance' as 'in'
 
-        $experiences->id;
-
-        dd(  $experiences);
-
-        // $experiences = Experience::get();
-
-        // $experience = $experiences->id;
-
-        // dd( $experiences);
+    // If a record is found, set $isLoggedIn to true, otherwise false
+    $isLoggedIn = $in ? true : false;
     
         $dateNow = Carbon::now('Asia/Manila');
-        $diffInWeek = $dateNow->diffInWeeks(Carbon::now('asia/manila')) + 1;
+        $diffInWeek = $dateNow->diffInWeeks(Carbon::now('Asia/Manila')) + 1;
     
         return view('student.experience_record.index', [
-            'diffInWeek' => $diffInWeek, 
-            'studentDatas' => $studentDatas,
-            'studentId' => $studentId,
-            // 'isLoggedIn' => $isLoggedIn,
-            // 'experiences' => $experiences,
+            'diffInWeek' => $diffInWeek,
+            'studentDatas' => $studentDatas, // student name
+            'studentId' => $studentId, // student id
+            'experience' => $experience,
+            'dailyExperiences' => $dailyExperiences,
+            'isLoggedIn' => $isLoggedIn,
         ]);
     }
+    
+    
     
 
     /**
@@ -82,10 +90,13 @@ class ExperienceController extends Controller
             'week_no' => 'nullable|string|max:255',
         ]);
 
+        $dateNow = Carbon::now('Asia/Manila');
+        $diffInWeek = $dateNow->diffInWeeks(Carbon::now('Asia/Manila')) + 1;
 
         $experience = new Experience;
 
         $experience->status = 'Pending';
+        $experience->week_no = $diffInWeek;
         $experience->time_in = Carbon::now('Asia/Manila')->format('g:i A');
         $experience->student = $request->student;
         $experience->studentId = $request->studentId;
@@ -94,6 +105,18 @@ class ExperienceController extends Controller
         $experience->save();
 
         return redirect()->back()->with('success', 'Successfully logged IN!');
+    }
+
+    public function timeOut(Request $request){
+
+        dd($request->studentId);
+
+        
+
+        $experience = new Experience;
+        $experience->attendance = 'out';
+        $experience->status = 'Logged-Out';
+        $experience->save();
     }
 
     /**
@@ -115,17 +138,16 @@ class ExperienceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Experience $experience, $studentId)
+    public function update(Request $request, $id)
     {
         $validate = $request->validate([
             'no_of_hours' => 'nullable|string|max:255',
             'week_no' => 'nullable|string|max:255',
             'activities' => 'nullable|string|max:255',
         ]);
+        // dd($id);
 
-        Experience::where('studentId', $studentId)->update($validate);
-
-
+        $i = Experience::where('id', $id)->where('status', 'Approved')->update($validate);
 
         return redirect()->back()->with('success', 'activity saved');
     }
