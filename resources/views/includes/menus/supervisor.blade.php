@@ -23,6 +23,14 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
+            href="{{ route('supervisor.experience.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Intern Experiences</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
             href="{{ route('supervisor.interns.index') }}">
             <i class="fas fa-fw fa-file"></i>

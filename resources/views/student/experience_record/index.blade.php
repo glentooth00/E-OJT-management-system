@@ -17,8 +17,10 @@
             <div class="col-md-4">
                 <div class="card">
                     @if($isLoggedIn)
-                    <form action="{{  route('student.experience.logOut') }}" method="post" class="form p-2">
+                    <form action="{{  $experience ?  route('student.experience.logOut', $experience->id) : '#' }}" method="post" class="form p-2">
                         @csrf
+                        @method('PUT')
+                       
                         <input type="hidden" value="{{ $studentDatas }}" name="student">
                         <input type="hidden" value="{{ $studentId }}" name="studentId">
                         <button type="submit" class="btn btn-warning btn-lg btn-block">Log-Out</button>  
@@ -26,6 +28,7 @@
                     @else
                     <form action="{{  route('student.experience.timeIn') }}" method="post" class="form p-2">
                         @csrf
+                        <input type="hidden" value="{{ $studentDesignation }}" name="designation">
                         <input type="hidden" value="{{ $studentDatas }}" name="student">
                         <input type="hidden" value="{{ $studentId }}" name="studentId">
                         <button type="submit" class="btn btn-success btn-lg btn-block">TIME IN</button>  

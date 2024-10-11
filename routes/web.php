@@ -322,7 +322,7 @@ Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'
     Route::get('/student/experience/index', [ExperienceController::class, 'index'])->name('student.experience.index');
     Route::put('/student/experience/update/{id}', [ExperienceController::class , 'update'])->name('student.experience.update');
     Route::post('/student/experience/timeIn', [ExperienceController::class, 'timeIn'])->name('student.experience.timeIn');
-    Route::post('/student/experience/logOut', [ExperienceController::class, 'timeOut'])->name('student.experience.logOut');
+    Route::put('/student/experience/logOut/{id}', [ExperienceController::class, 'timeOut'])->name('student.experience.logOut');
 
     Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
 
@@ -368,6 +368,7 @@ Route::middleware('auth:supervisor')->group(function () {
     Route::get('/supervisor/interns/{student_id}/{day_no}/{day}/{week_number}', [ActivityLogsController::class, 'supervisorSummary'])
     ->name('supervisor.interns.summary');
 
+    Route::get('/supervisor/experience/index', [ExperienceController::class , 'supIndexView' ])->name('supervisor.experience.index');
 
     Route::get('/supervisor/interns/{id}/{week_number}/{day}', [ActivityLogsController::class, 'view'])->name('supervisor.interns.view');
 

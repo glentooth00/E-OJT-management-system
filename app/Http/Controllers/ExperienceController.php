@@ -24,6 +24,7 @@ class ExperienceController extends Controller
     
         $studentDatas = $student->fullname;
         $studentId = $student->id;
+        $studentDesignation = $student->designation;
     
         // Get the latest approved experience
         $experience = Experience::where('studentId', $student->id)
@@ -54,6 +55,7 @@ class ExperienceController extends Controller
             'experience' => $experience,
             'dailyExperiences' => $dailyExperiences,
             'isLoggedIn' => $isLoggedIn,
+            'studentDesignation' => $studentDesignation,
         ]);
     }
     
@@ -84,22 +86,18 @@ class ExperienceController extends Controller
 
     public function timeIn( Request $request ){
 
-        $data = $request->validate([
-            'student' => 'nullable|string|max:255',
-            'studentId' => 'nullable|string|max:255',
-            'week_no' => 'nullable|string|max:255',
-        ]);
-
         $dateNow = Carbon::now('Asia/Manila');
         $diffInWeek = $dateNow->diffInWeeks(Carbon::now('Asia/Manila')) + 1;
 
         $experience = new Experience;
 
         $experience->status = 'Pending';
+        $experience->attendance = 'in';
         $experience->week_no = $diffInWeek;
         $experience->time_in = Carbon::now('Asia/Manila')->format('g:i A');
         $experience->student = $request->student;
         $experience->studentId = $request->studentId;
+        $experience->designation = $request->designation;
         $experience->date =  Carbon::now('Asia/Manila');
 
         $experience->save();
@@ -107,17 +105,28 @@ class ExperienceController extends Controller
         return redirect()->back()->with('success', 'Successfully logged IN!');
     }
 
-    public function timeOut(Request $request){
-
-        dd($request->studentId);
-
-        
-
-        $experience = new Experience;
-        $experience->attendance = 'out';
-        $experience->status = 'Logged-Out';
-        $experience->save();
+    public function timeOut(Request $request)
+    {
+        // Find the record based on studentId
+        $experience = Experience::where('id', $request->id)->first();
+    
+        // Check if the record exists
+        if ($experience) {
+            // Update the fields
+            $experience->attendance = 'out';
+            $experience->status = 'Logged-Out';
+            $experience->time_out = Carbon::now('Asia/Manila')->format('g:i A');
+    
+            // Save the updated record
+            $experience->save();
+        } else {
+            // Handle case when no record is found
+            return response()->json(['message' => 'Record not found'], 404);
+        }
+    
+        return redirect()->back()->with('success', 'activity saved');
     }
+    
 
     /**
      * Display the specified resource.
@@ -150,6 +159,21 @@ class ExperienceController extends Controller
         $i = Experience::where('id', $id)->where('status', 'Approved')->update($validate);
 
         return redirect()->back()->with('success', 'activity saved');
+    }
+
+
+    public function supIndexView(){
+        
+        $supervisor = Auth::guard('supervisor')->user();
+
+        $office = $supervisor->office;
+
+        $students = Experience::where('designation', $office)->get();
+
+
+        return view('supervisor.experience.index',[
+            'students' => $students,
+        ]);
     }
 
     /**
