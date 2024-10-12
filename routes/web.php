@@ -161,7 +161,7 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
-    Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
+    Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.department_head.index');
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');

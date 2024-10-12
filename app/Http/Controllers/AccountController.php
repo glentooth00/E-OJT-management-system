@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use App\Models\DepartmentHead;
+use Auth;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -13,6 +14,9 @@ class AccountController extends Controller
      */
     public function index()
     {
+    
+        
+
         $department_heads = DepartmentHead::all();
         return view('admin.departmentHead.index', [
             'department_heads' => $department_heads,

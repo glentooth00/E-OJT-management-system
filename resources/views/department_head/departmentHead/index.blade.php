@@ -167,6 +167,26 @@
                                         <option>Engineering</option>
                                     </select>
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputState">Coursedd</label>
+                                    <select name="department" id="inputState" class="form-control">
+                                        <option hidden>Select Course.</option>
+                                        <option>Education</option>
+                                        <option>IICS</option>
+                                        <option>Engineering</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                {{-- <div class="form-group col-md-6">
+                                    <label for="inputState">Course</label>
+                                    <select name="department" id="inputState" class="form-control">
+                                        <option hidden>Select Dept.</option>
+                                        <option>Education</option>
+                                        <option>IICS</option>
+                                        <option>Engineering</option>
+                                    </select>
+                                </div> --}}
                             </div>
                             {{-- <div class="form-group">
                                 <label for="inputAddress2">Office</label>
