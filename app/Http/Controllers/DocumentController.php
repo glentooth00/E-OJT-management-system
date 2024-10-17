@@ -18,12 +18,17 @@ class DocumentController extends Controller
         if (!$student) {
             return redirect()->route('login')->withErrors(['message' => 'Please log in to access the dashboard.']);
         }
+
+
     
         // Fetch paginated students
-        $students = Student::paginate(10);
+        $get_students = Student::where('id' , $student->id)->get();
+        $studentId = $student->id;
+        
     
         return view('student.documents.index', [
-            'students' => $students,
+            'studentId' => $studentId,
+            'get_students' => $get_students,
         ]);
     }
     
