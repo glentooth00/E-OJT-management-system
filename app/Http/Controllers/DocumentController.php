@@ -17,19 +17,22 @@ class DocumentController extends Controller
         $student = Auth::guard('student')->user();
         if (!$student) {
             return redirect()->route('login')->withErrors(['message' => 'Please log in to access the dashboard.']);
-        
         }
-        $studentId = $student->id;
-
-        $get_students = Student::where('id', $studentId)->get();
-        
-     
-        return view('student.documents.index',[
-            'studentId' => $studentId,
-            'get_students' => $get_students,
+    
+        // Fetch paginated students
+        $students = Student::paginate(10);
+    
+        return view('student.documents.index', [
+            'students' => $students,
         ]);
     }
-
+    
+    
+    
+    
+    
+    
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -76,9 +79,14 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Document $document)
+    public function show($id)
     {
-        //
+        $student = Student::findOrFail($id);
+      
+
+        return view('department_head.documents.show', [
+            'student' => $student,
+        ]);
     }
 
     /**
@@ -103,5 +111,16 @@ class DocumentController extends Controller
     public function destroy(Document $document)
     {
         //
+    }
+
+    public function documentIndex(){
+
+        $user = Auth::user();
+
+        $students = Student::where('course', $user->course)->get();
+
+        return view('department_head.documents.index',[
+            'students' => $students,
+        ]);
     }
 }

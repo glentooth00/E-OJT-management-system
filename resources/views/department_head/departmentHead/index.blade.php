@@ -112,7 +112,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new Department Head Account</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add new Depdsdartment Head Account</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -162,18 +162,18 @@
                                     <label for="inputState">Department</label>
                                     <select name="department" id="inputState" class="form-control">
                                         <option hidden>Select Dept.</option>
-                                        <option>Education</option>
-                                        <option>IICS</option>
-                                        <option>Engineering</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputState">Coursedd</label>
-                                    <select name="department" id="inputState" class="form-control">
+                                    <label for="inputState">Coursed</label>
+                                    <select name="course" id="inputState" class="form-control">
                                         <option hidden>Select Course.</option>
-                                        <option>Education</option>
-                                        <option>IICS</option>
-                                        <option>Engineering</option>
+                                       @foreach ($courses as $course)
+                                           <option value="{{$course->course_initials }}"> {{ $course->course_initials }}</option>
+                                       @endforeach
                                     </select>
                                 </div>
                             </div>

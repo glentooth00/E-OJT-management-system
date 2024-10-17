@@ -23,14 +23,18 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all(); // Fetch all courses
+        return view('department_head.departmentHead.index', [
+            'courses' => $courses,
+        ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+
 
         $course = $request->validate([
             'course' => 'nullable|string|max:255',
@@ -46,10 +50,14 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
-    {
-        //
-    }
+    // public function show(Course $course)
+    // {
+    //     $courses = Course::all();
+    //     dd($courses);
+    //     return view('department_head.departmentHead.index',[
+    //         'courses' => $courses,
+    //     ]);
+    // }
 
     /**
      * Show the form for editing the specified resource.

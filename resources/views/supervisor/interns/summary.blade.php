@@ -45,7 +45,46 @@
                 </div>
             </div>
         @endforeach
+        @if ($pending_logs->isNotEmpty())
+        @php
+            $first_pending_log = $pending_logs->first();
+        @endphp
+
+        <div class="col-md-3 mb-4"> <!-- Use col-md-3 for 4 cards per row -->
+            <div class="card box-shadow">
+                <div class="card-header">
+                    <label class="p-2" style="font-size: 15px;">
+                        <b>Week no. {{ $first_pending_log->week_number }} - {{ ucfirst($first_pending_log->day) }} - Day {{ $first_pending_log->day_no }}</b>
+                    </label>
+                </div>
+
+                <!-- Display only the first image as a Bootstrap thumbnail -->
+                <img class="card-img-top img-thumbnail p-3" src="{{ asset('storage/'.$first_pending_log->file_path) }}" alt="Pending Activity Thumbnail">
+                
+                <div class="card-body">
+                    <p class="card-text">{{ $first_pending_log->description }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{{ route('supervisor.interns.view', [ $first_pending_log->student_id, $first_pending_log->week_number, $first_pending_log->day ]) }}" type="button" class="btn btn-sm btn-outline-primary">View</a>
+                            <!-- Add a "Pending" label beside the View button with centered text -->
+                            <span class="badge badge-warning ml-2" style="padding:15px; font-size: 10px;">Pending</span>
+                        </div>
+                        <small class="text-muted">{{ \Carbon\Carbon::parse($first_pending_log->created_at)->diffForHumans() }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @else
+        <p>No pending activity logs available.</p>
+    @endif
+        
     </div>
+
+    <div class="row">
+    
+    </div>
+    
+    
 
     <a href="javascript:void(0);" class="btn btn-secondary" onclick="goBack()">Back to Dashboard</a>
 

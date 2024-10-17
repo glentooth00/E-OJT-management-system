@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agency;
+use App\Models\Course;
+use App\Models\Department;
 use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Schoolyear;
@@ -22,42 +24,53 @@ class DepartmentHeadController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $status = null)
-    {
-    // Get the selected status from the request
-    $status = $request->input('filter');
-
-    // Get the filtered students based on the selected status
-    if ($status === 'pending' || $status === 'registered') {
-        $filtered_students = Student::where('application_status', $status)->get();
-    } else {
-        $filtered_students = Student::all();
-        $status = ''; // Set status to empty string for the "All" option
-    }
-
-    $agencies =  Agency::all();
-
-    $moas = Moa::all();
-
-    $letters =  EndorsementLetter::all();
-
-    // Other data you may need to pass to the view
-    $registered_students_no = Student::where('application_status', 'registered')->count();
-    $pending_students_no = Student::where('application_status', 'pending')->count();
-
-    $no_agencies = Agency::all()->count();
-
-    return view('department_head.dashboard', [
-        'filtered_students' => $filtered_students,
-        'selectedFilter' => $status, // Pass the selected status as selectedFilter
-        'registered_students_no' => $registered_students_no,
-        'pending_students_no' => $pending_students_no,
-        'agencies' => $agencies,
-        'moas' => $moas,
-        'no_agencies' => $no_agencies,
-        'letters' => $letters,
-    ]);
-    }
+        /**
+         * Display a listing of the resource.
+         */
+        public function index(Request $request, $status = null)
+        {
+            // Get the selected status from the request
+            $status = $request->input('filter');
+    
+            // Get the logged-in user
+            $user = Auth::user();
+    
+            // Get the course of the logged-in department head
+            $course = $user->course;
+    
+            // Get the filtered students based on the selected status
+            if ($status === 'pending' || $status === 'registered') {
+                $filtered_students = Student::where('application_status', $status)
+                    ->where('course', $course) // Filter students by the same course
+                    ->get();
+            } else {
+                // If "All" option is selected, fetch all students with the same course
+                $filtered_students = Student::where('course', $course)->get();
+                $status = ''; // Set status to empty string for the "All" option
+            }
+    
+            // Fetch additional data
+            $agencies = Agency::all();
+            $moas = Moa::all();
+            $letters = EndorsementLetter::all();
+    
+            // Count registered and pending students in the same course
+            $registered_students_no = Student::where('application_status', 'registered')->where('course', $course)->count();
+            $pending_students_no = Student::where('application_status', 'pending')->where('course', $course)->count();
+            $no_agencies = Agency::count(); // Optimized the count method for Agency
+    
+            // Return view with necessary data
+            return view('department_head.dashboard', [
+                'filtered_students' => $filtered_students,
+                'selectedFilter' => $status, // Pass the selected status as selectedFilter
+                'registered_students_no' => $registered_students_no,
+                'pending_students_no' => $pending_students_no,
+                'agencies' => $agencies,
+                'moas' => $moas,
+                'no_agencies' => $no_agencies,
+                'letters' => $letters,
+            ]);
+        }
 
     public function gallery(){
         $test = 1;
@@ -163,9 +176,13 @@ class DepartmentHeadController extends Controller
     public function create()
     {
         $department_heads = DepartmentHead::all();
+        $courses = Course::all(); // Fetch all courses
+        $departments = Department::all();
 
         return view('department_head.departmentHead.index',[
             'department_heads' => $department_heads,
+            'courses' => $courses,
+            'departments' => $departments,
         ]);
     }
 
@@ -178,17 +195,18 @@ class DepartmentHeadController extends Controller
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:department_heads|max:255',
-            'password' => 'required|string|min:8',
-            'department' => 'required|string|max:255',
+            'email' => 'nullable|email|unique:department_heads|max:255',
+            'password' => 'nullable|string|min:8',
+            'course' => 'nullable|string|max:255',
+            'department' => 'nullable|string|max:255',
         ]);
 
-        // dd($validatedData);
+        // dd( $validatedData);
 
-        // // Hash the password before saving
+        // // // Hash the password before saving
         $validatedData['password'] = bcrypt($validatedData['password']);
 
-        // Create a new department head record
+        // // Create a new department head record
         $departmentHead = DepartmentHead::create($validatedData);
 
         // Redirect or return response as needed

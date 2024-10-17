@@ -83,6 +83,11 @@ class ActivityLogsController extends Controller
             ->where('status', 'Approved')
             ->where('week_number', $week_number)
             ->get();
+
+            $pending_logs = weeklyReport::where('student_id', $student_id)
+            ->where('status', 'Pending')
+            ->where('week_number', $week_number)
+            ->get();
     
         // Check if activity logs are empty
         if ($activity_logs->isEmpty()) {
@@ -97,7 +102,8 @@ class ActivityLogsController extends Controller
         // Pass all the necessary data to the view
         return view('supervisor.interns.summary', [
             'activity_logs' => $grouped_logs,
-            'week_number' => $week_number
+            'week_number' => $week_number,
+            'pending_logs' => $pending_logs
         ]);
     }
 

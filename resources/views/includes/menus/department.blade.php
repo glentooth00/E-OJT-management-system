@@ -17,8 +17,8 @@
          MENUS
      </div>
      <li class="nav-item">
-         <a class="nav-link {{ request()->is('department_head/dashboard') ? 'active' : '' }}"
-             href="{{ route('department_head.dashboard') }}">
+         <a class="nav-link {{ request()->is('department_head/documents*') ? 'active' : '' }}"
+             href="{{ route('department_head.documents.index') }}">
              <i class="fas fa-fw fa-tachometer-alt"></i>
              <span>Intern</span>
          </a>
