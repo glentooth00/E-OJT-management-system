@@ -82,12 +82,17 @@ class DocumentController extends Controller
     public function show($id)
     {
         $student = Student::findOrFail($id);
-      
-
+        $documents = Document::where('student_id', $id)->get(); // Add ->get() to retrieve the data
+    
+        // Debug the documents
+        // dd($documents);
+    
         return view('department_head.documents.show', [
             'student' => $student,
+            'documents' => $documents,
         ]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
