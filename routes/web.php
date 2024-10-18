@@ -190,6 +190,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/department/index', [DepartmentController::class, 'index'])->name('admin.department.index');
     Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
 
+
+    //documents
+   Route::get('/admin/documents/', [DocumentController::class, 'uploadDocs'])->name('admin.documents'); 
+   Route::post('/documents/upload-multiple', [DocumentController::class, 'uploadMultiple'])->name('documents.uploadMultiple');
+
     
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 

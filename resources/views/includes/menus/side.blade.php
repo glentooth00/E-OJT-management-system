@@ -42,9 +42,9 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}" href="/admin/moa">
+        <a class="nav-link {{ request()->is('admin/documents') ? 'active' : '' }}" href="{{ route('admin.documents') }}">
             <i class="fas fa-regular fa-building"></i>
-            <span>MOA / MOU</span>
+            <span>Upload documents</span>
         </a>
     </li>
 
