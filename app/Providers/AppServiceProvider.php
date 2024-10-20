@@ -19,6 +19,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        define('STATUS_PENDING', 'Pending');
+        define('STATUS_APPROVED', 'Approved');
+        define('STATUS_REGISTERED', 'Registered');
     }
 }

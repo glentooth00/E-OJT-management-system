@@ -383,6 +383,13 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/list/index', [SupervisorController::class, 'internList'])->name('supervisor.list.index');
 
+    Route::put('/supervisor/approve-experience/{student_id}/{experience_id}', [ExperienceController::class, 'approveExperience'])->name('supervisor.approve_experience.approve');
+
+    Route::get('/supervisor/experience/view/{student_id}/{experience_id}', [ExperienceController::Class, 'viewExperience'])->name('supervisor.experience.view');
+
+
+
+
     // Logout
     Route::post('/supervisor-logout', [SupervisorController::class, 'logout'])->name('supervisor.logout');
 });

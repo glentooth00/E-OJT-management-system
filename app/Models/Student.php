@@ -10,6 +10,14 @@ class Student extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
+
+    const STATUS_PENDING = 'Pending';
+
+    const STATUS_APPROVED = 'Approved';
+
+    const STATUS_LOGGED_IN = 'Logged-in';
+
+    const STATUS_LOGGED_OUT = 'Logged-Out';
     protected $guarded = [];    
 
     public function weeklyReports()

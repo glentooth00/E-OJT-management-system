@@ -149,32 +149,76 @@ class ExperienceController extends Controller
      */
     public function update(Request $request, $id)
     {
+ 
         $validate = $request->validate([
             'no_of_hours' => 'nullable|string|max:255',
             'week_no' => 'nullable|string|max:255',
             'activities' => 'nullable|string|max:255',
         ]);
-        // dd($id);
+        
 
         $i = Experience::where('id', $id)->where('status', 'Approved')->update($validate);
 
         return redirect()->back()->with('success', 'activity saved');
     }
 
+    public function approveExperience($studentId, $experienceId) {
+        // Debugging: Check the incoming parameters
 
-    public function supIndexView(){
+    
+        $user = Auth::guard('supervisor')->user();
+        $user_designation = $user->office;
+    
+        // Fetching the experience record
+        $getStudents = Experience::where('id', $experienceId)
+            ->where('designation', $user_designation)
+            ->where('status', STATUS_PENDING) // Optional, if you want to ensure the record belongs to the user's office
+            ->first(); // Get a single instance
+    
+
+    
+        if ($getStudents) {
+            // Update the status directly
+            $getStudents->status = 'Approved';
+            $getStudents->save();
+    
+            // Redirect back with a success message
+            return redirect()->back()->with('success', 'Status updated successfully.');
+        }
         
+        // If no record found
+        return redirect()->back()->with('error', 'No matching record found.');
+    }
+
+    public function viewExperience($studentId, $experienceId){
+
+        $dailyExperiences = Experience::where('id' ,  $experienceId)->where('studentId', $studentId)->get();
+
+        return view('supervisor.experience.view',[
+            'dailyExperiences' => $dailyExperiences,
+        ]);
+
+    }
+    
+    
+    
+
+
+    public function supIndexView()
+    {
         $supervisor = Auth::guard('supervisor')->user();
-
         $office = $supervisor->office;
-
-        $students = Experience::where('designation', $office)->get();
-
-
-        return view('supervisor.experience.index',[
+    
+        // Fetch all students
+        $students = Student::where('designation', $office)->get();
+    
+        // Pass the students data to the view
+        return view('supervisor.experience.index', [
             'students' => $students,
         ]);
     }
+    
+    
 
     /**
      * Remove the specified resource from storage.
