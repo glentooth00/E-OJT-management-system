@@ -7,8 +7,9 @@ use App\Models\Department;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use App\Models\YearLevel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -21,27 +22,26 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Auth::guard('student')->user();
-        $studentId = $student->id;
+        $students = Auth::guard('student')->user();
 
-  
-
-        // Retrieve the latest weekly report for each week using a subquery
+        $studentId = $students->id;
+    
+        // Retrieve the latest weekly report for each week and day using a subquery
         $latestReports = DB::table('weekly_reports')
-            ->select('week_number', DB::raw('MAX(id) as max_id'))
+            ->select('week_number', 'day_no', DB::raw('MAX(id) as max_id'))
             ->where('student_id', $studentId)
-            ->groupBy('week_number')
+            ->groupBy('week_number', 'day_no')  // Group by both week_number and day_no
             ->get();
-
+    
         // Get the full weekly reports based on the maximum IDs found in the subquery
-        $weeklyReports = WeeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
-
+        $weeklyReports = weeklyReport::whereIn('id', $latestReports->pluck('max_id'))->orderBy('day_no', 'asc')->get();
+    
         return view('student.dashboard', [
             'weeklyReports' => $weeklyReports,
             'studentId' => $studentId,
-    
         ]);
     }
+    
 
     /**
      * Show the form for creating a new student.
@@ -84,7 +84,8 @@ class StudentController extends Controller
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
             'application_status' => 'nullable|string',
-            'school_year' => 'nullable|string|max:255'
+            'school_year' => 'nullable|string|max:255',
+            'year_level' => 'nullable|string|max:255'
         ]);
         // dd($validatedData);
 
@@ -113,6 +114,29 @@ class StudentController extends Controller
     public function show(string $id)
     {
         // Implementation here if needed
+    }
+
+    public function summary($student_id, $day_no, $day, $week_number)
+    {
+        // dd( $student_id, $day_no, $day);
+        // Remove 'day_no' first and check if results are returned
+        $activity_logs = weeklyReport::where('student_id', $student_id)
+        ->where('day_no', $day_no)
+        ->where('day', $day)
+        ->where('week_number', $week_number)
+        ->get();  // Check if this works
+         
+        $day = $day;
+        $day_no = $day_no;
+
+    //  dd( $activity_logs);
+
+        return view('student.weekly_report.summary', [
+            'activity_logs' =>  $activity_logs,
+            'day' => $day,
+            'day_no' => $day_no,
+        ]);
+
     }
 
     /**
@@ -166,6 +190,7 @@ class StudentController extends Controller
     
         // Update the student's status to 'registered'
         $student->application_status = 'registered';
+        $student->date_registered = Carbon::now('Asia/Manila');
     
         // Save the changes
         $student->save();
@@ -216,14 +241,24 @@ class StudentController extends Controller
     public function weeklyReportIndex()
     {
         $student = Auth::guard('student')->user();
+
         if ($student) {
             $studentId = $student->id;
             $studentName = $student->fullname; // Adjust based on your actual column name for the student's name
-    
-            return view('student.weekly_report.index', compact('studentId', 'studentName'));
+            $registeredDate = Carbon::parse($student->date_registered);
+
+            $weeksPassed = $registeredDate->diffInWeeks(Carbon::now('Asia/Manila'));
+
+            $weeksPassed = ($weeksPassed == 0) ? 1 : $weeksPassed;
+          
+            return view('student.weekly_report.index',[
+                'studentId' => $studentId,
+                'studentName' => $studentName,
+                'weeksPassed' => $weeksPassed,
+            ]);
         }
     
-        return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
+        // return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
     }
     
 

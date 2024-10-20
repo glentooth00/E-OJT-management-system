@@ -1,7 +1,7 @@
 @extends('includes.layouts.app')
 
 
-@section('page-title', 'STUDENT VIEW')
+@section('page-title', 'Archives')
 
 @section('content')
 

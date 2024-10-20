@@ -36,7 +36,7 @@
          </div>
      </li> --}}
 {{-- ======= --}}
-         <a class="nav-link {{ request()->is('/student/dashboard') ? 'active' : '' }}" href="/student/experience_record">
+         <a class="nav-link {{ request()->is('/student/dashboard') ? 'active' : '' }}" href="{{ route('student.experience.index') }}">
              <i class="fa fa-file" aria-hidden="true"></i>
              <span>Experience Record</span>
          </a>
@@ -61,7 +61,7 @@
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
              href="{{ route('student.weeklyReportIndex') }}">
              <i class="fa fa-clock"></i>
-             <span>Weekly Logs</span>
+             <span>Daily Logs</span>
          </a>
      </li>
      <li class="nav-item">

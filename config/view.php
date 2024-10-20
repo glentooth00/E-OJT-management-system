@@ -33,4 +33,16 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Pagination Views
+    |--------------------------------------------------------------------------
+    |
+    | This option allows you to customize the view that will be used for
+    | pagination. You can specify which Bootstrap version to use here.
+    |
+    */
+
+    'pagination' => 'pagination::bootstrap-5', // Add this line for Bootstrap 5
+
 ];

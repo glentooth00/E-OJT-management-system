@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WeeklyReport;
+use App\Models\Student;
+use App\Models\weeklyReport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class WeeklyReportController extends Controller
         $studentId = $student->id;
 
         // Fetch the weekly reports for the logged-in student
-        $weeklyReports = WeeklyReport::where('student_id', $studentId)->get();
+        $weeklyReports = weeklyReport::where('student_id', $studentId)->get();
 
         // Pass the data to the view
         return view('student.dashboard', [
@@ -30,6 +31,63 @@ class WeeklyReportController extends Controller
             'studentId' => $studentId,
         ]);
     }
+
+    public function reports(Request $request)
+    {
+        $searchTerm = $request->input('search');
+        $course = $request->input('course');
+    
+        $students = Student::when($searchTerm, function ($query, $searchTerm) {
+            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+        })->when($course, function ($query, $course) {
+            return $query->where('course', $course);
+        })->paginate(10);
+    
+        return view('department_head.weekly_reports.index', [
+            'students' => $students,
+            'searchTerm' => $searchTerm,
+            'course' => $course,
+        ]);
+    }
+
+    public function showReports($id) {
+        // Get the student by ID
+        $students = Student::where('id', $id)->get();
+    
+        if ($students->isEmpty()) {
+            return redirect()->back()->with('error', 'Student not found.');
+        }
+    
+        // Get the start and end date of the latest week
+        $endDate = now(); // Current date
+        $startDate = now()->subDays(7); // Date 7 days ago
+    
+        // Get all images for the student from the latest week in descending order
+        $images = weeklyReport::where('student_id', $id)
+            ->where('status', 'Approved')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->orderBy('created_at', 'desc') // Order by created_at in descending order
+            ->get();
+    
+        return view('department_head.weekly_reports.show', [
+            'students' => $students,
+            'images' => $images,
+        ]);
+    }
+
+//     public function showReports($student_id, $report_id)
+// {
+//     // Fetch the report based on student_id and report_id
+//     $report = WeeklyReport::where('student_id', $student_id)
+//                            ->where('id', $report_id)
+//                            ->first();
+
+//     if (!$report) {
+//         return redirect()->back()->with('error', 'Report not found.');
+//     }
+
+//     return view('weekly_reports.view', compact('report'));
+// }
 
     /**
      * Show the form for creating a new resource.
@@ -51,11 +109,16 @@ class WeeklyReportController extends Controller
             'week_number' => 'required|integer',
             'activityPhotos.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'activityDescription' => 'required|string',
+            'day' => 'required|string',
+            'day_no' =>  'required|integer',
         ]);
+        // dd($validatedData);
     
         $studentId = $request->input('student_id');
         $studentName = $request->input('studentname'); // Corrected variable name
         $weekNumber = $request->input('week_number');
+        $day = $request->input('day');
+        $day_no = $request->input('day_no');
         $activityDescription = $request->input('activityDescription');
     
         if ($request->hasFile('activityPhotos')) {
@@ -64,18 +127,70 @@ class WeeklyReportController extends Controller
                 $filePath = $file->storeAs('activity_photos', $fileName, 'public');
     
                 // Save the report for each uploaded photo
-                $weeklyReport = new WeeklyReport();
+                $weeklyReport = new weeklyReport();
                 $weeklyReport->student_id = $studentId;
                 $weeklyReport->week_number = $weekNumber;
                 $weeklyReport->studentname = $studentName;
                 $weeklyReport->activity_description = $activityDescription;
                 $weeklyReport->file_path = $filePath; // Store the file path
+                $weeklyReport->day = $day;
+                $weeklyReport->day_no = $day_no;
+                $weeklyReport->status = 'Pending'; // Set status to Pending
                 $weeklyReport->save();
             }
         }
     
         return redirect()->route('student.dashboard')->with('success', 'Weekly report created successfully!');
     }
+    
+    
+    // public function summary($student_id, $week_number)
+    // {
+    //     // Get the activity logs for the entire week for the student
+    //     $activity_logs = weeklyReport::where('student_id', $student_id)
+    //         ->where('status', 'Approved')
+    //         ->where('week_number', $week_number)
+    //         ->get();
+    
+    //     // Check if activity logs are empty
+    //     if ($activity_logs->isEmpty()) {
+    //         return redirect()->back()->with('error', 'No reports available for this week.');
+    //     }
+    
+    //     // Pass all the necessary data to the view
+    //     return view('department_head.weekly_reports.summary', [
+    //         'activity_logs' => $activity_logs,
+    //         'week_number' => $week_number
+    //     ]);
+    // }
+
+    public function summary($student_id, $week_number)
+    {
+        // Get the activity logs for the entire week for the student
+        $activity_logs = weeklyReport::where('student_id', $student_id)
+            ->where('status', 'Approved')
+            ->where('week_number', $week_number)
+            ->get();
+    
+        // Check if activity logs are empty
+        if ($activity_logs->isEmpty()) {
+            return redirect()->back()->with('error', 'No reports available for this week.');
+        }
+    
+        // Group by day and take the first activity log for each day
+        $grouped_logs = $activity_logs->groupBy('day')->map(function ($group) {
+            return $group->first();
+        });
+    
+        // Pass all the necessary data to the view
+        return view('department_head.weekly_reports.summary', [
+            'activity_logs' => $grouped_logs,
+            'week_number' => $week_number
+        ]);
+    }
+    
+
+    
     
     
     
@@ -85,14 +200,14 @@ class WeeklyReportController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($weekNumber)
-    {
-        // Fetch weekly reports with the given week_number
-        $weeklyReports = WeeklyReport::where('week_number', $weekNumber)->get();
+    // public function show($weekNumber)
+    // {
+    //     // Fetch weekly reports with the given week_number
+    //     $weeklyReports = weeklyReport::where('week_number', $weekNumber)->get();
     
-        // Pass the weekly report data to the view
-        return view('student.weekly_report.show', compact('weeklyReports', 'weekNumber'));
-    }
+    //     // Pass the weekly report data to the view
+    //     return view('department_head.weekly_reports.show', compact('weeklyReports', 'weekNumber'));
+    // }
     
     
     
@@ -100,7 +215,7 @@ class WeeklyReportController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(WeeklyReport $weeklyReport)
+    public function edit(weeklyReport $weeklyReport)
     {
         // Return the view to edit the weekly report
         return view('student.weekly_report.edit', compact('weeklyReport'));
@@ -109,7 +224,7 @@ class WeeklyReportController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, WeeklyReport $weeklyReport)
+    public function update(Request $request, weeklyReport $weeklyReport)
     {
         $request->validate([
             'week_number' => 'required|integer',
@@ -126,7 +241,7 @@ class WeeklyReportController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(WeeklyReport $weeklyReport)
+    public function destroy(weeklyReport $weeklyReport)
     {
         $weeklyReport->delete();
 

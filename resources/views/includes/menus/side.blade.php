@@ -42,9 +42,9 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}" href="/admin/moa">
+        <a class="nav-link {{ request()->is('admin/documents') ? 'active' : '' }}" href="{{ route('admin.documents') }}">
             <i class="fas fa-regular fa-building"></i>
-            <span>MOA / MOU</span>
+            <span>Upload documents</span>
         </a>
     </li>
 
@@ -69,7 +69,7 @@
 
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
-            href="{{ route('admin.supervisor.supervisor') }}">
+            href="{{ route('admin.department_head.index') }}">
             <i class='fas fa-building'></i>
             <span>Chairpersons</span>
         </a>
