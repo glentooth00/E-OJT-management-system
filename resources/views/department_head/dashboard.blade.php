@@ -73,6 +73,19 @@
             </div>
         </section>
 
+        @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        {{ implode('', $errors->all(':message')) }}
+    </div>
+@endif
+
+
         <section class="mt-5">
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

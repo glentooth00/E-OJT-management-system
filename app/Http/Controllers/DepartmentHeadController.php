@@ -13,7 +13,8 @@ use App\Models\weeklyReport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
 use Illuminate\Http\Request;
-
+use App\Mail\ApplicationApproved; // Don't forget to include this at the top
+use Illuminate\Support\Facades\Mail; // Add this as well
 use Illuminate\Support\Facades\Validator;
 
 
@@ -257,13 +258,18 @@ class DepartmentHeadController extends Controller
         if (Auth::guard('department_head')->check()) {
             // Update the student's application_status to "registered"
             $student->update(['application_status' => 'registered']);
-            
-            return redirect()->back()->with('success', 'Student approved successfully.');
+    
+            // Send approval email to the student
+            Mail::to($student->email)->send(new ApplicationApproved($student));
+    
+            // Notify the user that the email has been sent
+            return redirect()->back()->with('success', 'Student approved successfully and email notification sent.');
         } else {
             // Handle cases where the user is not authorized
             return redirect()->back()->withErrors(['error' => 'You are not authorized to perform this action.']);
         }
     }
+    
     
 
     public function showLoginForm()
