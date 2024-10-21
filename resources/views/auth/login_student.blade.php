@@ -36,6 +36,16 @@
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
                     <form action="{{ route('student.login') }}" method="POST">
+                        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">

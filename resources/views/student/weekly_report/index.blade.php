@@ -35,8 +35,8 @@
                                 <!-- Week Number -->
                                 <div class="form-group col-md-6">
                                     <label for="weekNumber">Number of Week:</label>
-                                    {{-- <input type="number" class="form-control" id="weekNumber" name="week_number" value="{{ $weeksPassed }}" required readonly> --}}
-                                    <input type="number" class="form-control" id="weekNumber" name="week_number" value="" >
+                                    <input type="number" class="form-control" id="weekNumber" name="week_number" value="{{ $weeksPassed }}" required readonly>
+                                    {{-- <input type="number" class="form-control" id="weekNumber" name="week_number" value="" > --}}
                                 </div>
                                 
                                 <!-- Day and Day No. -->

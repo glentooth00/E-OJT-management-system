@@ -49,7 +49,7 @@
         </a>
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/download">Download Form</a>
+            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="{{ route('download.documents') }}">Download Form</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/upload">Upload Form</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="#">Endorsement Letter</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/printables/letter-of-intent">Picture With Description</a>

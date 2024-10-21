@@ -223,17 +223,33 @@ class StudentController extends Controller
      */
     public function login(Request $request)
     {
+        // Validate the request data
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+    
+        // Attempt to log the user in
         if (Auth::guard('student')->attempt($credentials)) {
+            // Redirect to the student dashboard on successful login
             return redirect()->route('student.dashboard');
         }
-
-        return back()->withErrors(['email' => 'Invalid credentials']);
+    
+        // If login fails, check the conditions and return appropriate errors
+        $student = Student::where('email', $credentials['email'])->first();
+    
+        if (!$student) {
+            // If the student does not exist
+            return back()->withErrors(['email' => 'No account found with this email address.']);
+        } elseif (!$student->is_active) {
+            // If the account is inactive
+            return back()->withErrors(['email' => 'Your account is inactive. Please contact support.']);
+        } else {
+            // If the password is incorrect
+            return back()->withErrors(['password' => 'The provided password is incorrect.']);
+        }
     }
+    
 
     /**
      * Show the weekly report index for the authenticated student.

@@ -14,6 +14,7 @@ use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
+use App\Http\Controllers\StudentDocumentsController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentHeadController;
 use App\Http\Controllers\WeeklyReportController;
 use App\Http\Controllers\DocumentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -336,6 +338,14 @@ Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'
     Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
 
     Route::post('/documents/store', [DocumentController::class, 'store'])->name('documents.store');
+
+    Route::get('/student/documents/download', [StudentDocumentsController::class, 'index'])->name('download.documents');
+
+
+
+
+    Route::get('/documents/download/{id}/{type}', [StudentDocumentsController::class, 'downloadPdf'])->name('documents.downloadPdf');
+
 
 
     // Logout

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\student_documents;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Storage;
+
 
 class StudentDocumentsController extends Controller
 {
@@ -12,9 +15,52 @@ class StudentDocumentsController extends Controller
      */
     public function index()
     {
-        //
+        $documents = student_documents::get();
+
+        return view('student.download_&_upload.download', [
+            'documents' => $documents,
+        ]);
     }
 
+    public function downloadPdf($id, $type)
+    {
+        // Fetch the document based on the ID
+        $document = student_documents::find($id);
+
+        if (!$document) {
+            return response()->json(['error' => 'Document not found.'], 404);
+        }
+
+        // Determine the file path based on the document type
+        $filePath = '';
+
+        switch ($type) {
+            case 'good_moral':
+                $filePath = $document->good_moral;
+                break;
+            case 'endorsement_letter':
+                $filePath = $document->endorsement_letter;
+                break;
+            case 'letter_of_consent':
+                $filePath = $document->letter_of_consent;
+                break;
+            default:
+                return response()->json(['error' => 'Invalid document type.'], 400);
+        }
+
+        // Check if the file exists
+        if (!Storage::exists($filePath)) {
+            return response()->json(['error' => 'File not found.'], 404);
+        }
+
+        // Return the file as a response
+        return response()->download(storage_path("app/{$filePath}"));
+    }
+    
+    
+
+    
+    
     /**
      * Show the form for creating a new resource.
      */
