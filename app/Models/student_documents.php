@@ -9,6 +9,10 @@ class student_documents extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['file_name', 'content', 'created_at'];
-    protected $guarded = [];
+    protected $fillable = [
+        'user_id', 
+        'good_moral', 
+        'endorsement_letter', 
+        'letter_of_consent',
+    ];
 }

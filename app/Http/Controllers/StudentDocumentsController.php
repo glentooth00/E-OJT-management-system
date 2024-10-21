@@ -79,47 +79,44 @@ class StudentDocumentsController extends Controller
 
     public function uploadMultiple(Request $request)
 {
-    // Validate the uploaded files
+    dd($request->all()); // Check the incoming request data
+
     $request->validate([
         'good_moral' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         'endorsement_letter' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         'letter_of_consent' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    // Initialize an array to store file paths
-    $data = [];
-
-    // Store Good Moral document if present
-    if ($request->hasFile('good_moral')) {
-        $goodMoralFileName = time() . '_good_moral_' . $request->file('good_moral')->getClientOriginalName();
-        $request->file('good_moral')->storeAs('documents', $goodMoralFileName, 'public');
-        $data['good_moral_path'] = 'storage/documents/' . $goodMoralFileName;
-    }
-
-    // Store Endorsement Letter document if present
-    if ($request->hasFile('endorsement_letter')) {
-        $endorsementLetterFileName = time() . '_endorsement_letter_' . $request->file('endorsement_letter')->getClientOriginalName();
-        $request->file('endorsement_letter')->storeAs('documents', $endorsementLetterFileName, 'public');
-        $data['endorsement_letter_path'] = 'storage/documents/' . $endorsementLetterFileName;
-    }
-
-    // Store Letter of Consent document if present
-    if ($request->hasFile('letter_of_consent')) {
-        $letterOfConsentFileName = time() . '_letter_of_consent_' . $request->file('letter_of_consent')->getClientOriginalName();
-        $request->file('letter_of_consent')->storeAs('documents', $letterOfConsentFileName, 'public');
-        $data['letter_of_consent_path'] = 'storage/documents/' . $letterOfConsentFileName;
-    }
-
-    // Save file paths to the database
-    \App\Models\Document::create([
-        'user_id' => auth()->user()->id,  // Assuming the user is logged in
-        'good_moral_path' => $data['good_moral_path'] ?? null,
-        'endorsement_letter_path' => $data['endorsement_letter_path'] ?? null,
-        'letter_of_consent_path' => $data['letter_of_consent_path'] ?? null,
-    ]);
-
+    // If dd() is reached, then file upload logic will go here...
     return back()->with('success', 'Documents uploaded and saved successfully.');
 }
+
+
+    // public function uploadMultiple(Request $request)
+    // {
+    //     dd($request);
+    //     // Validate the uploaded files
+    //     // $request->validate([
+    //     //     'good_moral' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     //     'endorsement_letter' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     //     'letter_of_consent' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     // ]);
+    
+    //     // // Save each file directly and store the paths
+    //     // $goodMoralPath = $request->file('good_moral')->store('documents', 'public');
+    //     // $endorsementLetterPath = $request->file('endorsement_letter')->store('documents', 'public');
+    //     // $letterOfConsentPath = $request->file('letter_of_consent')->store('documents', 'public');
+    
+    //     // // Create a new document record
+    //     // \App\Models\student_documents::create([
+    //     //     'user_id' => auth()->user()->id,
+    //     //     'good_moral_path' => 'storage/' . $goodMoralPath,
+    //     //     'endorsement_letter_path' => 'storage/' . $endorsementLetterPath,
+    //     //     'letter_of_consent_path' => 'storage/' . $letterOfConsentPath,
+    //     // ]);
+    
+    //     // return back()->with('success', 'Documents uploaded and saved successfully.');
+    // }
 
 
     /**
