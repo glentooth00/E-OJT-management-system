@@ -103,7 +103,12 @@
                                 <option value="Punctuality">Punctuality</option>
                                 <option value="Initiative">Initiative</option>
                                 <option value="Ability to Plan Activities">Ability to Plan Activities</option>
-                                <option value="Cooperation">Cooperation</option>
+                                <option value="Interest and attitudes towards work
+                                ">Interest and attitudes towards work</option>
+                                <option value="Major Field of Concentration">Major Field of Concentration</option>
+                                <option value="Appearance">Appearance</option>
+                                <option value="Alertness">Alertness</option>
+                                <option value="Self-Confidence">Self-Confidence</option>
                             </select>
                         </div>
                     

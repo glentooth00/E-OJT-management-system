@@ -170,7 +170,6 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
     Route::get('/admin/questionnaire', [QuestionnaireController::class, 'index'])->name('admin.questionnaire.index');
     Route::post('/admin/questionnaire/store', [QuestionnaireController::class, 'store'])->name('admin.questionnaire.store');
-    Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
     Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
     Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
     //MOA
@@ -283,6 +282,8 @@ Route::middleware('auth:department_head')->group(function () {
     Route::get('/department_head/documents/index', [DocumentController::class, 'documentIndex'])->name('department_head.documents.index');
 
     Route::get('/department_head/documents/show/{id}', [DocumentController::class, 'show'])->name('department_head.document.show');
+
+    Route::get('/department_head/evaluation/index', [DepartmentHeadController::class, 'viewEvaluation'])->name('department_head.evaluation.index');
 
     // routes/web.php
 
@@ -397,7 +398,13 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/experience/view/{student_id}/{experience_id}', [ExperienceController::Class, 'viewExperience'])->name('supervisor.experience.view');
 
+    Route::get('/supervisor/evaluate/index', [SupervisorController::class, 'supervisorEvaluate'])->name('supervisor.evaluate.index');
 
+    Route::post('/supervisor/evaluate/evaluation_form/{student_id}', [SupervisorController::class, 'evaluate'])->name('supervisor.evaluate.evaluation_form');
+
+
+
+    Route::post('/supervisor/evaluation/store', [EvaluationController::class, 'evaluateStudent'])->name('supervisor.evaluation.store');
 
 
     // Logout

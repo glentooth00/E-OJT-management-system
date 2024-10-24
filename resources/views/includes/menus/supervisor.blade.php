@@ -37,6 +37,14 @@
             <span>Activity Logs</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('supervisor/evaluate/index') ? 'active' : '' }}"
+            href="{{ route('supervisor.evaluate.index') }}">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Evaluation</span>
+        </a>
+    </li>
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
             <i class="fas fa-fw fa-clock"></i>

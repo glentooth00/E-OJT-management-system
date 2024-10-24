@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Questionnaire;
 use App\Models\Student;
 use App\Models\Category;
 use App\Models\Supervisor;
@@ -73,7 +74,46 @@ class SupervisorController extends Controller
 
     public function create()
     {
-        //
+       //
+    }
+
+    public function evaluate($id)
+    {
+        $student = Student::where('id', $id)->first();
+
+        $attendances = Questionnaire::where('type' , 'Attendance')->get();
+
+        $punctualities = Questionnaire::where('type' , 'Punctuality')->get();
+
+        $initiatives = Questionnaire::where('type' , 'Initiative')->get();
+
+        $plannings = Questionnaire::where('type' , 'Ability to Plan Activities')->get();
+
+        $cooperations = Questionnaire::where('type' , 'Cooperation')->get();
+
+        $interests = Questionnaire::where('type' , 'Interest and attitudes towards work')->get();
+
+        $fields = Questionnaire::where('type' , 'Major Field of Concentration')->get();
+
+        $appearances = Questionnaire::where('type' , 'Appearance')->get();
+
+        $alertness = Questionnaire::where('type' , 'Alertness')->get();
+
+        $self_confidence = Questionnaire::where('type' , 'Self-Confidence')->get();
+
+          return view('supervisor.evaluate.evaluation_form',[
+            'student' => $student,
+            'attendances' => $attendances,
+            'punctualities' => $punctualities,
+            'initiatives' => $initiatives,
+            'plannings' => $plannings,
+            'cooperations' => $cooperations,
+            'interests' => $interests,
+            'fields' => $fields,
+            'appearances' => $appearances,
+            'alertness' => $alertness,
+            'self_confidence' => $self_confidence,
+        ]);
     }
 
     public function store(Request $request)
@@ -149,5 +189,23 @@ class SupervisorController extends Controller
     public function destroy(Supervisor $supervisor)
     {
         //
+    }
+
+
+    public function supervisorEvaluate(){
+
+        $user =  Auth::user();
+
+        $office = $user->office;
+
+        $students = Student::where('designation', $office)->paginate();
+
+        return view('supervisor.evaluate.index', [
+            'students' => $students,
+        ]);
+    }
+
+    public function evaluationForm(){
+        return view('supervisor.evaluate.evaluation_form');
     }
 }

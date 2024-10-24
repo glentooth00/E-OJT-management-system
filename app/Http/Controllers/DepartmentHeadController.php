@@ -9,6 +9,7 @@ use App\Models\EndorsementLetter;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
+use App\Models\Supervisor_student_evaluations;
 use App\Models\weeklyReport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DepartmentHead;
@@ -320,6 +321,18 @@ class DepartmentHeadController extends Controller
         $request->session()->regenerateToken(); // Regenerate the CSRF token
         
         return redirect()->route('site.index'); // Redirect to the site's index page
+    }
+
+
+    public function viewEvaluation(){
+
+    $evaluations = Supervisor_student_evaluations::paginate();
+
+        
+
+        return view('department_head.evaluation.index',[
+            'evaluations' => $evaluations,
+        ]);
     }
     
 }
