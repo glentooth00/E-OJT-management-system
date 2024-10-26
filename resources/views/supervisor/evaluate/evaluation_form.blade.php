@@ -47,7 +47,7 @@
                                                 <span>
                                                     <input type="checkbox" name="attendance_questions[{{ $attendance->question }}]" value="{{ $attendance->question }}">
                                                     {{ $attendance->question }} 
-                                                    <input type="hidden" name="points[{{ $attendance->question }}]" value="{{ $attendance->points }}">
+                                                    <input type="hidden" name="attendance_points[{{ $attendance->question }}]" value="{{ $attendance->points }}">
                                                 </span><br>
                                             @endforeach
 
@@ -311,7 +311,7 @@
                                         </div>
                                     </div>
 
-                                    <button type="submit">Submit</button>
+                                    <button type="submit" class="btn btn-sm btn-primary">Submit</button>
                                 </form>
                             </div>
                         </div>

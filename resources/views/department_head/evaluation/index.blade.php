@@ -3,6 +3,11 @@
 @section('page-title', 'Evaluations')
 
 @section('content')
+<style>
+    .custom-modal {
+        max-width: 800px; /* Adjust the width as needed */
+    }
+</style>
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between">
@@ -130,55 +135,90 @@
         </section>
 
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg"> <!-- Add modal-lg for a larger modal -->
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Evaluation Details</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                        <!-- Two columns: questions on the left, points on the right -->
-                        <div class="row">
-                            <div class="col-6">
-                                <p><strong>Attendance:</strong> <span id="modalAttendanceQuestions"></span> - <span id="modalAttendancePoints"></span></p>
-                                <p><strong>Punctuality:</strong> <span id="modalPunctualityQuestions"></span> - <span id="modalPunctualityPoints"></span></p>
-                                <p><strong>Initiative:</strong> <span id="modalInitiativeQuestions"></span> - <span id="modalInitiativePoints"></span></p>
-                                <p><strong>Planning:</strong> <span id="modalPlanningQuestions"></span> - <span id="modalPlanningPoints"></span></p>
-                                <p><strong>Cooperation:</strong> <span id="modalCooperationQuestions"></span> - <span id="modalCooperationPoints"></span></p>
-                                <p><strong>Interest:</strong> <span id="modalInterestQuestions"></span> - <span id="modalInterestPoints"></span></p>
-                                <p><strong>Field:</strong> <span id="modalFieldQuestions"></span> - <span id="modalFieldPoints"></span></p>
-                                <p><strong>Appearance:</strong> <span id="modalAppearanceQuestions"></span> - <span id="modalAppearancePoints"></span></p>
-                                <p><strong>Alertness:</strong> <span id="modalAlertQuestions"></span> - <span id="modalAlertPoints"></span></p>
-                                <p><strong>Self-Control:</strong> <span id="modalSelfQuestions"></span> - <span id="modalSelfPoints"></span></p>
-                                <p><strong>Total Score:</strong> <span id="modalTotalScore"></span></p>
-                                <p><strong>Remarks:</strong> <span id="modalRemarks"></span></p>
-                            </div>
-                            <div class="col-6 text-end">
-                                <p id="modalAttendancePoints"></p>
-                                <p id="modalPunctualityPoints"></p>
-                                <p id="modalInitiativePoints"></p>
-                                <p id="modalPlanningPoints"></p>
-                                <p id="modalCooperationPoints"></p>
-                                <p id="modalInterestPoints"></p>
-                                <p id="modalFieldPoints"></p>
-                                <p id="modalAppearancePoints"></p>
-                                <p id="modalAlertPoints"></p>
-                                <p id="modalSelfPoints"></p>
-                            </div>
-                        </div>
-                        <!-- Total Score and Percentage beside each other -->
+                    <div class="modal-body p-4">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Evaluation Criteria</th>
+                                    <th>Details</th>
+                                    <th>Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Attendance:</td>
+                                    <td>Attending regularly</td>
+                                    <td id="modalAttendancePoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Punctuality:</td>
+                                    <td>Report to work on time</td>
+                                    <td id="modalPunctualityPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Initiative:</td>
+                                    <td>Self-starter of good ideas</td>
+                                    <td id="modalInitiativePoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Planning:</td>
+                                    <td>Handles work well</td>
+                                    <td id="modalPlanningPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Cooperation:</td>
+                                    <td>Sets good example in teamwork</td>
+                                    <td id="modalCooperationPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Interest:</td>
+                                    <td>Hardworking and strives to get ahead</td>
+                                    <td id="modalInterestPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Field of Interest:</td>
+                                    <td>Knowledgeable</td>
+                                    <td id="modalFieldPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Appearance:</td>
+                                    <td>Impressive, commands admiration</td>
+                                    <td id="modalAppearancePoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Alertness:</td>
+                                    <td>Exceptionally quick to understand</td>
+                                    <td id="modalAlertPoints">1</td>
+                                </tr>
+                                <tr>
+                                    <td>Self-Control:</td>
+                                    <td>Shows superior self-assurance</td>
+                                    <td id="modalSelfPoints">1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+        
+                        <!-- Total Score Section -->
                         <hr>
                         <div class="row">
                             <div class="col-6">
                                 <p><strong>Total Score:</strong></p>
                             </div>
                             <div class="col-6 text-end">
-                                <p id="modalTotalScore"></p> <!-- The total score and percentage will be placed here -->
+                                <p id="modalTotalScore" class="h5"></p>
                             </div>
                         </div>
+        
+                        <!-- Remarks Section -->
                         <div class="row">
                             <div class="col-12">
-                                <p><strong>Remarks:</strong> <span id="modalRemarks"></span></p>
+                                <p><strong>Remarks:</strong><br><br> <span id="modalRemarks" class="text-muted"></span></p>
                             </div>
                         </div>
                     </div>
@@ -189,35 +229,28 @@
             </div>
         </div>
         
+        
     
     <!---Container Fluid-->
 @endsection
 <script>
 function loadEvaluationData(evaluation) {
+    console.log(evaluation); // Inspect the evaluation object
+
     // Populate questions and points
-    document.getElementById('modalAttendanceQuestions').innerText = evaluation.attendance_questions;
     document.getElementById('modalAttendancePoints').innerText = evaluation.attendance_points;
-    document.getElementById('modalPunctualityQuestions').innerText = evaluation.punctuality_questions;
     document.getElementById('modalPunctualityPoints').innerText = evaluation.punctuality_points;
-    document.getElementById('modalInitiativeQuestions').innerText = evaluation.initiative_questions;
     document.getElementById('modalInitiativePoints').innerText = evaluation.initiative_points;
-    document.getElementById('modalPlanningQuestions').innerText = evaluation.planning_questions;
     document.getElementById('modalPlanningPoints').innerText = evaluation.planning_points;
-    document.getElementById('modalCooperationQuestions').innerText = evaluation.cooperation_questions;
     document.getElementById('modalCooperationPoints').innerText = evaluation.cooperation_points;
-    document.getElementById('modalInterestQuestions').innerText = evaluation.interest_questions;
     document.getElementById('modalInterestPoints').innerText = evaluation.interest_points;
-    document.getElementById('modalFieldQuestions').innerText = evaluation.field_questions;
     document.getElementById('modalFieldPoints').innerText = evaluation.field_points;
-    document.getElementById('modalAppearanceQuestions').innerText = evaluation.appearance_questions;
     document.getElementById('modalAppearancePoints').innerText = evaluation.appearance_points;
-    document.getElementById('modalAlertQuestions').innerText = evaluation.alert_questions;
     document.getElementById('modalAlertPoints').innerText = evaluation.alert_points;
-    document.getElementById('modalSelfQuestions').innerText = evaluation.self_questions;
     document.getElementById('modalSelfPoints').innerText = evaluation.self_points;
 
-    // Calculate percentage based on the total score
-    let totalScore = evaluation.total_score;
+    // Calculate total score and percentage
+    let totalScore = parseFloat(evaluation.total_score); // Ensure it's a number
     let percentage = '';
 
     if (totalScore >= 8.6 && totalScore <= 10) {
@@ -236,6 +269,5 @@ function loadEvaluationData(evaluation) {
     // Populate remarks
     document.getElementById('modalRemarks').innerText = evaluation.remarks;
 }
-
 
 </script>

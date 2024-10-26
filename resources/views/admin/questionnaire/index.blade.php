@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Container Fluid-->
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="container">
         @if(session('success'))
     <div class="alert alert-success text-success">
@@ -16,7 +16,7 @@
             <div class="col">
                 <h1 class="mb-3">Add Evaluation</h1>
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAgencyModal">Add Question</button>
-                <table class="table">
+                <table id="table1" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Evaluation</th>
@@ -28,43 +28,50 @@
                     </thead>
                     <tbody>
                         @foreach ($questionItems as $questionItem)
-                               <tr>
-                                    <td>{{ $questionItem->question }}</td>
-                                    <td>{{ $questionItem->points }}</td>
-                                    <td>{{ $questionItem->type }}</td>
-                                    <td>
+                            <tr>
+                                <td>{{ $questionItem->question }}</td>
+                                <td>{{ $questionItem->points }}</td>
+                                <td>{{ $questionItem->type }}</td>
+                                <td>
+                                    <form action="{{ route('admin.updateStatus', $questionItem->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
                                         <div class="form-check">
-                                            @if ($questionItem->status ==1)
-                                            <input class="form-check-input" type="checkbox" value="1" checked id="flexCheckChecked" data-id="{{ $questionItem->id }}" onchange="updateStatus(this)">
-                                            <label class="form-check-label" for="flexCheckChecked">
+                                            <input 
+                                                class="form-check-input" 
+                                                type="checkbox" 
+                                                name="status" 
+                                                value="1" 
+                                                id="flexCheckChecked{{ $questionItem->id }}" 
+                                                {{ $questionItem->status == 1 ? 'checked' : '' }}
+                                                onchange="this.form.submit()">
+                                            <label class="form-check-label" for="flexCheckChecked{{ $questionItem->id }}">
                                                 Include in Evaluation Form
                                             </label>
-                                            @else
-                                            <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" data-id="{{ $questionItem->id }}" onchange="updateStatus(this)">
-                                            <label class="form-check-label" for="flexCheckChecked">
-                                                Include in Evaluation Form
-                                            </label>
-                                            @endif
                                         </div>
-                                    </td>
-                                    
-                                    <td>
-                                        <button type="button" class="btn btn-primary btn-sm view-more  data-id="{{ $questionItem->id }}" 
-                                        data-toggle="modal" data-target="#exampleModal" 
-                                        data-id="{{ $questionItem->id }}"
-                                        data-points="{{ $questionItem->points }}" 
-                                        data-question="{{ $questionItem->question }}" 
-                                        data-type="{{ $questionItem->type }}">
+                                    </form>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-primary btn-sm view-more" 
+                                            data-toggle="modal" data-target="#exampleModal" 
+                                            data-id="{{ $questionItem->id }}"
+                                            data-points="{{ $questionItem->points }}" 
+                                            data-question="{{ $questionItem->question }}" 
+                                            data-type="{{ $questionItem->type }}">
                                         Edit
                                     </button>
-                                    
-                                    
-                                        <button class="btn btn-danger">Delete</button>
-                                    </td>
-                               </tr>
+                                    <button class="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
+                
+                <!-- Pagination Links -->
+                <div class="d-flex justify-content-end">
+                    {{ $questionItems->links() }}
+                </div>
+                
             </div>
         </div>
     </div>
@@ -173,32 +180,40 @@
         </div>
     </div>
 </div>
-@endsection
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
 
 <script>
+ $(document).ready(function() {
     function updateStatus(checkbox) {
         var status = checkbox.checked ? 1 : 0;
         var itemId = $(checkbox).data('id');
-    
+        console.log("Status to update:", status);
+        console.log("Item ID:", itemId);
+
+        // Test AJAX call
         $.ajax({
-            url: '/update-status/' + itemId,
+            url: `/update_status/${itemId}`,
             type: 'PUT',
             data: {
-                _token: '{{ csrf_token() }}',
+                _token: '{{ csrf_token() }}', // Laravel CSRF token
                 status: status
             },
             success: function(response) {
-                alert('Item has been included to Evaluation form.');
+                alert(status ? 'Item included in Evaluation Form.' : 'Item removed from Evaluation Form.');
             },
-            error: function(xhr) {
-                alert('Item has been removed.');
+            error: function(xhr, status, error) {
+                console.error("Error:", status, error);
+                alert('Error updating status.');
             }
         });
     }
 
+    // Checkbox change event
+    $('.form-check-input').on('change', function() {
+        updateStatus(this);
+    });
 
-    $(document).ready(function() {
     $('.view-more').on('click', function() {
         // Get the data attributes from the clicked button
         var id = $(this).data('id');
@@ -212,18 +227,16 @@
         $('#modalType').val(type);
         $('#modalPoints').val(points);
 
-         // Update the form action with the correct student ID
-         var formAction = "{{ route('admin.questionnaire.update', ':id') }}";
+        // Update the form action with the correct student ID
+        var formAction = "{{ route('admin.questionnaire.update', ':id') }}";
         formAction = formAction.replace(':id', id);
-        // $('form').attr('action', formAction);
         $('#exampleModal form').attr('action', formAction);
-
-        
     });
 });
 
 
-
-
     </script>
+@endsection
+<!-- Load jQuery from CDN -->
+
     

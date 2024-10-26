@@ -81,25 +81,25 @@ class SupervisorController extends Controller
     {
         $student = Student::where('id', $id)->first();
 
-        $attendances = Questionnaire::where('type' , 'Attendance')->get();
+        $attendances = Questionnaire::where('type' , 'Attendance')->where('status', '1')->get();
 
-        $punctualities = Questionnaire::where('type' , 'Punctuality')->get();
+        $punctualities = Questionnaire::where('type' , 'Punctuality')->where('status', '1')->get();
 
-        $initiatives = Questionnaire::where('type' , 'Initiative')->get();
+        $initiatives = Questionnaire::where('type' , 'Initiative')->where('status', '1')->get();
 
-        $plannings = Questionnaire::where('type' , 'Ability to Plan Activities')->get();
+        $plannings = Questionnaire::where('type' , 'Ability to Plan Activities')->where('status', '1')->get();
 
-        $cooperations = Questionnaire::where('type' , 'Cooperation')->get();
+        $cooperations = Questionnaire::where('type' , 'Cooperation')->where('status', '1')->get();
 
-        $interests = Questionnaire::where('type' , 'Interest and attitudes towards work')->get();
+        $interests = Questionnaire::where('type' , 'Interest and attitudes towards work')->where('status', '1')->get();
 
-        $fields = Questionnaire::where('type' , 'Major Field of Concentration')->get();
+        $fields = Questionnaire::where('type' , 'Major Field of Concentration')->where('status', '1')->get();
 
-        $appearances = Questionnaire::where('type' , 'Appearance')->get();
+        $appearances = Questionnaire::where('type' , 'Appearance')->where('status', '1')->get();
 
-        $alertness = Questionnaire::where('type' , 'Alertness')->get();
+        $alertness = Questionnaire::where('type' , 'Alertness')->where('status', '1')->get();
 
-        $self_confidence = Questionnaire::where('type' , 'Self-Confidence')->get();
+        $self_confidence = Questionnaire::where('type' , 'Self-Confidence')->where('status', '1')->get();
 
           return view('supervisor.evaluate.evaluation_form',[
             'student' => $student,

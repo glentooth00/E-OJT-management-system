@@ -203,7 +203,7 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
-    Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
+    Route::put('/update_status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('admin.updateStatus');
 
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
