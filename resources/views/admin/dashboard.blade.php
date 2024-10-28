@@ -161,38 +161,40 @@
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
                                         @endif
                                     </td>
-                                    <td class="text-right">
-                                        <div class="d-inline-block">
+                                    <td class="text-right ">
+                                        <div class="d-flex align-items-end">
                                             @if ($student->application_status == 'registered')
-                                             
+                                                <!-- Optional content for 'registered' status -->
                                             @elseif ($student->application_status == 'pending')  
-                                            <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('PUT') <!-- For a PUT request -->
-                                                <button type="submit" class="btn btn-sm btn-success">Approve</button>
-                                            </form>
+                                                <form action="{{ route('student.approve', $student->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-success mr-1" >
+                                                        Approve
+                                                    </button>
+                                                </form>
                                             @endif
                                             
-                                            
                                             <button type="button" class="btn btn-danger btn-sm view-more" 
-                                            data-id="{{ $student->id }}" 
-                                            data-endorsement="{{ $student->endorsement }}"
-                                            data-fullname="{{ $student->fullname }}" 
-                                            data-dob="{{ $student->dob }}" 
-                                            data-idnumber="{{ $student->id_number }}" 
-                                            data-department="{{ $student->department }}" 
-                                            data-course="{{ $student->course }}" 
-                                            data-designation="{{ $student->designation }}" 
-                                            data-applicationstatus="{{ $student->application_status }}"
-                                            data-moa="{{ $student->moa }}"
-                                            data-toggle="modal" 
-                                            data-target="#exampleModal">
-                                            View More <i class="fas fa-chevron-right"></i>
-                                        </button>
-                                        
-
+                                                data-id="{{ $student->id }}" 
+                                                data-endorsement="{{ $student->endorsement }}"
+                                                data-fullname="{{ $student->fullname }}" 
+                                                data-dob="{{ $student->dob }}" 
+                                                data-idnumber="{{ $student->id_number }}" 
+                                                data-department="{{ $student->department }}" 
+                                                data-course="{{ $student->course }}" 
+                                                data-designation="{{ $student->designation }}" 
+                                                data-applicationstatus="{{ $student->application_status }}"
+                                                data-moa="{{ $student->moa }}"
+                                                data-toggle="modal" 
+                                                data-target="#exampleModal"
+                                               >
+                                                View More <i class="fas fa-chevron-right"></i>
+                                            </button>
                                         </div>
                                     </td>
+                                    
+                                    
                                     
                                 </tr>
                             @endforeach
