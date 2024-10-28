@@ -14,6 +14,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ApplicationApproved; 
+use Mail;// Don't forget to include this at the top
 
 class StudentController extends Controller
 {
@@ -183,21 +185,46 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Student status updated successfully');
     }
 
+    // public function approve($id)
+    // {
+    //     // Find the student by ID
+    //     $student = Student::findOrFail($id);
+    
+    //     // Update the student's status to 'registered'
+    //     $student->application_status = 'registered';
+    //     $student->date_registered = Carbon::now('Asia/Manila');
+    
+    //     // Save the changes
+    //     $student->save();
+    
+    //     // /Redirect or return a response
+    //     return redirect()->back()->with('success', 'Student status updated to registered.');
+    // }
+
     public function approve($id)
-    {
+{
+    // Check if the authenticated user is a department head
+    if (Auth::guard('admin')->check()) {
         // Find the student by ID
         $student = Student::findOrFail($id);
-    
-        // Update the student's status to 'registered'
+        
+        // Update the student's status and date registered
         $student->application_status = 'registered';
         $student->date_registered = Carbon::now('Asia/Manila');
-    
+        
         // Save the changes
         $student->save();
-    
-        // /Redirect or return a response
-        return redirect()->back()->with('success', 'Student status updated to registered.');
+
+        // Send approval email to the student
+        Mail::to($student->email)->send(new ApplicationApproved($student));
+
+        // Redirect with success message
+        return redirect()->back()->with('success', 'Student status updated to registered and email notification sent.');
+    } else {
+        // Handle cases where the user is not authorized
+        return redirect()->back()->withErrors(['error' => 'You are not authorized to perform this action.']);
     }
+}
 
     
 
