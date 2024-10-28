@@ -161,15 +161,15 @@
                                             <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
                                         @endif
                                     </td>
-                                    <td class="text-right ">
-                                        <div class="d-flex align-items-end">
+                                    <td class="text-right">
+                                        <div class="d-flex align-items-center">
                                             @if ($student->application_status == 'registered')
                                                 <!-- Optional content for 'registered' status -->
                                             @elseif ($student->application_status == 'pending')  
-                                                <form action="{{ route('student.approve', $student->id) }}" method="POST">
+                                                <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline-block mb-0">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button type="submit" class="btn btn-sm btn-success mr-1" >
+                                                    <button type="submit" class="btn btn-sm btn-success mr-2" style="height: 36px;">
                                                         Approve
                                                     </button>
                                                 </form>
@@ -188,11 +188,12 @@
                                                 data-moa="{{ $student->moa }}"
                                                 data-toggle="modal" 
                                                 data-target="#exampleModal"
-                                               >
+                                                style="height: 36px;">
                                                 View More <i class="fas fa-chevron-right"></i>
                                             </button>
                                         </div>
                                     </td>
+                                    
                                     
                                     
                                     
