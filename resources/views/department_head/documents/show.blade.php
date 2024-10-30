@@ -16,7 +16,7 @@
                     <!-- Apply img-fluid and rounded-circle to make the image responsive and round -->
                     <img src="/storage/{{ $student->id_attachment }}" class="img-fluid rounded-circle pb-3" alt="Avatar" style="max-width: 150px; height: auto;">
                     <h4>{{ $student->fullname }}</h4>
-                    <p>wick@gmail.com</p>
+                    <p>{{ $student->email }}</p>
                     <h5>About</h5>
                     <p>No information available</p>
                 </div>

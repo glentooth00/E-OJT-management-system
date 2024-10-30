@@ -94,6 +94,10 @@ Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
 
+// web.php
+Route::get('/get-department/{course}', [CourseController::class, 'getDepartment']);
+
+
 // Route::get('/student/register', function () {
 //     return view('student.register');
 // })->name('student.register');

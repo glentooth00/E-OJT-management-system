@@ -51,22 +51,22 @@ class StudentController extends Controller
     public function create()
     {
         $schoolYears = Schoolyear::all();
-
-        $courses =  Course::all();
-
+        $courses = Course::all(); // Eager load the department
+        
         $departments = Department::all();
-
         $yearLevels = YearLevel::all();
-
-        return view('student.register',[
+    
+        return view('student.register', [
             'schoolYears' => $schoolYears,
             'courses' => $courses,
             'departments' => $departments,
             'yearLevels' => $yearLevels,
         ]);
-
-        
     }
+    
+    
+    
+    
 
     /**
      * Store a newly created student in storage.

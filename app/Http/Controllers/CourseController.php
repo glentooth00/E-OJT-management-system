@@ -82,4 +82,18 @@ class CourseController extends Controller
     {
         //
     }
+
+// YourController.php
+public function getDepartment($course)
+{
+    $courseData = Course::where('course_initials', $course)->with('department')->first();
+
+    if ($courseData) {
+        return response()->json($courseData); // Return the entire course data with department
+    } else {
+        return response()->json([]); // Return an empty array if not found
+    }
+}
+
+
 }

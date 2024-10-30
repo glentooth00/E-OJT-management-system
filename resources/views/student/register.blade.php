@@ -43,6 +43,8 @@
                         </div>
                     @endif
 
+
+
                     <form action="{{ route('students.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="p-5">
@@ -74,15 +76,13 @@
                                     <label for="" class="text-white">ID number</label>
                                     <input type="text" name="id_number" class="form-control">
                                 </div>
-                                <div class="col-md-6 mt-3">
+                                {{-- <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Course</label>
                                     <select name="course" id="" class="form-control">
                                         <option value="" hidden>Select Course </option>
                                         @foreach ($courses as $course)
                                             <option value="{{ $course->course_initials }}">{{ $course->course_initials }}</option>
                                         @endforeach
-                                        {{-- <option value="BEED"> BEED </option>
-                                        <option value="CIVIL ENGINEERING"> CIVIL ENGINEERING </option> --}}
                                     </select>
                                 </div>
                                 <div class="col-md-6 mt-3">
@@ -93,7 +93,33 @@
                                             <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>}
                                         @endforeach
                                     </select>
+                                </div> --}}
+
+
+                                <div class="col-md-6 mt-3">
+                                    <label for="course" class="text-white">Course</label>
+                                    <select name="course" id="course" class="form-control">
+                                        <option value="" hidden>Select Course</option>
+                                        @foreach ($courses as $course)
+                                        <option value="{{ $course->course_initials }}" 
+                                            data-department="{{ $course->department->department_name ?? '' }}">
+                                        {{ $course->course_initials }}
+                                    </option>
+                                        @endforeach
+                                    </select>
                                 </div>
+                                
+                                <div class="col-md-6 mt-3">
+                                    <label for="department" class="text-white">Department</label>
+                                    <input type="text" name="department" id="department" class="form-control" readonly>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+
+
                                 <div class="col-md-6 mt-3">
                                     <label for="" class="text-white">Address</label>
                                     <input type="text" name="address" class="form-control">
@@ -151,3 +177,43 @@
 </body>
 
 </html>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#course').on('change', function() {
+        var course = $(this).val(); // Get selected course initials
+        if (course) {
+            $.ajax({
+                url: `/get-department/${course}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data); // Log the entire response for debugging
+                    if (data && data.department) {
+                        // Set the department input value
+                        $('#department').val(data.department.department_name);
+                    } else {
+                        // Clear the input field if no department data is found
+                        $('#department').val('');
+                        alert('No department data found for the selected course.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Log the error details
+                    console.error('AJAX Error:', status, error);
+                    alert('Error retrieving data. Please try again.');
+                }
+            });
+        } else {
+            // Clear the department field if no course is selected
+            $('#department').val('');
+            alert('Please select a course.');
+        }
+    });
+});
+
+
+</script>
+
+

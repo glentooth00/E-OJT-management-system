@@ -55,7 +55,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" {{ request()->is('department_head/evaluation*') ? 'active' : '' }} href="{{ route('department_head.evaluation.index') }}">
+        <a class="nav-link" {{ request()->is('department_head/evaluation*') ? 'active' : '' }} href="{{ route(' ') }}">
             <i class="fas fa-solid fa-cogs"></i>
             <span> Intern Evaluations</span>
         </a>

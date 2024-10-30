@@ -172,14 +172,16 @@ class DocumentController extends Controller
         //
     }
 
-    public function documentIndex(){
-
+    public function documentIndex()
+    {
         $user = Auth::user();
-
-        $students = Student::where('course', $user->course)->get();
-
-        return view('department_head.documents.index',[
+    
+        // Change this line to use paginate instead of get
+        $students = Student::where('course', $user->course)->paginate(10);
+    
+        return view('department_head.documents.index', [
             'students' => $students,
         ]);
     }
+    
 }
