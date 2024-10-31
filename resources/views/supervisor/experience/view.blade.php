@@ -15,7 +15,7 @@
         <div class="row mt-5">
 
              @forelse ($dailyExperiences as $experience)
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <div class="card">
                     <div class="card-header">
                         <h2>{{ $experience->student }}`s Experience</h2>
@@ -25,8 +25,11 @@
                             <thead>
                                 <tr>
                                     <th>WEEK NO.</th>
-                                    <th>DESCRIPTION</th>
+                                    <th>ACCOMPLISHMENT</th>
                                     <th>DATE</th>
+                                    <th>DAY</th>
+                                    <th>TIME IN</th>
+                                    <th>TIME OUT</th>
                                     <th>No. of Hours</th>
                                     <th></th>
                                 </tr>
@@ -39,6 +42,11 @@
                                     <td>{{ $experience->week_no }}</td>
                                     <td>{{ $experience->activities }}</td>
                                     <td>{{ \Carbon\Carbon::parse($experience->date)->format('M-d-Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($experience->date)->format('l') }}</td>
+
+                                   
+                                    <td>{{ $experience->time_in }}</td>
+                                    <td>{{ $experience->time_out }}</td>
                                     <td>{{ $experience->no_of_hours }}</td>
                                     <td>
                                         <button 

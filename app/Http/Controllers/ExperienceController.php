@@ -24,6 +24,7 @@ class ExperienceController extends Controller
     
         $studentDatas = $student->fullname;
         $studentId = $student->id;
+        $registeredDate = Carbon::parse($student->date_registered);
         $studentDesignation = $student->designation;
     
         // Get the latest approved experience
@@ -46,7 +47,7 @@ class ExperienceController extends Controller
     $isLoggedIn = $in ? true : false;
     
         $dateNow = Carbon::now('Asia/Manila');
-        $diffInWeek = $dateNow->diffInWeeks(Carbon::now('Asia/Manila')) + 1;
+        $diffInWeek =  $registeredDate->diffInWeeks(Carbon::now('Asia/Manila')) + 1;
     
         return view('student.experience_record.index', [
             'diffInWeek' => $diffInWeek,

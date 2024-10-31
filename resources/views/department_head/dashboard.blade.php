@@ -221,7 +221,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="moaImage" src="{{ asset($student->moa) }}" alt="MOA" class="img-fluid">
+                <img id="moaImage" src="{{ asset($student->moa ?? 'path/to/placeholder/image.png') }}" alt="MOA" class="img-fluid">
+
             </div>
         </div>
     </div>
@@ -245,6 +246,7 @@
             </div>
             <div class="modal-body">
                 {{-- {{ route('admin.students.updateStatus', $student->id) }} --}}
+                @if(isset($student->id))
                 <form action="{{ route('department_head.students.updateStudentStatus', $student->id) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -327,7 +329,9 @@
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
-                
+                @else
+    <p>Student ID is missing. Unable to update status.</p>
+@endif
                 
                 
             </div>  
@@ -427,7 +431,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                @if(isset($student->endorsement) && !empty($student->endorsement))
                 <img id="endorsementImage" src="{{ asset($student->endorsement) }}" alt="Endorsement Letter" class="img-fluid">
+            @else
+                <p class="text-danger">Endorsement letter is missing.</p>
+            @endif
+            
             </div>
         </div>
     </div>

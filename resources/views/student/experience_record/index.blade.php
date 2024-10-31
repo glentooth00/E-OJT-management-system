@@ -71,6 +71,8 @@
                                     <th>WEEK NO.</th>
                                     <th>DESCRIPTION</th>
                                     <th>DATE</th>
+                                    <th>TIME IN</th>
+                                    <th>TIME OUT</th>
                                     <th>No. of Hours</th>
                                     <th></th>
                                 </tr>
@@ -83,6 +85,8 @@
                                     <td>{{ $experience->week_no }}</td>
                                     <td>{{ $experience->activities }}</td>
                                     <td>{{ \Carbon\Carbon::parse($experience->date)->format('M-d-Y') }}</td>
+                                    <td>{{  $experience->time_in  }}</td>
+                                    <td>{{  $experience->time_out  }}</td>
                                     <td>{{ $experience->no_of_hours }}</td>
                                     <td>
                                         <button 
@@ -101,7 +105,7 @@
                                       
 
 
-                                        <button class="btn btn-sm btn-danger">Delete</button>
+                                        {{-- <button class="btn btn-sm btn-danger">Delete</button> --}}
                                     </td>
 
                                 </tr>
@@ -153,8 +157,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="document.getElementById('edit-experience-form').submit();">Save changes</button>
+                {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                <button type="button" class="btn btn-primary" onclick="document.getElementById('edit-experience-form').submit();">Update</button>
             </div>
         </div>
     </div>
