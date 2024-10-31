@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\HealthCertificate;
 use App\Models\Student;
+use App\Models\student_documents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use PDF; // Ensure you have a PDF package like `barryvdh/laravel-dompdf`
 
 class DocumentController extends Controller
 {
@@ -17,19 +21,75 @@ class DocumentController extends Controller
         $student = Auth::guard('student')->user();
         if (!$student) {
             return redirect()->route('login')->withErrors(['message' => 'Please log in to access the dashboard.']);
-        
         }
-        $studentId = $student->id;
 
-        $get_students = Student::where('id', $studentId)->get();
+        // Fetch paginated students
+        $get_students = Student::where('id' , $student->id)->get();
+        $studentId = $student->id;
         
-     
-        return view('student.documents.index',[
+    
+        return view('student.documents.index', [
             'studentId' => $studentId,
             'get_students' => $get_students,
         ]);
     }
 
+    public function uploadDocs(){
+        return view('admin.document.index');
+    }
+    
+    public function uploadMultiple(Request $request)
+    {
+        // Validate the uploaded files
+        $request->validate([
+            'good_moral' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'endorsement_letter' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'letter_of_consent' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+    
+        // Check if the files exist and retrieve them
+        $goodMoralFile = $request->file('good_moral');
+        $endorsementLetterFile = $request->file('endorsement_letter');
+        $letterOfConsentFile = $request->file('letter_of_consent');
+    
+        // // Display file information for debugging
+        // dd([
+        //     'good_moral' => $goodMoralFile ? $goodMoralFile->getClientOriginalName() : 'No file uploaded',
+        //     'endorsement_letter' => $endorsementLetterFile ? $endorsementLetterFile->getClientOriginalName() : 'No file uploaded',
+        //     'letter_of_consent' => $letterOfConsentFile ? $letterOfConsentFile->getClientOriginalName() : 'No file uploaded',
+        // ]);
+    
+        // Store the files and paths
+        $data = [];
+    
+        if ($goodMoralFile) {
+            $goodMoralFileName = time() . '_good_moral_' . $goodMoralFile->getClientOriginalName();
+            $goodMoralFile->storeAs('documents', $goodMoralFileName, 'public');
+            $data['good_moral'] = 'storage/documents/' . $goodMoralFileName;
+        }
+    
+        if ($endorsementLetterFile) {
+            $endorsementLetterFileName = time() . '_endorsement_letter_' . $endorsementLetterFile->getClientOriginalName();
+            $endorsementLetterFile->storeAs('documents', $endorsementLetterFileName, 'public');
+            $data['endorsement_letter'] = 'storage/documents/' . $endorsementLetterFileName;
+        }
+    
+        if ($letterOfConsentFile) {
+            $letterOfConsentFileName = time() . '_letter_of_consent_' . $letterOfConsentFile->getClientOriginalName();
+            $letterOfConsentFile->storeAs('documents', $letterOfConsentFileName, 'public');
+            $data['letter_of_consent'] = 'storage/documents/' . $letterOfConsentFileName;
+        }
+    
+        //Now, save the data to the database (uncomment below to use)
+        student_documents::create($data);
+    
+        return back()->with('success', 'Documents uploaded and saved successfully.');
+    }
+    
+
+    
+    
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -76,10 +136,20 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Document $document)
+    public function show($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        $documents = Document::where('student_id', $id)->get(); // Add ->get() to retrieve the data
+    
+        // Debug the documents
+        // dd($documents);
+    
+        return view('department_head.documents.show', [
+            'student' => $student,
+            'documents' => $documents,
+        ]);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -104,4 +174,34 @@ class DocumentController extends Controller
     {
         //
     }
+
+    public function documentIndex()
+    {
+        $user = Auth::user();
+    
+        // Change this line to use paginate instead of get
+        $students = Student::where('course', $user->course)->paginate(10);
+    
+        return view('department_head.documents.index', [
+            'students' => $students,
+        ]);
+    }
+
+
+    public function downloadPDF(Request $request)
+{
+    // Retrieve the documents and health certificates
+    $documents = student_documents::all();
+    $healthCertificates = HealthCertificate::all();
+
+    // Load a view to generate the PDF
+    $pdf = \Barryvdh\DomPDF\PDF::loadView('pdf.documents', [
+        'documents' => $documents,
+        'healthCertificates' => $healthCertificates,
+    ]);
+
+    // Download the PDF file
+    return $pdf->download('documents.pdf');
+}
+    
 }

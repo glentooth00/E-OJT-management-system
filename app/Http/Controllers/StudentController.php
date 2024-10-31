@@ -7,12 +7,15 @@ use App\Models\Department;
 use App\Models\Moa;
 use App\Models\Schoolyear;
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use App\Models\YearLevel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use App\Mail\ApplicationApproved; 
+use Mail;// Don't forget to include this at the top
 
 class StudentController extends Controller
 {
@@ -21,27 +24,26 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Auth::guard('student')->user();
-        $studentId = $student->id;
+        $students = Auth::guard('student')->user();
 
-  
-
-        // Retrieve the latest weekly report for each week using a subquery
+        $studentId = $students->id;
+    
+        // Retrieve the latest weekly report for each week and day using a subquery
         $latestReports = DB::table('weekly_reports')
-            ->select('week_number', DB::raw('MAX(id) as max_id'))
+            ->select('week_number', 'day_no', DB::raw('MAX(id) as max_id'))
             ->where('student_id', $studentId)
-            ->groupBy('week_number')
+            ->groupBy('week_number', 'day_no')  // Group by both week_number and day_no
             ->get();
-
+    
         // Get the full weekly reports based on the maximum IDs found in the subquery
-        $weeklyReports = WeeklyReport::whereIn('id', $latestReports->pluck('max_id'))->get();
-
+        $weeklyReports = weeklyReport::whereIn('id', $latestReports->pluck('max_id'))->orderBy('day_no', 'asc')->get();
+    
         return view('student.dashboard', [
             'weeklyReports' => $weeklyReports,
             'studentId' => $studentId,
-    
         ]);
     }
+    
 
     /**
      * Show the form for creating a new student.
@@ -49,22 +51,22 @@ class StudentController extends Controller
     public function create()
     {
         $schoolYears = Schoolyear::all();
-
-        $courses =  Course::all();
-
+        $courses = Course::all(); // Eager load the department
+        
         $departments = Department::all();
-
         $yearLevels = YearLevel::all();
-
-        return view('student.register',[
+    
+        return view('student.register', [
             'schoolYears' => $schoolYears,
             'courses' => $courses,
             'departments' => $departments,
             'yearLevels' => $yearLevels,
         ]);
-
-        
     }
+    
+    
+    
+    
 
     /**
      * Store a newly created student in storage.
@@ -84,7 +86,8 @@ class StudentController extends Controller
             'sex' => 'nullable|string|in:MALE,FEMALE',
             'id_attachment' => 'nullable|file|mimes:jpeg,png,pdf|max:2048',
             'application_status' => 'nullable|string',
-            'school_year' => 'nullable|string|max:255'
+            'school_year' => 'nullable|string|max:255',
+            'year_level' => 'nullable|string|max:255'
         ]);
         // dd($validatedData);
 
@@ -94,17 +97,18 @@ class StudentController extends Controller
         if ($request->filled('password')) {
             $validatedData['password'] = Hash::make($validatedData['password']);
         }
+        dd( $validatedData);
 
-        if ($request->hasFile('id_attachment')) {
-            $file = $request->file('id_attachment');
-            $fileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('public/id_attachments', $fileName);
-            $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
-        }
+        // if ($request->hasFile('id_attachment')) {
+        //     $file = $request->file('id_attachment');
+        //     $fileName = $file->getClientOriginalName();
+        //     $filePath = $file->storeAs('public/id_attachments', $fileName);
+        //     $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
+        // }
 
-        Student::create($validatedData);
+        // Student::create($validatedData);
 
-        return redirect()->route('site.index')->with('success', 'Student registered successfully.');
+        // return redirect()->route('site.index')->with('success', 'Student registered successfully.');
     }
 
     /**
@@ -113,6 +117,29 @@ class StudentController extends Controller
     public function show(string $id)
     {
         // Implementation here if needed
+    }
+
+    public function summary($student_id, $day_no, $day, $week_number)
+    {
+        // dd( $student_id, $day_no, $day);
+        // Remove 'day_no' first and check if results are returned
+        $activity_logs = weeklyReport::where('student_id', $student_id)
+        ->where('day_no', $day_no)
+        ->where('day', $day)
+        ->where('week_number', $week_number)
+        ->get();  // Check if this works
+         
+        $day = $day;
+        $day_no = $day_no;
+
+    //  dd( $activity_logs);
+
+        return view('student.weekly_report.summary', [
+            'activity_logs' =>  $activity_logs,
+            'day' => $day,
+            'day_no' => $day_no,
+        ]);
+
     }
 
     /**
@@ -159,20 +186,46 @@ class StudentController extends Controller
         return redirect()->back()->with('success', 'Student status updated successfully');
     }
 
+    // public function approve($id)
+    // {
+    //     // Find the student by ID
+    //     $student = Student::findOrFail($id);
+    
+    //     // Update the student's status to 'registered'
+    //     $student->application_status = 'registered';
+    //     $student->date_registered = Carbon::now('Asia/Manila');
+    
+    //     // Save the changes
+    //     $student->save();
+    
+    //     // /Redirect or return a response
+    //     return redirect()->back()->with('success', 'Student status updated to registered.');
+    // }
+
     public function approve($id)
-    {
+{
+    // Check if the authenticated user is a department head
+    if (Auth::guard('admin')->check()) {
         // Find the student by ID
         $student = Student::findOrFail($id);
-    
-        // Update the student's status to 'registered'
+        
+        // Update the student's status and date registered
         $student->application_status = 'registered';
-    
+        $student->date_registered = Carbon::now('Asia/Manila');
+        
         // Save the changes
         $student->save();
-    
-        // /Redirect or return a response
-        return redirect()->back()->with('success', 'Student status updated to registered.');
+
+        // Send approval email to the student
+        Mail::to($student->email)->send(new ApplicationApproved($student));
+
+        // Redirect with success message
+        return redirect()->back()->with('success', 'Student status updated to registered and email notification sent.');
+    } else {
+        // Handle cases where the user is not authorized
+        return redirect()->back()->withErrors(['error' => 'You are not authorized to perform this action.']);
     }
+}
 
     
 
@@ -198,17 +251,33 @@ class StudentController extends Controller
      */
     public function login(Request $request)
     {
+        // Validate the request data
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+    
+        // Attempt to log the user in
         if (Auth::guard('student')->attempt($credentials)) {
+            // Redirect to the student dashboard on successful login
             return redirect()->route('student.dashboard');
         }
-
-        return back()->withErrors(['email' => 'Invalid credentials']);
+    
+        // If login fails, check the conditions and return appropriate errors
+        $student = Student::where('email', $credentials['email'])->first();
+    
+        if (!$student) {
+            // If the student does not exist
+            return back()->withErrors(['email' => 'No account found with this email address.']);
+        } elseif (!$student->is_active) {
+            // If the account is inactive
+            return back()->withErrors(['email' => 'Your account is inactive. Please contact support.']);
+        } else {
+            // If the password is incorrect
+            return back()->withErrors(['password' => 'The provided password is incorrect.']);
+        }
     }
+    
 
     /**
      * Show the weekly report index for the authenticated student.
@@ -216,14 +285,24 @@ class StudentController extends Controller
     public function weeklyReportIndex()
     {
         $student = Auth::guard('student')->user();
+
         if ($student) {
             $studentId = $student->id;
             $studentName = $student->fullname; // Adjust based on your actual column name for the student's name
-    
-            return view('student.weekly_report.index', compact('studentId', 'studentName'));
+            $registeredDate = Carbon::parse($student->date_registered);
+
+            $weeksPassed = $registeredDate->diffInWeeks(Carbon::now('Asia/Manila'));
+
+            $weeksPassed = ($weeksPassed == 0) ? 1 : $weeksPassed;
+          
+            return view('student.weekly_report.index',[
+                'studentId' => $studentId,
+                'studentName' => $studentName,
+                'weeksPassed' => $weeksPassed,
+            ]);
         }
     
-        return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
+        // return redirect()->route('login')->withErrors(['message' => 'Please log in to access this page.']);
     }
     
 

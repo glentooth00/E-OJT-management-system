@@ -1,17 +1,21 @@
 <?php
 
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ActivityLogsController;
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HealthCertificateController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\SchoolyearController;
+use App\Http\Controllers\StudentDocumentsController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\YearLevelController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +25,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DepartmentHeadController;
 use App\Http\Controllers\WeeklyReportController;
 use App\Http\Controllers\DocumentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -89,6 +94,10 @@ Route::get('/admin/interns-log/show', function () {
 Route::get('/site/index', function () {
     return view('site.index');
 })->name('site.index');
+
+// web.php
+Route::get('/get-department/{course}', [CourseController::class, 'getDepartment']);
+
 
 // Route::get('/student/register', function () {
 //     return view('student.register');
@@ -159,14 +168,13 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/agencies', [AdminController::class, 'agencies'])->name('admin.agencies');
     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
-    Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
+    Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.department_head.index');
     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
     Route::get('/admin/questionnaire', [QuestionnaireController::class, 'index'])->name('admin.questionnaire.index');
     Route::post('/admin/questionnaire/store', [QuestionnaireController::class, 'store'])->name('admin.questionnaire.store');
-    Route::get('/admin/evaluation',[EvaluationController::class, 'index'])->name('admin.evaluation.index');
     Route::post('/admin/evaluation/store', [EvaluationController::class, 'store'])->name('admin.evaluation.store');
     Route::post('/admin/agency/store', [AgencyController::class, 'store'])->name('admin.agency.store');
     //MOA
@@ -174,6 +182,9 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::post('/admin/store', [MoaController::class, 'store'])->name('admin.moa.store');
 
+    //Health cert 
+    Route::get('/admin/health-cert', [HealthCertificateController::class, 'index'])->name('admin.healthCert');
+    Route::post('/admin/health-cert', [HealthCertificateController::class, 'store'])->name('documents.uploadHealthCertificate');
     //Course
     Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
     Route::post('/admin/course/store', [CourseController::class, 'store'])->name('admin.course.store');
@@ -188,6 +199,11 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/department/index', [DepartmentController::class, 'index'])->name('admin.department.index');
     Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
 
+
+    //documents
+   Route::get('/admin/documents/', [DocumentController::class, 'uploadDocs'])->name('admin.documents'); 
+   Route::post('/documents/upload-multiple', [DocumentController::class, 'uploadMultiple'])->name('documents.uploadMultiple');
+
     
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
@@ -195,7 +211,7 @@ Route::middleware('auth:admin')->group(function () {
 
 
 
-    Route::put('/update-status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('update.status');
+    Route::put('/update_status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('admin.updateStatus');
 
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
@@ -236,10 +252,11 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::post('/department_head-logout', [DepartmentHeadController::class, 'logout'])->name('department_head.logout');
 
-    Route::post('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
+    Route::put('/approve-student/{student}', [DepartmentHeadController::class, 'approveStudent'])->name('department_head.approveStudent');
 
-    Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
-    Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('filter.students');
+    // Route::get('/department_head/gallery', [DepartmentHeadController::class, 'indexDepartmentHead'])->name('department_head.gallery.index');
+
+    Route::post('/filter-students', [DepartmentHeadController::class, 'filterStudentsDept'])->name('department_head.filter.students');
 
     Route::get('/show/{id}', [DepartmentHeadController::class, 'show'])->name('show');
 
@@ -264,6 +281,26 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/students/{id}/gallery/{weekNumber}', [GalleryController::class, 'show']);
 
+    Route::get('/department_head/weekly_reports/reports', [WeeklyReportController::class, 'reports'])->name('department_head.weekly_reports.reports');
+
+    Route::get('/weekly_reports/view/{id}', [WeeklyReportController::class, 'showReports'])->name('weekly_reports.view');
+
+    Route::get('/department_head/weekly_reports/{id}/{week_number}/{day}', [DepartmentHeadController::class, 'view'])->name('department_head.weekly_reports.view');
+
+    Route::get('/department_head/documents/index', [DocumentController::class, 'documentIndex'])->name('department_head.documents.index');
+
+    Route::get('/department_head/documents/show/{id}', [DocumentController::class, 'show'])->name('department_head.document.show');
+
+    Route::get('/department_head/evaluation/index', [DepartmentHeadController::class, 'viewEvaluation'])->name('department_head.evaluation.index');
+
+    // routes/web.php
+
+Route::get('/department-head/weekly-report/{student_id}/{week_number}', [WeeklyReportController::class, 'summary'])
+->name('department_head.weekly_reports.summary');
+
+
+
+    Route::get('/department_head/weekly_reports/reports', [WeeklyReportController::class, 'reports'])->name('department_head.weekly_reports.reports');
 
     // Route::get('department-head/index',[MoaController::class, 'index'])->name('department_head.moa.index');
 
@@ -292,16 +329,33 @@ Route::middleware('auth:student')->group(function () {
 
     Route::get('/weekly-report/{weekNumber}', 'WeeklyReportController@show')->name('weeklyReport.show');
 
+    // Route in web.php
+    Route::get('/student/weekly-report/{student_id}/{day_no}/{day}/{week_number}', [StudentController::class, 'summary'])->name('student.weeklyReport.summary');
+
+    Route::post('/download-pdf', [DocumentController::class, 'downloadPDF'])->name('download.pdf');
+
     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
     // routes/web.php
 
 // Route::get('/weekly_report/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 Route::get('/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
 
+    Route::get('/student/experience/index', [ExperienceController::class, 'index'])->name('student.experience.index');
+    Route::put('/student/experience/update/{id}', [ExperienceController::class , 'update'])->name('student.experience.update');
+    Route::post('/student/experience/timeIn', [ExperienceController::class, 'timeIn'])->name('student.experience.timeIn');
+    Route::put('/student/experience/logOut/{id}', [ExperienceController::class, 'timeOut'])->name('student.experience.logOut');
 
     Route::get('/documents/index', [DocumentController::class, 'index'])->name('documents.index');
 
     Route::post('/documents/store', [DocumentController::class, 'store'])->name('documents.store');
+
+    Route::get('/student/documents/download', [StudentDocumentsController::class, 'index'])->name('download.documents');
+
+
+
+
+    Route::get('/documents/download/{id}/{type}', [StudentDocumentsController::class, 'downloadPdf'])->name('documents.downloadPdf');
+
 
 
     // Logout
@@ -329,9 +383,37 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::get('/supervisor/weekly-report/{weekNumber}', [WeeklyReportController::class, 'show'])->name('supervisor.weeklyReport.show');
   
-    Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
+    // Route::get('/supervisor/interns', [SupervisorController::class, 'internsLIst'])->name('supervisor.interns.index');
 
     Route::get('/supervisor/evaluation/{id}', [EvaluationController::class, 'evaluate'])->name('supervisor.evaluation.evaluate');
+
+    Route::get('/supervisor/interns/index', [ActivityLogsController::class, 'index'])->name('supervisor.interns.index');
+    Route::get('/supervisor/show/{id}', [ActivityLogsController::class, 'show'])->name('supervisor.interns.show');
+
+    Route::post('/supervisor/interns/{id}/approve', [ActivityLogsController::class, 'approve'])->name('supervisor.interns.approve');
+
+    Route::get('/supervisor/weekly_report/{student_id}/{day_no}/{day}', [SupervisorController::class, 'studentActivities'])->name('supervisor.weekly_reports.summary');
+
+    Route::get('/supervisor/interns/{student_id}/{day_no}/{day}/{week_number}', [ActivityLogsController::class, 'supervisorSummary'])
+    ->name('supervisor.interns.summary');
+
+    Route::get('/supervisor/experience/index', [ExperienceController::class , 'supIndexView' ])->name('supervisor.experience.index');
+
+    Route::get('/supervisor/interns/{id}/{week_number}/{day}', [ActivityLogsController::class, 'view'])->name('supervisor.interns.view');
+
+    Route::get('/supervisor/list/index', [SupervisorController::class, 'internList'])->name('supervisor.list.index');
+
+    Route::put('/supervisor/approve-experience/{student_id}/{experience_id}', [ExperienceController::class, 'approveExperience'])->name('supervisor.approve_experience.approve');
+
+    Route::get('/supervisor/experience/view/{student_id}/{experience_id}', [ExperienceController::Class, 'viewExperience'])->name('supervisor.experience.view');
+
+    Route::get('/supervisor/evaluate/index', [SupervisorController::class, 'supervisorEvaluate'])->name('supervisor.evaluate.index');
+
+    Route::post('/supervisor/evaluate/evaluation_form/{student_id}', [SupervisorController::class, 'evaluate'])->name('supervisor.evaluate.evaluation_form');
+
+
+
+    Route::post('/supervisor/evaluation/store', [EvaluationController::class, 'evaluateStudent'])->name('supervisor.evaluation.store');
 
 
     // Logout

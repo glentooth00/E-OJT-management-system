@@ -15,18 +15,34 @@
         MENUS
     </div>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('supervisor/interns') ? 'active' : '' }}"
-            href="{{ route('supervisor.interns.index') }}">
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
+            href="{{ route('supervisor.list.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
+            href="{{ route('supervisor.experience.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Intern Experiences</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
-            href="">
+            href="{{ route('supervisor.interns.index') }}">
             <i class="fas fa-fw fa-file"></i>
-            <span>Intern's Evaluation</span>
+            <span>Activity Logs</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('supervisor/evaluate/index') ? 'active' : '' }}"
+            href="{{ route('supervisor.evaluate.index') }}">
+            <i class="fas fa-fw fa-file"></i>
+            <span>Evaluation</span>
         </a>
     </li>
     {{-- <li class="nav-item">
@@ -103,12 +119,6 @@
         <a class="nav-link" href="#">
             <i class="fas fa-solid fa-cogs"></i>
             <span>Settings</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.school_year.create') }}">
-            <i class="fas fa-solid fa-cogs"></i>
-            <span>Add School Year</span>
         </a>
     </li>
 

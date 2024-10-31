@@ -14,29 +14,64 @@
                         {{-- <h5>Student ID: {{ $studentId }}</h5> --}}
                     </div>
                     <div class="card-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>WEEK NO.</th>
-                                    <th>DESCRIPTION</th>
-                                    <th>ACTION</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($weeklyReports as $weeklyReport)
-                                    <tr>
-                                        <td>{{ $weeklyReport->week_number }}</td>
-                                        <td>{{ $weeklyReport->activity_description }}</td>
-                                        <td>
-                                            {{-- <a href="{{ route('weeklyReport.show', $weeklyReport->id) }}" class="btn btn-primary">View</a> --}}
-                                            <a href="{{ route('weeklyReport.show', $weeklyReport->week_number, $weeklyReport->activity_description) }}"
-                                                class="btn btn-primary btn-sm">View</a>
+                        @php
+    // Array mapping integers to day names
+    $daysOfWeek = [
+        1 => 'Monday',
+        2 => 'Tuesday',
+        3 => 'Wednesday',
+        4 => 'Thursday',
+        5 => 'Friday',
+        6 => 'Saturday',
+        7 => 'Sunday',
+    ];
+@endphp
 
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>WEEK</th>
+            <th>DAY</th>
+            <th>DAY NO.</th>
+            <th>DESCRIPTION</th>
+            <th>ACTIVITY REPORT STATUS</th>
+            <th>ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($weeklyReports as $weeklyReport)
+            <tr>
+                <!-- Map day_no (integer) to corresponding day name -->
+                <td>Week - {{ $weeklyReport->week_number  }}</td>
+                <td>{{ $daysOfWeek[$weeklyReport->day_no] ?? 'Unknown' }}</td>
+                <td>Day {{ $weeklyReport->day_no }}</td>
+                <td>{{ $weeklyReport->activity_description }}</td>
+                <td>
+                    
+                    @if ($weeklyReport->status == 'Approved')
+                        <label for="" class="badge badge-success p-2">{{ $weeklyReport->status }}</label>
+                    @else
+                        <label for="" class="badge badge-warning p-2">{{ $weeklyReport->status }}</label>
+                    @endif
+
+                </td>
+                <td>
+                    @if (isset($weeklyReport->student_id, $weeklyReport->day_no, $weeklyReport->day))
+                    <a href="{{ route('student.weeklyReport.summary', [$weeklyReport->student_id, $weeklyReport->day_no, $weeklyReport->day, $weeklyReport->week_number]) }}" 
+                       class="btn btn-primary btn-sm">View Activity</a>
+                @else
+                    <p>Missing required data to view activity.</p>
+                @endif
+                
+                     
+
+
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
+
                     </div>
                 </div>
             </div>

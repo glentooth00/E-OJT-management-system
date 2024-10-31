@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -12,9 +13,13 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $departments = Department::all();
+
+
         $courses = Course::all();
         return view('admin.course.index',[
             'courses' => $courses,
+            'departments' => $departments,
         ]);
     }
 
@@ -23,20 +28,27 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        $courses = Course::all(); // Fetch all courses
+        return view('department_head.departmentHead.index', [
+            'courses' => $courses,
+        ]);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
 
+
+
         $course = $request->validate([
             'course' => 'nullable|string|max:255',
             'course_code' => 'nullable|string|max:255',
             'course_initials' => 'nullable|string|max:255',
+            'department_id' =>'nullable|string|max:255',
         ]);
+        
         
         Course::create($course);
 
@@ -46,10 +58,14 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
-    {
-        //
-    }
+    // public function show(Course $course)
+    // {
+    //     $courses = Course::all();
+    //     dd($courses);
+    //     return view('department_head.departmentHead.index',[
+    //         'courses' => $courses,
+    //     ]);
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -74,4 +90,18 @@ class CourseController extends Controller
     {
         //
     }
+
+// YourController.php
+public function getDepartment($course)
+{
+    $courseData = Course::where('course_initials', $course)->with('department')->first();
+
+    if ($courseData) {
+        return response()->json($courseData); // Return the entire course data with department
+    } else {
+        return response()->json([]); // Return an empty array if not found
+    }
+}
+
+
 }

@@ -36,7 +36,7 @@
          </div>
      </li> --}}
 {{-- ======= --}}
-         <a class="nav-link {{ request()->is('/student/dashboard') ? 'active' : '' }}" href="/student/experience_record">
+         <a class="nav-link {{ request()->is('/student/dashboard') ? 'active' : '' }}" href="{{ route('student.experience.index') }}">
              <i class="fa fa-file" aria-hidden="true"></i>
              <span>Experience Record</span>
          </a>
@@ -49,7 +49,7 @@
         </a>
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/download">Download Form</a>
+            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="{{ route('download.documents') }}">Download Form</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/upload">Upload Form</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="#">Endorsement Letter</a>
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/printables/letter-of-intent">Picture With Description</a>
@@ -61,7 +61,7 @@
          <a class="nav-link {{ request()->is('weekly-report/index') ? 'active' : '' }}"
              href="{{ route('student.weeklyReportIndex') }}">
              <i class="fa fa-clock"></i>
-             <span>Weekly Logs</span>
+             <span>Daily Logs</span>
          </a>
      </li>
      <li class="nav-item">

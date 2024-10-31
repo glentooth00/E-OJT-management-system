@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Questionnaire;
 use App\Models\Student;
 use App\Models\Category;
 use App\Models\Supervisor;
@@ -21,6 +22,28 @@ class SupervisorController extends Controller
             'supervisor_accounts' => $supervisor_accounts
         ]);
     }
+
+    public function internList(Request $request) {
+    
+        $searchTerm = $request->input('search');
+        $course = $request->input('course');
+    
+        $students = Student::when($searchTerm, function ($query, $searchTerm) {
+            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+        })->when($course, function ($query, $course) {
+            return $query->where('course', $course);
+        })
+        // Add condition to filter by MDRRMO designation
+        ->where('designation', 'MDRRMO')
+        ->paginate(10);
+    
+        return view('supervisor.list.index', [
+            'students' => $students,
+            'searchTerm' => $searchTerm,
+            'course' => $course,
+        ]);
+    }
+    
 
     public function internsLIst()
     {
@@ -51,7 +74,46 @@ class SupervisorController extends Controller
 
     public function create()
     {
-        //
+       //
+    }
+
+    public function evaluate($id)
+    {
+        $student = Student::where('id', $id)->first();
+
+        $attendances = Questionnaire::where('type' , 'Attendance')->where('status', '1')->get();
+
+        $punctualities = Questionnaire::where('type' , 'Punctuality')->where('status', '1')->get();
+
+        $initiatives = Questionnaire::where('type' , 'Initiative')->where('status', '1')->get();
+
+        $plannings = Questionnaire::where('type' , 'Ability to Plan Activities')->where('status', '1')->get();
+
+        $cooperations = Questionnaire::where('type' , 'Cooperation')->where('status', '1')->get();
+
+        $interests = Questionnaire::where('type' , 'Interest and attitudes towards work')->where('status', '1')->get();
+
+        $fields = Questionnaire::where('type' , 'Major Field of Concentration')->where('status', '1')->get();
+
+        $appearances = Questionnaire::where('type' , 'Appearance')->where('status', '1')->get();
+
+        $alertness = Questionnaire::where('type' , 'Alertness')->where('status', '1')->get();
+
+        $self_confidence = Questionnaire::where('type' , 'Self-Confidence')->where('status', '1')->get();
+
+          return view('supervisor.evaluate.evaluation_form',[
+            'student' => $student,
+            'attendances' => $attendances,
+            'punctualities' => $punctualities,
+            'initiatives' => $initiatives,
+            'plannings' => $plannings,
+            'cooperations' => $cooperations,
+            'interests' => $interests,
+            'fields' => $fields,
+            'appearances' => $appearances,
+            'alertness' => $alertness,
+            'self_confidence' => $self_confidence,
+        ]);
     }
 
     public function store(Request $request)
@@ -78,6 +140,10 @@ class SupervisorController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Supervisor account created successfully.');
+    }
+
+    public function studentActivities($student_id, $day, $day_no){
+        dd($student_id, $day, $day_no);
     }
 
     public function show(Supervisor $supervisor)
@@ -123,5 +189,23 @@ class SupervisorController extends Controller
     public function destroy(Supervisor $supervisor)
     {
         //
+    }
+
+
+    public function supervisorEvaluate(){
+
+        $user =  Auth::user();
+
+        $office = $user->office;
+
+        $students = Student::where('designation', $office)->paginate();
+
+        return view('supervisor.evaluate.index', [
+            'students' => $students,
+        ]);
+    }
+
+    public function evaluationForm(){
+        return view('supervisor.evaluate.evaluation_form');
     }
 }

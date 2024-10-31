@@ -12,14 +12,13 @@ class QuestionnaireController extends Controller
      */
     public function index()
     {
-        $questionItems = Questionnaire::all();
-
-        // dd($questionItems);
-
+        $questionItems = Questionnaire::simplePaginate(10); // Adjust 10 as per your desired items per page
+    
         return view('admin.questionnaire.index', [
             'questionItems' => $questionItems,
         ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -68,18 +67,19 @@ class QuestionnaireController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function updateStatus(Request $request, $id)
-    {
-        // Find the record by ID
-        $item = Questionnaire::findOrFail($id);
-    
-        // Update the status
-        $item->status = $request->input('status');
-        $item->save();
-    
-        // Return a success response
-        return response()->json(['message' => 'Status updated successfully.']);
-    }
+
+    // Controller Method to update statu
+
+public function updateStatus(Request $request, $id)
+{
+    // Retrieve the item by ID and update its status
+    $questionItem = Questionnaire::findOrFail($id);
+    $questionItem->status = $request->input('status') ? 1 : 0;
+    $questionItem->save();
+
+    return back()->with('status', 'Status updated successfully');
+}
+
     
 
     /**
