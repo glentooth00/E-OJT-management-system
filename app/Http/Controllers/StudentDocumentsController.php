@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HealthCertificate;
 use App\Models\student_documents;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -17,8 +18,11 @@ class StudentDocumentsController extends Controller
     {
         $documents = student_documents::get();
 
+        $healthCertificates = HealthCertificate::get();
+
         return view('student.download_&_upload.download', [
             'documents' => $documents,
+            'healthCertificates' => $healthCertificates,
         ]);
     }
 

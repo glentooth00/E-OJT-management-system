@@ -77,6 +77,28 @@
                                     </td>
                                 </tr>
                             @endforeach
+                            <!-- medical certificate -->
+                            @foreach ($healthCertificates as $healthCertificate)
+                                 <tr>
+                                <td>
+                                    @if (empty($healthCertificate->file_path))
+                                    no document
+                                @else
+                                    <h5>Medical Certificate</h5>
+                                @endif
+                                </td>
+                                <td>
+                                    <img src="{{ asset($healthCertificate->file_path) }}" alt="Letter of Consent" style="max-width: 150px;">
+                                </td>
+                                <td>
+                                 
+                                    <a href="{{ asset($healthCertificate->file_path) }}" download class="btn btn-primary">
+                                        Download
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                           
                         </tbody>
                     </table>
                 </div>

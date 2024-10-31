@@ -10,6 +10,7 @@ use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ExperienceController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\HealthCertificateController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
@@ -181,6 +182,9 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::post('/admin/store', [MoaController::class, 'store'])->name('admin.moa.store');
 
+    //Health cert 
+    Route::get('/admin/health-cert', [HealthCertificateController::class, 'index'])->name('admin.healthCert');
+    Route::post('/admin/health-cert', [HealthCertificateController::class, 'store'])->name('documents.uploadHealthCertificate');
     //Course
     Route::get('/admin/course/index', [CourseController::class, 'index'])->name('admin.course.index');
     Route::post('/admin/course/store', [CourseController::class, 'store'])->name('admin.course.store');

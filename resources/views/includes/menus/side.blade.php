@@ -51,6 +51,8 @@
 
 
 
+
+
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
             href="{{ route('admin.departmentHead.department_head') }}">
@@ -203,6 +205,14 @@
             <span>Endorsement letter </span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/healthCert') ? 'active' : '' }}" href="{{ route('admin.healthCert') }}">
+            <i class="fas fa-regular fa-building"></i>
+            <span>Health Certificate</span>
+        </a>
+    </li>
+
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}"
             href="{{ route('admin.moa.index') }}">

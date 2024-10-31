@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -12,9 +13,13 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $departments = Department::all();
+
+
         $courses = Course::all();
         return view('admin.course.index',[
             'courses' => $courses,
+            'departments' => $departments,
         ]);
     }
 
@@ -36,11 +41,14 @@ class CourseController extends Controller
     {
 
 
+
         $course = $request->validate([
             'course' => 'nullable|string|max:255',
             'course_code' => 'nullable|string|max:255',
             'course_initials' => 'nullable|string|max:255',
+            'department_id' =>'nullable|string|max:255',
         ]);
+        
         
         Course::create($course);
 
