@@ -97,17 +97,18 @@ class StudentController extends Controller
         if ($request->filled('password')) {
             $validatedData['password'] = Hash::make($validatedData['password']);
         }
+        dd( $validatedData);
 
-        if ($request->hasFile('id_attachment')) {
-            $file = $request->file('id_attachment');
-            $fileName = $file->getClientOriginalName();
-            $filePath = $file->storeAs('public/id_attachments', $fileName);
-            $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
-        }
+        // if ($request->hasFile('id_attachment')) {
+        //     $file = $request->file('id_attachment');
+        //     $fileName = $file->getClientOriginalName();
+        //     $filePath = $file->storeAs('public/id_attachments', $fileName);
+        //     $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
+        // }
 
-        Student::create($validatedData);
+        // Student::create($validatedData);
 
-        return redirect()->route('site.index')->with('success', 'Student registered successfully.');
+        // return redirect()->route('site.index')->with('success', 'Student registered successfully.');
     }
 
     /**

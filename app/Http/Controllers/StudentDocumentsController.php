@@ -6,6 +6,7 @@ use App\Models\HealthCertificate;
 use App\Models\student_documents;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+
 use Storage;
 
 
@@ -14,17 +15,37 @@ class StudentDocumentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $documents = student_documents::get();
+    // public function index()
+    // {
+    //     $documents = student_documents::get();
 
-        $healthCertificates = HealthCertificate::get();
+    //     $healthCertificates = HealthCertificate::get();
+
+    //     return view('student.download_&_upload.download', [
+    //         'documents' => $documents,
+    //         'healthCertificates' => $healthCertificates,
+    //     ]);
+    // }
+
+    public function index()
+{
+    try {
+        // Retrieve documents with pagination
+        $documents = student_documents::paginate(10); // Change the number as needed for pagination
+
+        // Retrieve health certificates with pagination
+        $healthCertificates = HealthCertificate::paginate(10); // Adjust pagination as needed
 
         return view('student.download_&_upload.download', [
             'documents' => $documents,
             'healthCertificates' => $healthCertificates,
         ]);
+    } catch (\Exception $e) {
+        // Handle exceptions and return an appropriate error message
+        return back()->withErrors(['error' => 'Unable to fetch documents: ' . $e->getMessage()]);
     }
+}
+
 
     public function downloadPdf($id, $type)
     {

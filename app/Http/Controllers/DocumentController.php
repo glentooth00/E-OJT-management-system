@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\HealthCertificate;
 use App\Models\Student;
 use App\Models\student_documents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
+use PDF; // Ensure you have a PDF package like `barryvdh/laravel-dompdf`
 
 class DocumentController extends Controller
 {
@@ -183,5 +186,22 @@ class DocumentController extends Controller
             'students' => $students,
         ]);
     }
+
+
+    public function downloadPDF(Request $request)
+{
+    // Retrieve the documents and health certificates
+    $documents = student_documents::all();
+    $healthCertificates = HealthCertificate::all();
+
+    // Load a view to generate the PDF
+    $pdf = \Barryvdh\DomPDF\PDF::loadView('pdf.documents', [
+        'documents' => $documents,
+        'healthCertificates' => $healthCertificates,
+    ]);
+
+    // Download the PDF file
+    return $pdf->download('documents.pdf');
+}
     
 }

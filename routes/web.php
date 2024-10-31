@@ -332,6 +332,7 @@ Route::middleware('auth:student')->group(function () {
     // Route in web.php
     Route::get('/student/weekly-report/{student_id}/{day_no}/{day}/{week_number}', [StudentController::class, 'summary'])->name('student.weeklyReport.summary');
 
+    Route::post('/download-pdf', [DocumentController::class, 'downloadPDF'])->name('download.pdf');
 
     // Route::get('/weekly-report/show/{id}', [WeeklyReportController::class, 'show'])->name('weeklyReport.show');
     // routes/web.php
