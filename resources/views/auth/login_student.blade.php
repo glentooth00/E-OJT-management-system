@@ -31,11 +31,21 @@
                         <h1>E-OJT MANAGEMENT SYSTEM</h1>
                     </div>
                 </div>
-                <div class="col-lg-4 pt-5 btns bg-primary">
+                <div class="col-lg-4 pt-5 btns" style="background-color: #4267B2;">
                     <a href="/site/index" class="btn btn-outline-light btn-lg">
                         <span class="bi bi-arrow-left"></span> Back
                     </a>
                     <form action="{{ route('student.login') }}" method="POST">
+                        @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
                         @csrf
                         <div class="p-5">
                             <div class="text-header text-light text-center mb-5">

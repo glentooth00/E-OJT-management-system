@@ -6,7 +6,7 @@ use App\Models\Archive;
 use App\Models\Document;
 use App\Models\Schoolyear;
 use App\Models\Student;
-use App\Models\WeeklyReport;
+use App\Models\weeklyReport;
 use Illuminate\Http\Request;
 
 class ArchiveController extends Controller
@@ -120,7 +120,7 @@ class ArchiveController extends Controller
         $student = Student::findOrFail($id);
 
         // Retrieve the student's activities
-        $student_activities = WeeklyReport::where('student_id', $id)->get();
+        $student_activities = weeklyReport::where('student_id', $id)->get();
 
         // Retrieve the student's documents
         $student_documents = Document::where('student_id', $id)->get();

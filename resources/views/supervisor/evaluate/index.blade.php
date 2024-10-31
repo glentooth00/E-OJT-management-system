@@ -1,12 +1,12 @@
 @extends('includes.layouts.supervisor')
 
-@section('page-title', 'Agency Supervisor')
+@section('page-title', 'Intern Evaluation')
 
 @section('content')
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800">Evaluation</h1>
         </div>
 
         <section>
@@ -66,14 +66,19 @@
                 </div> --}}
             </div>
         </section>
-
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    
         <section class="mt-5">
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
 
                     {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
+                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}} 
 
                     {{-- <select name="filter" onchange="this.form.submit()">
                                 <option value="">All</option>
@@ -83,11 +88,36 @@
                                 </option>
                             </select> --}}
                     {{-- </div>
-                    </form> --}}
+                    </form>--}}
+
+                    
 
                 </div>
                 <div class="table-responsive">
-                    {{-- --}}
+                    <table id="table" class="table">
+                        <thead>
+                            <th>Student</th>
+                            <th>Designation</th>
+                            <th>Course & Year Lvl</th>
+                            <th>Actions</th>
+                        </thead>
+                        <tbody>
+                            @foreach ($students as $student)
+                                <tr>
+                                    <td>{{ $student->fullname }}</td>
+                                    <td>{{ $student->designation }}</td>
+                                    <td>{{ $student->course }} {{ $student->year_level }}</td>
+                                    <td>
+                                        <form action="{{ route('supervisor.evaluate.evaluation_form',  $student->id) }}" method="post">
+                                            @csrf
+                                              <button class="btn  btn-success btn-sm">Evaluate</button>
+                                        </form>
+                                      
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
         </section>
     </div>

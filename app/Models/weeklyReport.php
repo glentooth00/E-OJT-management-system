@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class WeeklyReport extends Model
+class weeklyReport extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,8 @@ class WeeklyReport extends Model
     protected $table = 'weekly_reports';
 
     // Define the fillable attributes for mass assignment
-    protected $fillable = [
-        'studentname','student_id', 'week_number', 'activity_description', 'file_path',
-    ];
+
+    protected $guarded = [];
 
     protected $casts = [
         'photos' => 'array',

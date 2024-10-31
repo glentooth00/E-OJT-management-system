@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
@@ -13,8 +14,10 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
+        $courses = Course::all();
         return view('admin.department.index',[
-            'departments' => $departments
+            'departments' => $departments,
+            'courses' => $courses
         ]);
     }
 

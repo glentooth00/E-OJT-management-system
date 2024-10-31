@@ -65,6 +65,15 @@
                             <input type="text" class="form-control" name="course_initials" id="course_initials"
                                 placeholder="">
                         </div>
+                        <div class="form-group">
+                            <label for="school_year" class="badge text-dark">Department</label>
+                            <select  class="form-select" name="department_id">
+                                <option value="No selection" hidden>Select Department</option>
+                                @foreach ($departments as $department)
+                                <option value="{{ $department->id }}">{{ $department->department_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">

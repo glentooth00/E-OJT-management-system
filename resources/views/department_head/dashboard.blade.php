@@ -1,7 +1,7 @@
 @extends('includes.layouts.department')
 
 
-@section('page-title', 'OJT Supervisor')
+@section('page-title', 'Chairperson')
 
 @section('content')
 <style>
@@ -73,6 +73,19 @@
             </div>
         </section>
 
+        @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger">
+        {{ implode('', $errors->all(':message')) }}
+    </div>
+@endif
+
+
         <section class="mt-5">
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -92,7 +105,7 @@
                     </form> --}}
 
                 </div>
-                <div class="table-responsive">
+                <div class="table-responsive ">
                     <table class="table align-items-center table-flush">
                         <thead class="thead-light">
                             <tr>
@@ -159,7 +172,7 @@
                                             @if ($student->application_status == 'registered')
                                              
                                             @elseif ($student->application_status == 'pending')  
-                                            <form action="{{ route('student.approve', $student->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('department_head.approveStudent', $student->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT') <!-- For a PUT request -->
                                                 <button type="submit" class="btn btn-sm btn-success">Approve</button>
@@ -208,7 +221,8 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="moaImage" src="{{ asset($student->moa) }}" alt="MOA" class="img-fluid">
+                <img id="moaImage" src="{{ asset($student->moa ?? 'path/to/placeholder/image.png') }}" alt="MOA" class="img-fluid">
+
             </div>
         </div>
     </div>
@@ -232,6 +246,7 @@
             </div>
             <div class="modal-body">
                 {{-- {{ route('admin.students.updateStatus', $student->id) }} --}}
+                @if(isset($student->id))
                 <form action="{{ route('department_head.students.updateStudentStatus', $student->id) }}" method="post">
                     @csrf
                     @method('PUT')
@@ -311,10 +326,12 @@
                 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
-                
+                @else
+    <p>Student ID is missing. Unable to update status.</p>
+@endif
                 
                 
             </div>  
@@ -414,7 +431,12 @@
                 </button>
             </div>
             <div class="modal-body">
+                @if(isset($student->endorsement) && !empty($student->endorsement))
                 <img id="endorsementImage" src="{{ asset($student->endorsement) }}" alt="Endorsement Letter" class="img-fluid">
+            @else
+                <p class="text-danger">Endorsement letter is missing.</p>
+            @endif
+            
             </div>
         </div>
     </div>
