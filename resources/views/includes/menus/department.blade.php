@@ -60,6 +60,13 @@
             <span> Intern Evaluations</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" {{ request()->is('department_head/report*') ? 'active' : '' }} href="{{ route('department_head.report.index') }}">
+            <i class="fas fa-solid fa-cogs"></i>
+            <span> Reports</span>
+        </a>
+    </li>
     
 
     <hr class="sidebar-divider">

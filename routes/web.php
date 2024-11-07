@@ -14,6 +14,7 @@ use App\Http\Controllers\HealthCertificateController;
 use App\Http\Controllers\MoaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SchoolyearController;
 use App\Http\Controllers\StudentDocumentsController;
 use App\Http\Controllers\SupervisorController;
@@ -209,9 +210,15 @@ Route::middleware('auth:admin')->group(function () {
 
     Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');
 
+    //Report
+    Route::get('/admin/report', [ReportsController::class, 'index'])->name('reports.index');
+    // Route for printing the filtered data
+Route::get('/admin/report/print', [ReportsController::class, 'print'])->name('reports.print');
 
+    // Route::get('/reports', [ReportsController::class, 'index'])->name('students.reports');
 
     Route::put('/update_status/{id}', [QuestionnaireController::class, 'updateStatus'])->name('admin.updateStatus');
+
 
 
     Route::get('/students/{id}', [ArchiveController::class, 'showStudent'])->name('student.show');
@@ -292,6 +299,9 @@ Route::middleware('auth:department_head')->group(function () {
     Route::get('/department_head/documents/show/{id}', [DocumentController::class, 'show'])->name('department_head.document.show');
 
     Route::get('/department_head/evaluation/index', [DepartmentHeadController::class, 'viewEvaluation'])->name('department_head.evaluation.index');
+
+    Route::get('/department_head/report', [ReportsController::class, 'deptHeadReport'])->name('department_head.reports.index');
+    // Route::get('/admin/report', [ReportsController::class, 'index'])->name('reports.index');
 
     // routes/web.php
 

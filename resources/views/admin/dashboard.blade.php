@@ -102,11 +102,11 @@
                         <thead class="thead-light">
                             <tr>
                                 <th style="width:10%;">ID</th>
-                                <th>DOB</th>
+                                {{-- <th>DOB</th> --}}
                                 <th>ID Number</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
-                                <th>Assigned to</th>
+                                <th>Agency</th>
                                 <th>MOA</th>
                                 <th>Endorsement Letter</th>
                                 <th>Application status</th>
@@ -117,7 +117,7 @@
                             @foreach ($filtered_students as $student)
                                 <tr>
                                     <td>{{ $student->fullname }}</td>
-                                    <td>{{ $student->dob }}</td>
+                                    {{-- <td>{{ $student->dob }}</td> --}}
                                     <td>{{ $student->id_number }}</td>
                                     <td>{{ $student->department }}</td>
                                     <td>{{ $student->course }}</td>

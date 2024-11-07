@@ -48,6 +48,12 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('admin/reports') ? 'active' : '' }}" href="{{ route('reports.index') }}">
+            <i class="fas fa-regular fa-building"></i>
+            <span>Reports</span>
+        </a>
+    </li>
 
 
 
