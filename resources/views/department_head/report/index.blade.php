@@ -8,7 +8,7 @@
 
         <!-- Filter Form for Search and Course -->
         <div class="mb-4">
-            <form action="{{ route('department_head.reports.index') }}" method="GET" class="form-inline d-flex justify-content-between align-items-center">
+            <form action="{{ route('department_head.report.index') }}" method="GET" class="form-inline d-flex justify-content-between align-items-center">
                 <div class="d-flex">
                     <!-- Course Filter -->
                     <label for="course" class="mr-2">Course:</label>

@@ -300,7 +300,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('/department_head/evaluation/index', [DepartmentHeadController::class, 'viewEvaluation'])->name('department_head.evaluation.index');
 
-    Route::get('/department_head/report', [ReportsController::class, 'deptHeadReport'])->name('department_head.reports.index');
+    Route::get('/department_head/report', [ReportsController::class, 'deptHeadReport'])->name('department_head.report.index');
     // Route::get('/admin/report', [ReportsController::class, 'index'])->name('reports.index');
 
     // routes/web.php
