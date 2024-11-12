@@ -122,8 +122,11 @@ class DepartmentHeadController extends Controller
     public function departmentIndex(){
         $department_heads = DepartmentHead::all();
 
+        $departments = Department::get();
+
         return view('admin.departmentHead.index', [
             'department_heads' => $department_heads,
+            'departments' => $departments,
         ]);
     }
 
@@ -240,18 +243,59 @@ class DepartmentHeadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DepartmentHead $departmentHead)
+    public function update(Request $request)
     {
-        //
+        // Find the department head by ID
+        $department_head = DepartmentHead::findOrFail($request->id);
+    
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255|unique:department_heads,email,' . $request->id,
+            'department' => 'required|string|exists:departments,department_name', // Validate based on department_name
+        ]);
+    
+        try {
+            // Update department head fields
+            $department_head->first_name = $request->input('first_name');
+            $department_head->middle_name = $request->input('middle_name');
+            $department_head->last_name = $request->input('last_name');
+            $department_head->email = $request->input('email');
+            $department_head->department = $request->input('department'); // Store the department name
+            
+    
+            // Save the updated department head
+            $department_head->save();
+    
+            // Redirect back with success message
+            return back()->with('success', 'Department Head updated successfully!');
+    
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Department Head Update Error: ' . $e->getMessage());
+    
+            // Redirect back with an error message
+            return back()->withErrors('There was an issue updating the Department Head. Please try again.');
+        }
     }
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(DepartmentHead $departmentHead)
     {
-        //
+        // Delete the department head
+        $departmentHead->delete();
+    
+        // Redirect back with a success message
+        return back()->with('success', 'Department Head deleted successfully!');
     }
+    
 
     public function approveStudent(Request $request, Student $student)
     {

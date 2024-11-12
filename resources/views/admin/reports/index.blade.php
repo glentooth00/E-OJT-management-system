@@ -6,7 +6,7 @@
     <div class="container mt-4">
         <h1 class="mb-4">Reports</h1>
 
-        <!-- Filter Form for Search and Course -->
+        <!-- Filter Form for Search, Course, Year Level, and Agency -->
         <div class="mb-4">
             <form action="{{ route('reports.index') }}" method="GET" class="form-inline d-flex justify-content-between align-items-center">
                 <div class="d-flex">
@@ -20,7 +20,7 @@
                             </option>
                         @endforeach
                     </select>
-        
+            
                     <!-- Year Level Filter -->
                     <label for="year_level" class="mr-2">Year Level:</label>
                     <select name="year_level" id="year_level" class="form-control mr-2">
@@ -34,14 +34,25 @@
                             </option>
                         @endforeach
                     </select>
-        
+            
+                    <!-- Agency Filter -->
+                    <label for="agency" class="mr-2">Agency:</label>
+                    <select name="agency" id="agency" class="form-control mr-2">
+                        <option value="">Select Agency</option>
+                        @foreach ($agencies as $agency)
+                            <option value="{{ $agency->agency_name }}" {{ request('agency') == $agency->agency_name ? 'selected' : '' }}>
+                                {{ $agency->agency_name }}
+                            </option>
+                        @endforeach
+                    </select>
+            
                     <!-- Search Bar -->
                     <label for="search" class="mr-2">Search:</label>
                     <input type="text" name="search" id="search" class="form-control mr-2" placeholder="Search by Name, ID, Course" value="{{ request('search') }}">
-        
+            
                     <button type="submit" class="btn btn-primary">Filter</button>
                 </div>
-        
+            
                 <!-- Print Button (aligned to the right) -->
                 <a href="{{ route('reports.print', request()->query()) }}" class="btn btn-success mt-3 btn-print" target="_blank">Print All Data</a>
             </form>

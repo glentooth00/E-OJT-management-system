@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
 use App\Models\Course;
+use App\Models\DepartmentHead;
 use App\Models\Reports;
 use App\Models\Student;
 use App\Models\YearLevel;
@@ -20,41 +22,48 @@ class ReportsController extends Controller
 
      public function index(Request $request)
      {
-         $query = Student::query();
-     
-         // Fetch all courses and year levels for filters
+         // Fetch all courses, year levels, and agencies for filters
          $courses = Course::all();
          $yearLevels = YearLevel::all();
+         $agencies = Agency::all();
      
-         // Search filter
-    // Apply filters based on request (optional)
-    $students = Student::query()
-        ->when($request->course, function ($query) use ($request) {
-            return $query->where('course', $request->course);
-        })
-        ->when($request->year_level, function ($query) use ($request) {
-            return $query->where('year_level', $request->year_level);
-        })
-        ->when($request->search, function ($query) use ($request) {
-            return $query->where('fullname', 'like', '%' . $request->search . '%')
-                ->orWhere('id_number', 'like', '%' . $request->search . '%');
-        })
-        ->paginate(10);  // Paginate with 5 students per page
+         // Build the query for filtering students
+         $students = Student::query()
+             ->when($request->course, function ($query) use ($request) {
+                 return $query->where('course', $request->course);
+             })
+             ->when($request->year_level, function ($query) use ($request) {
+                 return $query->where('year_level', $request->year_level);
+             })
+             ->when($request->search, function ($query) use ($request) {
+                 return $query->where(function ($q) use ($request) {
+                     $q->where('fullname', 'like', '%' . $request->search . '%')
+                       ->orWhere('id_number', 'like', '%' . $request->search . '%')
+                       ->orWhere('course', 'like', '%' . $request->search . '%');
+                 });
+             })
+             ->when($request->agency, function ($query) use ($request) {
+                 return $query->where('designation', $request->agency);
+             })
+             ->paginate(10); // Paginate with 10 students per page
      
          return view('admin.reports.index', [
              'students' => $students,
              'courses' => $courses,
              'yearLevels' => $yearLevels,
+             'agencies' => $agencies,
          ]);
      }
+     
 
 
-     public function print(Request $request)
+// Controller method
+public function print(Request $request)
 {
-    // Retrieve all filtered students
+    // Start the query with the Student model
     $query = Student::query();
 
-    // Apply the search filter
+    // Apply search filter
     if ($request->has('search') && $request->search != '') {
         $searchTerm = $request->search;
         $query->where(function($q) use ($searchTerm) {
@@ -64,22 +73,41 @@ class ReportsController extends Controller
         });
     }
 
-    // Apply the course filter
+    // Apply course filter
     if ($request->has('course') && $request->course != '') {
         $query->where('course', $request->course);
     }
 
-    // Apply the year level filter
+    // Apply year level filter
     if ($request->has('year_level') && $request->year_level != '') {
         $query->where('year_level', $request->year_level);
+    }
+
+    // Apply agency filter
+    if ($request->has('agency') && $request->agency != '') {
+        $query->where('designation', $request->agency);
     }
 
     // Get all the filtered students
     $students = $query->get();
 
-    // Return the print view
-    return view('admin.reports.print', compact('students'));
+    $course = $request->course;
+
+    $department_head = DepartmentHead::where('course', $course)->first();
+
+
+
+
+    // Return the print view with filtered students and department head
+    return view('admin.reports.print', [
+        'students' => $students,
+        'department_head' =>  $department_head,
+    ]);
+    
 }
+
+     
+     
 
  public function deptHeadReport(Request $request){
     $query = Student::query();

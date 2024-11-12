@@ -17,7 +17,12 @@ public function department()
     return $this->belongsTo(Department::class, 'department_id'); // Adjust if necessary
 }
 
-    
+    // Course.php (Model)
+public function departmentHead()
+{
+    return $this->hasOne(DepartmentHead::class);
+}
+
     
     
 }

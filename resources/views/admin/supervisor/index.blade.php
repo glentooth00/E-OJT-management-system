@@ -9,72 +9,23 @@
             <h1 class="h3 mb-0 text-gray-800">Supervisor</h1>
         </div>
 
-        {{-- <section>
-            <div class="row">
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Registered Interns
-                                    </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
-                                    <div class="mt-2 mb-0 text-muted text-xs">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-users fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Pending Interns
-                                    </div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800"></div>
-                                    <div class="mt-2 mb-0 text-muted text-xs">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-user fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-uppercase mb-1">Number of Agencies</div>
-                                    <div class="h3 mb-0 font-weight-bold text-gray-800">10</div>
-                                    <div class="mt-2 mb-0 text-muted text-xs">
-                                    </div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-regular fa-building fa-2x text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
+
+    
 
         <section class="mt-2">
+            @if(session('success'))
+            <div class="alert alert-success text-success">
+                {{ session('success') }}
+            </div>
+        @endif
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Supervisor Accounts</h6>
                     <div>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add Account
+                            <i class="fas fa-plus"></i> Add Account
                         </button>
+                        
                     </div>
                 </div>
 
@@ -101,11 +52,32 @@
                                     <td>{{ $supervisor->category }}</td>
                                     <td>{{ $supervisor->office }}</td>
                                     <td>
-                                        <button class="btn btn-primary">EDIT</button>
-                                        <button class="btn btn-secondary">VIEW</button>
-                                        <button class="btn btn-danger">DELETE</button>
+                                        <button class="btn btn-primary btn-sm"
+                                            data-toggle="modal"
+                                            data-target="#editModal"
+                                            data-id="{{ $supervisor->id }}"
+                                            data-firstname="{{ $supervisor->first_name }}"
+                                            data-middlename="{{ $supervisor->middle_name }}"
+                                            data-lastname="{{ $supervisor->last_name }}"
+                                            data-email="{{ $supervisor->email }}"
+                                            data-category="{{ $supervisor->category }}"
+                                            data-office="{{ $supervisor->office }}"
+                                            data-password="{{ $supervisor->password }}"> <!-- Add the password here -->
+                                            <i class="fas fa-edit"></i> EDIT
+                                        </button>
 
+                                    
+                                        <form action="{{ route('supervisor.destroy', $supervisor->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">
+                                                <i class="fas fa-trash-alt"></i> DELETE
+                                            </button>
+                                        </form>
+                                        
+                                        
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                         </tbody>
@@ -224,4 +196,102 @@
         </div>
     </div>
     <!---Container Fluid-->
+
+<!-- Modal Structure -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit Supervisor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('supervisor.update') }}" method="POST" id="editForm">
+                    @csrf
+                    @method('PUT')
+                    <!-- Hidden input for ID -->
+                    <input type="hidden" name="id" id="supervisorId">
+
+                    <!-- Form fields for editing -->
+                    <div class="form-group">
+                        <label for="firstname">First Name</label>
+                        <input type="text" class="form-control" name="firstname" id="firstname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="middlename">Middle Name</label>
+                        <input type="text" class="form-control" name="middlename" id="middlename">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname">Last Name</label>
+                        <input type="text" class="form-control" name="lastname" id="lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <input type="text" class="form-control" name="category" id="category">
+                    </div>
+                    <div class="form-group">
+                        <label for="office">Office</label>
+                        <input type="text" class="form-control" name="office" id="office">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                        <small class="form-text text-muted">Leave blank if you don't want to change the password</small>
+                    </div>
+
+                    <button type="submit" class="btn btn-success">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function () {
+    // When the modal is shown
+    $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var id = button.data('id'); // Extract info from data-* attributes
+        var firstname = button.data('firstname');
+        var middlename = button.data('middlename');
+        var lastname = button.data('lastname');
+        var email = button.data('email');
+        var category = button.data('category');
+        var office = button.data('office');
+        // Set the current password to empty, as it's not shown in the modal
+        var currentPassword = ''; // We don’t set the current password
+
+        // Populate the modal with the data
+        var modal = $(this);
+        modal.find('#supervisorId').val(id);
+        modal.find('#firstname').val(firstname);
+        modal.find('#middlename').val(middlename);
+        modal.find('#lastname').val(lastname);
+        modal.find('#email').val(email);
+        modal.find('#category').val(category);
+        modal.find('#office').val(office);
+        modal.find('#password').val(currentPassword); // Leave password field empty
+    });
+});
+
+function confirmDelete(button) {
+    // Ask the user for confirmation
+    if (confirm('Are you sure you want to delete this supervisor?')) {
+        // Submit the form if the user confirms
+        button.closest('form').submit();
+    }
+}
+
+
+</script>

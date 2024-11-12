@@ -205,7 +205,26 @@ Route::middleware('auth:admin')->group(function () {
    Route::get('/admin/documents/', [DocumentController::class, 'uploadDocs'])->name('admin.documents'); 
    Route::post('/documents/upload-multiple', [DocumentController::class, 'uploadMultiple'])->name('documents.uploadMultiple');
 
-    
+   Route::get('/admin/ojt_supervisor/index',[AdminController::class, 'add_ojt_supervisor'])->name('admin.ojt_supervisor.index');
+
+   Route::post('/admin/add_ojt_supervisor', [AdminController::class,'store'])->name('ojt_supervisor.store');
+   
+   Route::delete('/admin/ojt_supervisor/{id}', [AdminController::class, 'destroy'])->name('admin.ojt_supervisor.destroy');
+
+Route::put('/admin/update/OJT_Supervisor',[AdminController::class,'update'])->name('update.ojt_supervisor');
+
+
+Route::put('/admin/update/', [SupervisorController::class, 'update'])->name('supervisor.update');
+
+Route::delete('/supervisors/{supervisor}', [SupervisorController::class, 'destroy'])->name('supervisor.destroy');
+
+// Route for updating a department head
+Route::put('/department-head/', [DepartmentHeadController::class, 'update'])->name('department_head.update');
+
+Route::delete('/department-head/{departmentHead}', [DepartmentHeadController::class, 'destroy'])->name('department_head.destroy');
+
+
+
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
     Route::put('/student/{id}/approve', [StudentController::class, 'approve'])->name('student.approve');

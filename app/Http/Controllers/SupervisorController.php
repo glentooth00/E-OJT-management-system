@@ -156,10 +156,43 @@ class SupervisorController extends Controller
         //
     }
 
-    public function update(Request $request, Supervisor $supervisor)
+    public function update(Request $request)
     {
-        //
+        // Find the supervisor by ID
+        $supervisor = Supervisor::findOrFail($request->id);
+    
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:supervisors,email,' . $request->id, // Exclude current email
+            'category' => 'nullable|string|max:255',
+            'office' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:8', // Optional password validation
+        ]);
+    
+        // Update supervisor fields
+        $supervisor->first_name = $request->input('firstname');
+        $supervisor->middle_name = $request->input('middlename');
+        $supervisor->last_name = $request->input('lastname');
+        $supervisor->email = $request->input('email');
+        $supervisor->category = $request->input('category');
+        $supervisor->office = $request->input('office');
+    
+        // If a password is provided, hash it and update the password
+        if ($request->filled('password')) {
+            $supervisor->password = bcrypt($request->input('password')); // Hash the password
+        }
+    
+        // Save the updated supervisor
+        $supervisor->save();
+    
+        // Redirect back with success message
+        return back()->with('success', 'Supervisor updated successfully!');
     }
+    
+    
 
     public function login(Request $request)
     {
@@ -188,8 +221,13 @@ class SupervisorController extends Controller
 
     public function destroy(Supervisor $supervisor)
     {
-        //
+        // Delete the supervisor
+        $supervisor->delete();
+    
+        // Redirect back with a success message
+        return back()->with('success', 'Supervisor deleted successfully!');
     }
+    
 
 
     public function supervisorEvaluate(){

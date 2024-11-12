@@ -20,5 +20,19 @@ class DepartmentHead extends AuthenticatableUser implements Authenticatable
     //     'password',
     //     'department',
     // ];
+
+    // DepartmentHead.php (Model)
+public function course()
+{
+    return $this->belongsTo(Course::class);
+}
+
+// In DepartmentHead model
+public function department()
+{
+    return $this->belongsTo(Department::class);
+}
+
+
 }
 

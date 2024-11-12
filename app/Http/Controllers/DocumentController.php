@@ -83,7 +83,9 @@ class DocumentController extends Controller
         //Now, save the data to the database (uncomment below to use)
         student_documents::create($data);
     
-        return back()->with('success', 'Documents uploaded and saved successfully.');
+        session()->flash('success', 'Documents uploaded and saved successfully.');
+    return back();
+
     }
     
 

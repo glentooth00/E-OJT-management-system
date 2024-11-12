@@ -8,6 +8,12 @@
     <div class="col-md-6">
             <h1 class="mt-4">Upload Required Documents</h1>
         <br>
+        @if (session('success'))
+    <div class="alert alert-success text-dark">
+        {{ session('success') }}
+    </div>
+@endif
+
     <!-- Form for uploading documents -->
     {{-- {{ route('documents.uploadMultiple') }} --}}
     <form action="{{ route('documents.uploadMultiple') }}" method="POST" enctype="multipart/form-data">
@@ -19,7 +25,7 @@
             <input type="file" class="form-control" id="good_moral" name="good_moral" accept="image/*" required>
         </div>
         @error('good_moral')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger text-dark">{{ $message }}</div>
         @enderror
         
         <!-- Upload Endorsement Letter Document -->
@@ -28,7 +34,7 @@
             <input type="file" class="form-control" id="endorsement_letter" name="endorsement_letter" accept="image/*" required>
         </div>
         @error('endorsement_letter')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger  text-dark">{{ $message }}</div>
         @enderror
         
         <!-- Upload Letter of Consent Document -->
@@ -37,7 +43,7 @@
             <input type="file" class="form-control" id="letter_of_consent" name="letter_of_consent" accept="image/*" required>
         </div>
         @error('letter_of_consent')
-            <div class="alert alert-danger">{{ $message }}</div>
+            <div class="alert alert-danger  text-dark">{{ $message }}</div>
         @enderror
 
         <!-- Submit button -->

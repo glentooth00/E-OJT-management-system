@@ -220,49 +220,52 @@
             </div>
             <div class="modal-body">
                 {{-- {{ route('admin.students.updateStatus', $student->id) }} --}}
-                <form action="{{ route('admin.student.updateStudentStatus', $student->id) }}" method="post">
+                <form action="{{ route('admin.student.updateStudentStatus', $student->id ?? '') }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
                         <div class="form-group col-md-6">
-            <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id }}" readonly>
+                            <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id ?? '' }}" readonly>
+
             <label for="modalFullName" class="badge text-black">Fullname</label>
-            <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname }}" readonly>
+            <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname ?? '' }}" readonly>
+
         </div>
         <div class="form-group col-md-6">
             <label for="modalDOB" class="badge text-black">Date of Birth</label>
-            <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob }}" readonly>
+            <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob ?? '' }}" readonly>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="modalIDNumber" class="badge text-black">ID Number</label>
-            <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number }}" readonly>
+            <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number ?? '' }}" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="modalDepartment" class="badge text-black">Department</label>
-            <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department }}" readonly>
+            <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department ?? '' }}" readonly>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="modalCourse" class="badge text-black">Course and Year</label>
-            <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course }}" readonly>
+            <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course ?? '' }}" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="modalApplicationStatus" class="badge text-black">Application Status</label><br>
-            @if ($student->application_status == 'pending')
-            <span class="badge badge-warning" style="font-size: 25px;">PENDING</span>
-            @elseif ($student->application_status == 'registered')
-            <span class="badge badge-success" style="font-size: 25px;">REGISTERED</span>
+            @if ($student->application_status ?? '' == 'pending')
+                <span class="badge badge-warning" style="font-size: 25px;">PENDING</span>
+            @elseif ($student->application_status ?? '' == 'registered')
+                <span class="badge badge-success" style="font-size: 25px;">REGISTERED</span>
             @else
-            <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
+                <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
             @endif
         </div>
+        
         <div class="form-group col-md-6">
             <label for="modalAssignedTo" class="badge text-black">Assign to</label>
 
-            <input type="text" class="form-control" name="designation" value="{{ $student->designation }}" readonly>
+            <input type="text" class="form-control" name="designation" value="{{ $student->designation ?? '' }}" readonly>
 
             {{-- <select name="designation" id="modalDesignation" class="form-control" readonly disabled>
                 <option value="{{ $student->designation }}" hidden>{{ $student->designation }}</option>
@@ -332,7 +335,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="moaImage" src="{{ asset($student->moa) }}" alt="MOA" class="img-fluid">
+                <img id="moaImage" src="{{ asset($student->moa ?? '') }}" alt="MOA" class="img-fluid">
             </div>
         </div>
     </div>
@@ -348,7 +351,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="endorsementImage" src="{{ asset($student->endorsement) }}" alt="Endorsement Letter" class="img-fluid">
+                <img id="endorsementImage" src="{{ asset($student->endorsement ?? '') }}" alt="Endorsement Letter" class="img-fluid">
             </div>
         </div>
     </div>
