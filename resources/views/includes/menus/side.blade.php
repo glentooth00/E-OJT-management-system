@@ -50,19 +50,20 @@
             <div id="accordionUserManagement">
                 <!-- Supervisor Sub-menu -->
                 <a class="dropdown-item" href="{{ route('admin.supervisor.supervisor') }}">
-                    <i class="fas fa-building"></i> Supervisor
+                    <i class="fas fa-users-cog"></i> Supervisor
                 </a>
-    
+            
                 <!-- Chairpersons Sub-menu -->
                 <a class="dropdown-item" href="{{ route('admin.department_head.index') }}">
-                    <i class="fas fa-building"></i> Chairpersons
+                    <i class="fas fa-chalkboard-teacher"></i> Chairpersons
                 </a>
-
+            
                 <!-- OJT supervisor Sub-menu -->
                 <a class="dropdown-item" href="{{ route('admin.ojt_supervisor.index') }}">
-                    <i class="fas fa-building"></i> OJT Supervisor
+                    <i class="fas fa-user-tie"></i> OJT Supervisor
                 </a>
             </div>
+            
         </div>
     </li>
     

@@ -86,7 +86,7 @@ class AdminController extends Controller
         'firstname' => 'required|string|max:255',
         'middlename' => 'nullable|string|max:255',
         'lastname' => 'required|string|max:255',
-        'email' => 'required|email|unique:admins,email', // Ensure email is unique
+        'username' => 'nullable|max:255', // Ensure username is unique
         'password' => 'required|string|min:6', // Minimum length for password
     ]);
 
@@ -101,7 +101,7 @@ class AdminController extends Controller
         'firstname' => $request->input('firstname'),
         'middlename' => $request->input('middlename'),
         'lastname' => $request->input('lastname'),
-        'email' => $request->input('email'),
+        'username' => $request->input('username'),
         'name' => $fullName, // Full name
         'role' => 'admin',   // Default role
         'password' => $hashedPassword,  // Hashed password
@@ -187,7 +187,7 @@ class AdminController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|min:8',
         ]);
     

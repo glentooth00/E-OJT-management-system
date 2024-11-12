@@ -151,8 +151,6 @@ Route::post('/admin-login', [AdminController::class, 'login'])->name('admin.logi
 
 //     Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.departmentHead.department_head');
 
-//     Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
-
 //     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
 
 //     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
@@ -170,7 +168,6 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/categories', [CategoriesController::class, 'index'])->name('admin.categories.index');
     Route::post('/admin/categories', [CategoriesController::class, 'store'])->name('admin.categories.store');
     Route::get('/admin/accounts/department_head', [AccountController::class, 'index'])->name('admin.department_head.index');
-    Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
     Route::get('/admin/accounts', [SupervisorController::class, 'index'])->name('admin.supervisor.supervisor');
     Route::post('/supervisor/store', [SupervisorController::class, 'store'])->name('supervisor.store');
     Route::get('/admin/archive', [ArchiveController::class, 'index'])->name('admin.archive.index');
@@ -200,6 +197,9 @@ Route::middleware('auth:admin')->group(function () {
     Route::get('/admin/department/index', [DepartmentController::class, 'index'])->name('admin.department.index');
     Route::post('/admin/department/store', [DepartmentController::class, 'store'])->name('admin.department.store');
 
+    //update agency
+    Route::put('/admin/agency/update', [AgencyController::class, 'update'])->name('update.agency');
+    Route::delete('/admin/agency/{agency}/delete', [AgencyController::class, 'destroy'])->name('delete.agency');
 
     //documents
    Route::get('/admin/documents/', [DocumentController::class, 'uploadDocs'])->name('admin.documents'); 
@@ -223,7 +223,7 @@ Route::put('/department-head/', [DepartmentHeadController::class, 'update'])->na
 
 Route::delete('/department-head/{departmentHead}', [DepartmentHeadController::class, 'destroy'])->name('department_head.destroy');
 
-
+Route::post('/admin/department_heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
 
     Route::put('admin/questionnaire/{evaluation}', [EvaluationController::class, 'update'])->name('admin.questionnaire.update');
 
@@ -293,7 +293,7 @@ Route::middleware('auth:department_head')->group(function () {
 
     Route::get('department-head/create', [DepartmentHeadController::class, 'create'])->name('department_head.departmentHead.create');
 
-    Route::post('/department-heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
+    // Route::post('/admin/department_heads', [DepartmentHeadController::class, 'store'])->name('department_heads.store');
 
     Route::get('/department-head/school_year/create', [SchoolYearController::class, 'create'])->name('department_head.school_year.create');
 

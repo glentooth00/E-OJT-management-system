@@ -122,7 +122,7 @@ class SupervisorController extends Controller
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:supervisors|max:255',
+            'username' => 'required|max:255',
             'password' => 'required|string|min:8',
             'category' => 'required|string|max:255',
             'office' => 'required|string|max:255', // Add this validation
@@ -133,7 +133,7 @@ class SupervisorController extends Controller
             'first_name' => $validatedData['first_name'],
             'middle_name' => $validatedData['middle_name'],
             'last_name' => $validatedData['last_name'],
-            'email' => $validatedData['email'],
+            'username' => $validatedData['username'],
             'password' => Hash::make($validatedData['password']),
             'category' => $validatedData['category'],
             'office' => $validatedData['office'], // Save office as well

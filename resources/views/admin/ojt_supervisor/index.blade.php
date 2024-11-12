@@ -103,7 +103,7 @@
                                         <td>{{ $supervisor->firstname }}</td>
                                         <td>{{ $supervisor->middlename }}</td>
                                         <td>{{ $supervisor->lastname }}</td>
-                                        <td>{{ $supervisor->email }}</td>
+                                        <td>{{ $supervisor->username }}</td>
                                         <td>
                                            <!-- EDIT Button -->
                                         <button class="btn btn-primary btn-sm"
@@ -113,7 +113,7 @@
                                             data-firstname="{{ $supervisor->firstname }}"
                                             data-middlename="{{ $supervisor->middlename }}"
                                             data-lastname="{{ $supervisor->lastname }}"
-                                            data-email="{{ $supervisor->email }}">
+                                            data-username="{{ $supervisor->username }}">
                                             <i class="fas fa-edit"></i> EDIT
                                         </button>
 
@@ -143,7 +143,7 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Add new Supervisor Account</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Add new OJT Supervisor Account</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -178,13 +178,13 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="Email">
+                                    <label for="username">username</label>
+                                    <input type="username" name="username" class="form-control" id="username"
+                                        placeholder="username">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password"
+                                    <input type="text" name="password" class="form-control" id="password"
                                         placeholder="Password">
                                 </div>
                             </div>
@@ -236,8 +236,8 @@
                         <input type="text" class="form-control" name="lastname" id="lastname">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email">
+                        <label for="username">username</label>
+                        <input type="username" class="form-control" name="username" id="username">
                     </div>
 
                     <button type="submit" class="btn btn-success">Update</button>
@@ -260,7 +260,7 @@ $(document).ready(function () {
         var firstname = button.data('firstname');
         var middlename = button.data('middlename');
         var lastname = button.data('lastname');
-        var email = button.data('email');
+        var username = button.data('username');
 
         // Populate the modal with the data
         var modal = $(this);
@@ -268,7 +268,7 @@ $(document).ready(function () {
         modal.find('#firstname').val(firstname);
         modal.find('#middlename').val(middlename);
         modal.find('#lastname').val(lastname);
-        modal.find('#email').val(email);
+        modal.find('#username').val(username);
     });
 });
 </script>

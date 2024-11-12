@@ -120,6 +120,8 @@ class DepartmentHeadController extends Controller
     }
 
     public function departmentIndex(){
+
+
         $department_heads = DepartmentHead::all();
 
         $departments = Department::get();
@@ -196,27 +198,32 @@ class DepartmentHeadController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming data
         $validatedData = $request->validate([
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:department_heads|max:255',
+            'username' => 'nullable|max:255',
             'password' => 'nullable|string|min:8',
             'course' => 'nullable|string|max:255',
             'department' => 'nullable|string|max:255',
         ]);
-
-        // dd( $validatedData);
-
-        // // // Hash the password before saving
+    
+        // Hash the password before saving
         $validatedData['password'] = bcrypt($validatedData['password']);
-
-        // // Create a new department head record
+    
+        // Create a new department head record
         $departmentHead = DepartmentHead::create($validatedData);
-
+    
+        // Debugging session data
+      
+    
         // Redirect or return response as needed
-        return redirect()->route('department_head.departmentHead.create')->with('success', 'Department Head created successfully.');
-    }          
+        return back()->with('success', 'Department Head created successfully.');
+    }
+    
+    
+    
 
     /**
      * Display the specified resource.
@@ -324,16 +331,16 @@ class DepartmentHeadController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
     
         if (Auth::guard('department_head')->attempt($credentials)) {
             // Authentication successful, redirect to intended page
             return redirect()->route('department_head.dashboard');
         } else {
             // Authentication failed, log error message
-            \Log::error('Authentication failed for department head with email: ' . $credentials['email']);
+            \Log::error('Authentication failed for department head with username: ' . $credentials['username']);
     
-            return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+            return back()->withErrors(['username' => 'Invalid credentials'])->withInput();
         }
     }
     

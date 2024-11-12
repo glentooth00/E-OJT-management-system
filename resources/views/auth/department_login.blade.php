@@ -42,8 +42,8 @@
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="email" class="text-light">Email</label>
-                                <input type="email" id="email" name="email" class="form-control" required>
+                                <label for="email" class="text-light">Username</label>
+                                <input type="text" id="username" name="username" class="form-control" required>
                             </div>
                             <div class="mt-4">
                                 <label for="password" class="text-light">Password</label>

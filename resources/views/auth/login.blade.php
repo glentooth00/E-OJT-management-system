@@ -43,11 +43,11 @@
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="email" class="text-light">Email</label>
-                                <input type="email" id="email"
-                                    class="form-control @error('email') is-invalid @enderror" name="email"
-                                    value="{{ old('email') }}" required>
-                                @error('email')
+                                <label for="email" class="text-light">Username</label>
+                                <input type="text" id="username"
+                                    class="form-control " name="username"
+                                    value="{{ old('username') }}" required>
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

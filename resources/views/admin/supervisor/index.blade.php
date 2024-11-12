@@ -36,7 +36,7 @@
                                 <th>First Name</th>
                                 <th>Middle Name</th>
                                 <th>Last Name</th>
-                                <th>Email</th>
+                                <th>username</th>
                                 <th>Department</th>
                                 <th>Office</th>
                                 <th>ACTIONS</th>
@@ -48,7 +48,7 @@
                                     <td>{{ $supervisor->first_name }}</td>
                                     <td>{{ $supervisor->middle_name }}</td>
                                     <td>{{ $supervisor->last_name }}</td>
-                                    <td>{{ $supervisor->email }}</td>
+                                    <td>{{ $supervisor->username }}</td>
                                     <td>{{ $supervisor->category }}</td>
                                     <td>{{ $supervisor->office }}</td>
                                     <td>
@@ -59,7 +59,7 @@
                                             data-firstname="{{ $supervisor->first_name }}"
                                             data-middlename="{{ $supervisor->middle_name }}"
                                             data-lastname="{{ $supervisor->last_name }}"
-                                            data-email="{{ $supervisor->email }}"
+                                            data-username="{{ $supervisor->username }}"
                                             data-category="{{ $supervisor->category }}"
                                             data-office="{{ $supervisor->office }}"
                                             data-password="{{ $supervisor->password }}"> <!-- Add the password here -->
@@ -125,13 +125,13 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="email">Email</label>
-                                    <input type="email" name="email" class="form-control" id="email"
-                                        placeholder="Email">
+                                    <label for="username">Username</label>
+                                    <input type="username" name="username" class="form-control" id="username"
+                                        placeholder="username">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="password">Password</label>
-                                    <input type="password" name="password" class="form-control" id="password"
+                                    <input type="text" name="password" class="form-control" id="password"
                                         placeholder="Password">
                                 </div>
                             </div>
@@ -228,8 +228,8 @@
                         <input type="text" class="form-control" name="lastname" id="lastname" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
+                        <label for="username">username</label>
+                        <input type="username" class="form-control" name="username" id="username" required>
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
@@ -266,7 +266,7 @@ $(document).ready(function () {
         var firstname = button.data('firstname');
         var middlename = button.data('middlename');
         var lastname = button.data('lastname');
-        var email = button.data('email');
+        var username = button.data('username');
         var category = button.data('category');
         var office = button.data('office');
         // Set the current password to empty, as it's not shown in the modal
@@ -278,7 +278,7 @@ $(document).ready(function () {
         modal.find('#firstname').val(firstname);
         modal.find('#middlename').val(middlename);
         modal.find('#lastname').val(lastname);
-        modal.find('#email').val(email);
+        modal.find('#username').val(username);
         modal.find('#category').val(category);
         modal.find('#office').val(office);
         modal.find('#password').val(currentPassword); // Leave password field empty

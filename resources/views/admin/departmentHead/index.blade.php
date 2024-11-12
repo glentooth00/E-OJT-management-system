@@ -91,6 +91,17 @@
     </div>
 @endif
 
+@if ($errors->any())
+    <div class="alert alert-danger text-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+
 
             <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -109,6 +120,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Department</th>
+                                <th>Username</th>
                                 <th>ACTIONS</th>
                             </tr>
                         </thead>
@@ -117,6 +129,7 @@
                             <tr>
                                 <td>{{ $department_head->first_name }} {{ $department_head->middle_name }} {{ $department_head->last_name }}</td>
                                 <td>{{ $department_head->department }}</td>
+                                <td>{{ $department_head->username }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-sm"
                                             data-toggle="modal"
@@ -190,36 +203,42 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Email</label>
-                                    <input type="email" name="email" class="form-control" id="inputEmail4"
-                                        placeholder="Email">
+                                    <label for="inputEmail4">Username</label>
+                                    <input type="text" name="username" class="form-control" id="inputEmail4"
+                                        placeholder="username">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputPassword4">Password</label>
-                                    <input type="password" name="password" class="form-control" id="inputPassword4"
+                                    <input type="text" name="password" class="form-control" id="inputPassword4"
                                         placeholder="Password">
                                 </div>
                             </div>
+
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputState">Department</label>
                                     <select name="department" id="inputState" class="form-control">
                                         <option hidden>Select Dept.</option>
-                                        <option>Education</option>
-                                        <option>IICS</option>
-                                        <option>Engineering</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>
+                                        @endforeach
                                     </select>
+                                    
                                 </div>
+
                                 <div class="form-group col-md-6">
                                     <label for="inputState">Course</label>
-                                    <select name="department" id="inputState" class="form-control">
+                                    <select name="course" id="inputState" class="form-control">
                                         <option hidden>Select course</option>
-                                        <option>Education</option>
-                                        <option>IICS</option>
-                                        <option>Engineering</option>
+                                        @foreach ($courses as $course)
+                                            <option value="{{ $course->course_initials }}">{{ $course->course}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+                                
+
                             </div>
+
                             <div class="form-row">
                                
                             </div>
