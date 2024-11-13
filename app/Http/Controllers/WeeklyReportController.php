@@ -33,9 +33,11 @@ class WeeklyReportController extends Controller
     }
 
     public function reports(Request $request)
-    {
-        $user = Auth::user();
-        $defaultCourse = $user->course; // Get the course of the authenticated user
+    { 
+
+
+        $depthead = Auth::user();
+        $defaultCourse = $depthead->course; // Get the course of the authenticated user
     
         $searchTerm = $request->input('search');
         $course = $request->input('course', $defaultCourse); // Use user's course as default if no input
