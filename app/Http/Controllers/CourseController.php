@@ -39,21 +39,22 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
-        $course = $request->validate([
+        $courseData = $request->validate([
             'course' => 'nullable|string|max:255',
             'course_code' => 'nullable|string|max:255',
             'course_initials' => 'nullable|string|max:255',
-            'department_id' =>'nullable|string|max:255',
+            'department_id' => 'nullable|integer',
         ]);
-        
-        
-        Course::create($course);
-
+    
+        // Log the data to verify it
+        \Log::info($courseData);
+    
+        Course::create($courseData);
+    
         return redirect()->back()->with('success', 'New Course added successfully.');
     }
+    
+    
 
     /**
      * Display the specified resource.

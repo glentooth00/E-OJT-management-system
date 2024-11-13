@@ -100,6 +100,9 @@ Route::get('/site/index', function () {
 Route::get('/get-department/{course}', [CourseController::class, 'getDepartment']);
 
 
+Route::get('/get-year-levels/{course}', [StudentController::class, 'getYearLevels']);
+
+
 // Route::get('/student/register', function () {
 //     return view('student.register');
 // })->name('student.register');

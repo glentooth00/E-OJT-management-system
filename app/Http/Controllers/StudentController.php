@@ -64,6 +64,22 @@ class StudentController extends Controller
         ]);
     }
     
+
+    public function getYearLevels($courseInitials)
+    {
+        // Retrieve year levels where course column matches selected course initials
+        $yearLevels = DB::table('year_levels')
+            ->where('course', $courseInitials)
+            ->select('year_level', 'section')
+            ->get();
+    
+        // Return a JSON response with the year levels
+        return response()->json($yearLevels);
+    }
+    
+    
+    
+
     
     
     
