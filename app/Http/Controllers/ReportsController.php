@@ -108,6 +108,57 @@ public function print(Request $request)
 }
 
 
+
+public function DeptHeadprint(Request $request)
+{
+    // Start the query with the Student model
+    $query = Student::query();
+
+    // Apply search filter
+    if ($request->has('search') && $request->search != '') {
+        $searchTerm = $request->search;
+        $query->where(function($q) use ($searchTerm) {
+            $q->where('fullname', 'like', '%' . $searchTerm . '%')
+              ->orWhere('id_number', 'like', '%' . $searchTerm . '%')
+              ->orWhere('course', 'like', '%' . $searchTerm . '%');
+        });
+    }
+
+    // Apply course filter
+    if ($request->has('course') && $request->course != '') {
+        $query->where('course', $request->course);
+    }
+
+    // Apply year level filter
+    if ($request->has('year_level') && $request->year_level != '') {
+        $query->where('year_level', $request->year_level);
+    }
+
+    // Apply agency filter
+    if ($request->has('agency') && $request->agency != '') {
+        $query->where('designation', $request->agency);
+    }
+
+    // Get all the filtered students
+    $students = $query->get();
+
+    $course = $request->course;
+
+    $department_head = DepartmentHead::where('course', $course)->first();
+
+    // Get logged-in user's data
+    $loggedInUser = auth()->user();
+    
+
+    // Return the print view with filtered students, department head, and logged-in user's data
+    return view('department_head.report.print', [
+        'students' => $students,
+        'department_head' =>  $department_head,
+        'loggedInUser' => $loggedInUser,  // Pass logged-in user's data to the view
+    ]);
+}
+
+
      
      
 

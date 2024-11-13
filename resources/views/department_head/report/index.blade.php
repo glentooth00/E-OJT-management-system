@@ -43,7 +43,7 @@
                 </div>
         
                 <!-- Print Button (aligned to the right) -->
-                {{-- <a href="{{ route('reports.print', request()->query()) }}" class="btn btn-success mt-3 btn-print" target="_blank">Print All Data</a> --}}
+                <a href="{{ route('department_head.reports.print', request()->query()) }}" class="btn btn-success mt-3 btn-print" target="_blank">Print All Data</a>
             </form>
         </div>
 

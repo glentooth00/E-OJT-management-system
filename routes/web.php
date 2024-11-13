@@ -322,6 +322,8 @@ Route::middleware('auth:department_head')->group(function () {
     Route::get('/department_head/report', [ReportsController::class, 'deptHeadReport'])->name('department_head.report.index');
     // Route::get('/admin/report', [ReportsController::class, 'index'])->name('reports.index');
 
+    Route::get('/department_head/report/print', [ReportsController::class, 'DeptHeadprint'])->name('department_head.reports.print');
+
     // routes/web.php
 
 Route::get('/department-head/weekly-report/{student_id}/{week_number}', [WeeklyReportController::class, 'summary'])
