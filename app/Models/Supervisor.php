@@ -12,7 +12,7 @@ class Supervisor extends Authenticatable
         'first_name',
         'middle_name',
         'last_name',
-        'email',
+        'username',
         'password',
         'office',
         'category',
