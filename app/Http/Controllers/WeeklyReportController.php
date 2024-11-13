@@ -34,14 +34,19 @@ class WeeklyReportController extends Controller
 
     public function reports(Request $request)
     {
+        $user = Auth::user();
+        $defaultCourse = $user->course; // Get the course of the authenticated user
+    
         $searchTerm = $request->input('search');
-        $course = $request->input('course');
+        $course = $request->input('course', $defaultCourse); // Use user's course as default if no input
     
         $students = Student::when($searchTerm, function ($query, $searchTerm) {
-            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
-        })->when($course, function ($query, $course) {
-            return $query->where('course', $course);
-        })->paginate(10);
+                return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->when($course, function ($query, $course) {
+                return $query->where('course', $course);
+            })
+            ->paginate(10);
     
         return view('department_head.weekly_reports.index', [
             'students' => $students,
@@ -49,6 +54,7 @@ class WeeklyReportController extends Controller
             'course' => $course,
         ]);
     }
+    
 
     public function showReports($id) {
         // Get the student by ID
