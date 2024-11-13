@@ -148,8 +148,12 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="office">Office</label>
-                                    <input type="text" name="office" class="form-control" id="office"
-                                        placeholder="Office">
+                                    <select class="form-control" name="office" id="office">
+                                        @foreach($agencies as $agency)
+                                        <option value="" disabled selected hidden>Select an office</option>
+                                            <option value="{{ $agency->agency_name }}">{{ $agency->agency_name }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="department">Department</label>
@@ -244,10 +248,19 @@
                         <label for="category">Category</label>
                         <input type="text" class="form-control" name="category" id="category">
                     </div>
+
                     <div class="form-group">
                         <label for="office">Office</label>
-                        <input type="text" class="form-control" name="office" id="office">
+                        <select class="form-control" name="office" id="office">
+                            
+                            @foreach($agencies as $agency)
+                            <option value="" hidden>Select an office</option>
+                                <option value="{{ $agency->agency_name }}">{{ $agency->agency_name }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    
+
                     <div class="form-group">
                         <label for="password">Password</label>
                         <input type="password" class="form-control" name="password" id="password">

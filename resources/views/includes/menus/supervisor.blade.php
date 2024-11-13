@@ -5,12 +5,6 @@
     </a>
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-        <a class="nav-link" href="/supervisor/dashboard">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span>
-        </a>
-    </li>
 
     <hr class="sidebar-divider">
     <div class="sidebar-heading">MENUS</div>

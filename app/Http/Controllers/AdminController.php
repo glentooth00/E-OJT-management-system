@@ -23,6 +23,11 @@ class AdminController extends Controller
  
      public function index(Request $request, $status = null)
      {
+
+        $user = Auth::user();
+
+        $admin = 'Admin';
+
          $filtered_students = [];
      
          if ($status === 'pending' || $status === 'registered') {
@@ -55,6 +60,7 @@ class AdminController extends Controller
              'letters' => $letters,
              'moas' => $moas,
              'no_agencies' => $no_agencies,
+             'admin' => $admin,
             
          ]);
      }

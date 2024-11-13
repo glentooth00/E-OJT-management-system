@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
 use App\Models\Questionnaire;
 use App\Models\Student;
 use App\Models\Category;
@@ -17,9 +18,12 @@ class SupervisorController extends Controller
         $categories = Category::all(); // Fetch all categories
         $supervisor_accounts = Supervisor::orderBy('created_at', 'desc')->get(); // Fetch all supervisor accounts sorted by latest
 
+        $agencies = Agency::all();
+
         return view('admin.supervisor.index', [
             'categories' => $categories,
-            'supervisor_accounts' => $supervisor_accounts
+            'supervisor_accounts' => $supervisor_accounts,
+            'agencies' => $agencies,
         ]);
     }
 
