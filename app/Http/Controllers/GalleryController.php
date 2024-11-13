@@ -4,20 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\weeklyReport;
+use Auth;
 use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $defaultCourse = $user->course; // Set default course to the authenticated user's course
+    
         $searchTerm = $request->input('search');
-        $course = $request->input('course');
+        $course = $request->input('course', $defaultCourse); // Use user's course as default if no input
     
         $students = Student::when($searchTerm, function ($query, $searchTerm) {
-            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
-        })->when($course, function ($query, $course) {
-            return $query->where('course', $course);
-        })->paginate(10);
+                return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+            })
+            ->when($course, function ($query, $course) {
+                return $query->where('course', $course);
+            })
+            ->paginate(10);
     
         return view('department_head.gallery.index', [
             'students' => $students,
@@ -25,6 +31,7 @@ class GalleryController extends Controller
             'course' => $course,
         ]);
     }
+    
     
     
 
