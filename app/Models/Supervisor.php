@@ -8,15 +8,7 @@ class Supervisor extends Authenticatable
 {
     use Notifiable;
 
-    protected $fillable = [
-        'first_name',
-        'middle_name',
-        'last_name',
-        'username',
-        'password',
-        'office',
-        'category',
-    ];
+    protected $guarded = [];
 
     protected $hidden = [
         'password',
