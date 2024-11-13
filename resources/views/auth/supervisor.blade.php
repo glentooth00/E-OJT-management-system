@@ -42,7 +42,7 @@
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="email" class="text-light">Username</label>
+                                <label for="username" class="text-light">Username</label>
                                 <input type="username" name="username"
                                     class="form-control @error('username') is-invalid @enderror" required>
                                 @error('username')
