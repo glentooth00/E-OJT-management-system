@@ -200,7 +200,7 @@ class SupervisorController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'username' => 'required|username',
+            'username' => 'required',
             'password' => 'required|min:8',
         ]);
 
