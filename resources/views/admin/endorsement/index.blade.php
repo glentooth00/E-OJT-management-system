@@ -105,7 +105,7 @@
             </div>
             <div class="modal-body text-center">
                 <!-- Image will be displayed here -->
-                <img id="letterImage" src="{{ asset($letter->letter) }}"" class="img-fluid" alt="Letter" style="max-height: 80vh;">
+                <img id="letterImage" src="{{ asset($letter->letter ?? '') }}"" class="img-fluid" alt="Letter" style="max-height: 80vh;">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
