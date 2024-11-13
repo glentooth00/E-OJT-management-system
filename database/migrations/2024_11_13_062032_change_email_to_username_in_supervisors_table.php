@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('students', function (Blueprint $table) {
-            $table->string('year_level')->nullable()->after('course');
+        Schema::table('supervisors', function (Blueprint $table) {
+            $table->renameColumn('email', 'username');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('students', function (Blueprint $table) {
+        Schema::table('supervisors', function (Blueprint $table) {
             //
         });
     }

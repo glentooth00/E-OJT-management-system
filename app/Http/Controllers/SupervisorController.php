@@ -118,29 +118,32 @@ class SupervisorController extends Controller
 
     public function store(Request $request)
     {
+        // Validate incoming data
         $validatedData = $request->validate([
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'username' => 'required|max:255',
+            'username' => 'nullable|max:255|unique:supervisors,username', // Ensure uniqueness
             'password' => 'required|string|min:8',
             'category' => 'required|string|max:255',
-            'office' => 'required|string|max:255', // Add this validation
+            'office' => 'required|string|max:255',
         ]);
-        // dd($validatedData);
-
+    
+        // Create supervisor record
         Supervisor::create([
             'first_name' => $validatedData['first_name'],
             'middle_name' => $validatedData['middle_name'],
             'last_name' => $validatedData['last_name'],
-            'username' => $validatedData['username'],
+            'username' => $validatedData['username'], // Ensure the username is passed here
             'password' => Hash::make($validatedData['password']),
             'category' => $validatedData['category'],
-            'office' => $validatedData['office'], // Save office as well
+            'office' => $validatedData['office'],
         ]);
-
+    
         return redirect()->back()->with('success', 'Supervisor account created successfully.');
     }
+    
+    
 
     public function studentActivities($student_id, $day, $day_no){
         dd($student_id, $day, $day_no);
@@ -166,7 +169,7 @@ class SupervisorController extends Controller
             'firstname' => 'required|string|max:255',
             'middlename' => 'nullable|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:supervisors,email,' . $request->id, // Exclude current email
+            'username' => 'required|max:255|unique:supervisors,username,' . $request->id, // Exclude current username
             'category' => 'nullable|string|max:255',
             'office' => 'nullable|string|max:255',
             'password' => 'nullable|string|min:8', // Optional password validation
@@ -176,7 +179,7 @@ class SupervisorController extends Controller
         $supervisor->first_name = $request->input('firstname');
         $supervisor->middle_name = $request->input('middlename');
         $supervisor->last_name = $request->input('lastname');
-        $supervisor->email = $request->input('email');
+        $supervisor->username = $request->input('username');
         $supervisor->category = $request->input('category');
         $supervisor->office = $request->input('office');
     
