@@ -13,7 +13,7 @@
 
             <!-- Centered Text -->
             <div class="text-center">
-                <h2 class="mb-1">NORTHERN ILOILO STATE UNIVERSITY</h2>
+                <h2 class="mb-1">NORTHERN ILOLO STATE UNIVERSITY</h2>
                 <h3 class="mb-1">COLLEGE OF INFORMATION AND COMPUTING STUDIES</h3>
                 <p>CUDILLA AVENUE, ESTANCIA, ILOILO</p>
             </div>
@@ -24,39 +24,36 @@
             </div>
         </header>
 
-        <!-- Page Title -->
-        <h1 class="mb-4 text-center">Student Reports</h1>
+        <!-- Content Wrapper with Added Margin for Print -->
+        <div class="content-wrapper">
+            <!-- Page Title (Student Reports) centered above the user info -->
+            <h1 class="text-center mb-4">Student Reports</h1>
 
-        <!-- Department Head Information Positioned at Bottom Left (First Page Only) -->
-        @if($department_head)
-            <div class="department-head-container">
-                <span class="underlined">{{ $department_head->first_name }} {{ $department_head->middle_name }} {{ $department_head->last_name }}</span>
-                <h4>Department Head</h4>
+            <!-- Logged-in User Information Positioned at Top Left of Table -->
+            <div class="user-info mb-4">
+                <p><strong>OJT SUpervisor: </strong>{{ $loggedInUser->firstname }} {{ $loggedInUser->middlename }} {{ $loggedInUser->lastname }}</p>
             </div>
-        @endif
 
-        <!-- Page Break (Start of the next page) -->
-        <div style="page-break-before: always;"></div>
-
-        <!-- Student Report Table -->
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col" class="text-center">Student Name</th>
-                    <th scope="col" class="text-center">Course</th>
-                    <th scope="col" class="text-center">Agency</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($students as $student)
+            <!-- Student Report Table -->
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td class="text-center">{{ $student->fullname }}</td>
-                        <td class="text-center">{{ $student->course }}</td>
-                        <td class="text-center">{{ $student->designation }}</td>
+                        <th scope="col" class="text-center">Student Name</th>
+                        <th scope="col" class="text-center">Course</th>
+                        <th scope="col" class="text-center">Agency</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($students as $student)
+                        <tr>
+                            <td class="text-center">{{ $student->fullname }}</td>
+                            <td class="text-center">{{ $student->course }}</td>
+                            <td class="text-center">{{ $student->designation }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
 
         <!-- Print Button (only visible on screen) -->
         <div class="no-print text-end mt-4">
@@ -96,28 +93,28 @@
                 text-align: center;
             }
 
-            /* Department Head at Bottom Left, First Page Only */
-            .department-head-container {
-                position: absolute;
-                top: 10px;
-                left: 10px;
-                text-align: left;
-                page-break-after: avoid;
-                page-break-inside: avoid;
+            /* Add Margin to the Content Wrapper to Prevent Overlap */
+            .content-wrapper {
+                margin-top: 160px; /* Ensure content is pushed down */
             }
 
-            .underlined {
-                text-decoration: underline;
-                display: block;
-                font-weight: bold;
+            /* Positioning User Info */
+            .user-info {
+                position: relative;
+                margin-top: 20px;
             }
 
-            /* Page Break for Tables */
+            /* Page Title */
+            h1 {
+                margin-top: 100px; /* Position the title below the fixed header */
+            }
+
+            /* Adjust Table Positioning */
             table {
                 width: 100%;
                 border-collapse: collapse;
                 border: 1px solid #ddd;
-                margin-top: 180px; /* offset for header */
+                margin-top: 20px; /* Adjust table spacing */
             }
 
             th, td {

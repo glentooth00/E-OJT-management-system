@@ -95,16 +95,18 @@ public function print(Request $request)
 
     $department_head = DepartmentHead::where('course', $course)->first();
 
+    // Get logged-in user's data
+    $loggedInUser = auth()->user();
+    
 
-
-
-    // Return the print view with filtered students and department head
+    // Return the print view with filtered students, department head, and logged-in user's data
     return view('admin.reports.print', [
         'students' => $students,
         'department_head' =>  $department_head,
+        'loggedInUser' => $loggedInUser,  // Pass logged-in user's data to the view
     ]);
-    
 }
+
 
      
      
