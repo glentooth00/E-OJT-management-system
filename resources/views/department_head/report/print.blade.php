@@ -31,7 +31,7 @@
 
             <!-- Logged-in User Information Positioned at Top Left of Table -->
             <div class="user-info mb-4">
-                <p><strong>OJT SUpervisor: </strong>{{ $loggedInUser->first_name }} {{ $loggedInUser->middle_name }} {{ $loggedInUser->last_name }}</p>
+                <p><strong>Dept Head: </strong>{{ $loggedInUser->first_name }} {{ $loggedInUser->middle_name }} {{ $loggedInUser->last_name }}</p>
             </div>
 
             <!-- Student Report Table -->
