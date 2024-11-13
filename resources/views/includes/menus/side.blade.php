@@ -40,6 +40,34 @@
             <span>Archives</span>
         </a>
     </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#endorsementMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="endorsementMenu">
+            <i class="fas fa-file"></i>
+            <span>Endorsement</span>
+        </a>
+    </li>
+    
+    <!-- Submenu items under Endorsement -->
+    <div class="collapse" id="endorsementMenu">
+        <li class="nav-item">
+           
+            <a class="nav-link {{ request()->is('admin/endorsement/list') ? 'active' : '' }}" href=" {{ route('admin.endorsement.list') }}">
+                <i class="fas fa-list"></i> <!-- Icon for List Endorsements -->
+                <span>List Endorsements</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            {{-- {{ route('admin.endorsement.create') }} --}}
+            <a class="nav-link {{ request()->is('admin/endorsement/create') ? 'active' : '' }}" href="{{ route('admin.endorsement') }}">
+                <i class="fas fa-plus-circle"></i> <!-- Icon for Create Endorsement -->
+                <span>Create Endorsement</span>
+            </a>
+        </li>
+    </div>
+    
+
+
     <li class="nav-item">
         <a class="nav-link" href="#userManagementMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="userManagementMenu">
             <i class="fas fa-users"></i>

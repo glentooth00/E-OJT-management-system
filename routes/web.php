@@ -6,6 +6,7 @@ use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\EndorsementController;
 use App\Http\Controllers\EndorsementLetterController;
 use App\Http\Controllers\EvaluationController;
 use App\Http\Controllers\ExperienceController;
@@ -247,9 +248,13 @@ Route::get('/admin/report/print', [ReportsController::class, 'print'])->name('re
    
 // Route for displaying the form (GET request)
 Route::get('/admin/school_year/create', [SchoolYearController::class, 'create'])->name('admin.school_year.create');
+Route::delete('delete/{id}', [EndorsementController::class, 'destroy'])->name('admin.endorsement.destroy');
 
 // Route for handling the form submission (POST request)
 Route::post('/admin/school_year/store', [SchoolYearController::class, 'store'])->name('admin.school_year.store');
+
+Route::get('admin/endorsement/{id}', [EndorsementController::class, 'show'])->name('admin.endorsement.show');
+
 
 Route::get('/admin/year_level/index', [YearLevelController::class , 'index'])->name('admin.year_level.index');
 Route::post('/admin/year_level/store', [YearLevelController::class,  'store'])->name('admin.year_level.store');
@@ -258,7 +263,11 @@ Route::post('/admin/year_level/store', [YearLevelController::class,  'store'])->
 Route::get('/admin/archives', [ArchiveController::class, 'index'])->name('admin.archives.index');
 Route::get('/filter-students', [ArchiveController::class, 'filterStudents'])->name('filter.students');
 
+Route::get('/admin/endorsement', [EndorsementController::class, 'create'])->name('admin.endorsement');
 
+Route::get('list', [EndorsementController::class, 'index'])->name('admin.endorsement.list');
+
+Route::post('/endorsements', [EndorsementController::class, 'store'])->name('store.endorsements');
 
     Route::post('/admin-logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
