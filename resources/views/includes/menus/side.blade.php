@@ -40,85 +40,93 @@
             <span>Archives</span>
         </a>
     </li>
-
-    <li class="nav-item dropdown" onmouseleave="closeDropdown(this)">
-        <a class="nav-link {{ request()->is('admin/archives', 'admin/supervisor', 'admin/department_head') ? 'active' : '' }}" href="#" id="userManagementDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item">
+        <a class="nav-link" href="#userManagementMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="userManagementMenu">
             <i class="fas fa-users"></i>
-            <span>User Management <span class="ml-1"></span></span> <!-- Added the > here -->
+            <span>User Management</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="userManagementDropdown">
-            <div id="accordionUserManagement">
-                <!-- Supervisor Sub-menu -->
-                <a class="dropdown-item" href="{{ route('admin.supervisor.supervisor') }}">
-                    <i class="fas fa-users-cog"></i> Supervisor
-                </a>
-            
-                <!-- Chairpersons Sub-menu -->
-                <a class="dropdown-item" href="{{ route('admin.department_head.index') }}">
-                    <i class="fas fa-chalkboard-teacher"></i> Chairpersons
-                </a>
-            
-                <!-- OJT supervisor Sub-menu -->
-                <a class="dropdown-item" href="{{ route('admin.ojt_supervisor.index') }}">
-                    <i class="fas fa-user-tie"></i> OJT Supervisor
-                </a>
-            </div>
-            
-        </div>
     </li>
     
-    
-    
+    <!-- Submenu items under User Management -->
+    <div class="collapse" id="userManagementMenu">
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}" href="{{ route('admin.supervisor.supervisor') }}">
+                <i class="fas fa-users-cog"></i> <!-- Icon for Supervisor -->
+                <span>Supervisor</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/department_head') ? 'active' : '' }}" href="{{ route('admin.department_head.index') }}">
+                <i class="fas fa-chalkboard-teacher"></i> <!-- Icon for Chairpersons -->
+                <span>Chairpersons</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/ojt_supervisor') ? 'active' : '' }}" href="{{ route('admin.ojt_supervisor.index') }}">
+                <i class="fas fa-user-tie"></i> <!-- Icon for OJT Supervisor -->
+                <span>OJT Supervisor</span>
+            </a>
+        </li>
+    </div>
     
     
     
     
 
-
-    <li class="nav-item dropdown" onmouseleave="closeDropdown(this)">
-        <a class="nav-link dropdown-toggle {{ request()->is('admin/documents', 'admin/reports', 'admin/endorsement', 'admin/healthCert', 'admin/moa') ? 'active' : '' }}" href="#" id="documentsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item">
+        <a class="nav-link" href="#documentsMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="documentsMenu">
             <i class="fas fa-folder"></i>
             <span>Documents</span>
         </a>
-        <div class="dropdown-menu" aria-labelledby="documentsDropdown">
-            <div id="accordion">
-                <a class="dropdown-item" data-toggle="collapse" href="#uploadDocuments" role="button" aria-expanded="false" aria-controls="uploadDocuments">
-                    <i class="fas fa-upload"></i> Upload Documents
-                </a>
-                <div id="uploadDocuments" class="collapse" data-parent="#accordion">
-                    <a class="dropdown-item" href="{{ route('admin.documents') }}">Go to Upload Documents</a>
-                </div>
-    
-                <a class="dropdown-item" data-toggle="collapse" href="#reports" role="button" aria-expanded="false" aria-controls="reports">
-                    <i class="fas fa-chart-line"></i> Reports
-                </a>
-                <div id="reports" class="collapse" data-parent="#accordion">
-                    <a class="dropdown-item" href="{{ route('reports.index') }}">Go to Reports</a>
-                </div>
-    
-                <a class="dropdown-item" data-toggle="collapse" href="#endorsement" role="button" aria-expanded="false" aria-controls="endorsement">
-                    <i class="fas fa-paper-plane"></i> Endorsement Letter
-                </a>
-                <div id="endorsement" class="collapse" data-parent="#accordion">
-                    <a class="dropdown-item" href="{{ route('admin.endorsement.index') }}">Go to Endorsement Letter</a>
-                </div>
-    
-                <a class="dropdown-item" data-toggle="collapse" href="#healthCert" role="button" aria-expanded="false" aria-controls="healthCert">
-                    <i class="fas fa-stethoscope"></i> Health Certificate
-                </a>
-                <div id="healthCert" class="collapse" data-parent="#accordion">
-                    <a class="dropdown-item" href="{{ route('admin.healthCert') }}">Go to Health Certificate</a>
-                </div>
-    
-                <a class="dropdown-item" data-toggle="collapse" href="#moa" role="button" aria-expanded="false" aria-controls="moa">
-                    <i class="fas fa-file-alt"></i> Upload MOA
-                </a>
-                <div id="moa" class="collapse" data-parent="#accordion">
-                    <a class="dropdown-item" href="{{ route('admin.moa.index') }}">Go to Upload MOA</a>
-                </div>
-            </div>
-        </div>
     </li>
+    
+    <!-- Submenu items under Documents -->
+    <div class="collapse" id="documentsMenu">
+        <li class="nav-item">
+            <a class="nav-link" href="#uploadDocuments" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="uploadDocuments">
+                <i class="fas fa-upload"></i> Upload Documents
+            </a>
+            <div class="collapse" id="uploadDocuments">
+                <a class="nav-link" href="{{ route('admin.documents') }}">Go to Upload Documents</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#reports" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="reports">
+                <i class="fas fa-chart-line"></i> Reports
+            </a>
+            <div class="collapse" id="reports">
+                <a class="nav-link" href="{{ route('reports.index') }}">Go to Reports</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#endorsement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="endorsement">
+                <i class="fas fa-paper-plane"></i> Endorsement Letter
+            </a>
+            <div class="collapse" id="endorsement">
+                <a class="nav-link" href="{{ route('admin.endorsement.index') }}">Go to Endorsement Letter</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#healthCert" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="healthCert">
+                <i class="fas fa-stethoscope"></i> Health Certificate
+            </a>
+            <div class="collapse" id="healthCert">
+                <a class="nav-link" href="{{ route('admin.healthCert') }}">Go to Health Certificate</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#moa" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="moa">
+                <i class="fas fa-file-alt"></i> Upload MOA
+            </a>
+            <div class="collapse" id="moa">
+                <a class="nav-link" href="{{ route('admin.moa.index') }}">Go to Upload MOA</a>
+            </div>
+        </li>
+    </div>
     
     
     

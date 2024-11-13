@@ -38,7 +38,7 @@ class SupervisorController extends Controller
             })->when($course, function ($query, $course) {
                 return $query->where('course', $course);
             })
-            ->where('designation', $userOffice) // Add office filter
+            ->where('designation', operator: $userOffice) // Add office filter
             ->paginate(10);
     
         return view('supervisor.list.index', [
