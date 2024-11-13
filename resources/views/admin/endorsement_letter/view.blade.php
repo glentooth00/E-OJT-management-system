@@ -49,22 +49,27 @@
     <!-- Endorsement Letter Content -->
     <div class="form-group">
         <label for="agencyPersonnel">Name of Agency Personnel</label>
-        <input type="text" class="form-control" id="agencyPersonnel" name="agencyPersonnel" placeholder="Enter Name of Agency Personnel" required>
+        <input type="text" class="form-control" id="agencyPersonnel" name="agencyPersonnel" placeholder="Enter Name of Agency Personnel" 
+            value="{{ old('agencyPersonnel', $endorsement->agency_personnel) }}" required readonly>
     </div>
 
     <div class="form-group">
         <label for="agencyName">Name of Agency</label>
-        <select class="form-control" id="agencyName" name="agencyName" required>
+        <select class="form-control" id="agencyName" name="agencyName" required disabled>
             <option value="" disabled selected>Select an Agency</option>
             @foreach($agencies as $agency)
-                <option value="{{ $agency->agency_name }}">{{ $agency->agency_name }}</option>
+                <option value="{{ $agency->agency_name }}" 
+                    {{ old('agencyName', $endorsement->agency_name) == $agency->agency_name ? 'selected' : '' }}>
+                    {{ $agency->agency_name }}
+                </option>
             @endforeach
         </select>
     </div>
 
     <div class="form-group">
         <label for="agencyAddress">Address</label>
-        <input type="text" class="form-control" id="agencyAddress" name="agencyAddress" placeholder="Enter Address" required>
+        <input type="text" class="form-control" id="agencyAddress" name="agencyAddress" placeholder="Enter Address" 
+            value="{{ old('agencyAddress', $endorsement->agency_address) }}" required readonly>
     </div>
 
     <div class="form-group mt-4">
@@ -90,7 +95,6 @@
                     <th>Name of Student</th>
                     <th>Year Level</th>
                     <th>Department</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -99,40 +103,26 @@
                 @foreach($students as $student)
                     <tr class="student-entry">
                         <td>
-                            <input type="text" class="form-control" name="studentName[]" value="{{ $student['name'] }}" placeholder="Enter Name of Student" required>
+                            <input type="text" class="form-control" name="studentName[]" value="{{ $student['name'] }}" placeholder="Enter Name of Student" required readonly>
                         </td>
                         <td>
-                            <input type="text" class="form-control" name="studentYear[]" value="{{ $student['year'] }}" placeholder="Enter Year Level" required>
+                            <input type="text" class="form-control" name="studentYear[]" value="{{ $student['year'] }}" placeholder="Enter Year Level" required readonly>
                         </td>
                         <td>
-                            <select class="form-control" name="studentDepartment[]" required>
-                                <option value="" disabled selected>Select Department</option>
-                                @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" 
-                                        {{ $student['department'] == $department->department_name ? 'selected' : '' }}>
-                                        {{ $department->department_name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            
-                        </td>
-                        <td>
-                            <button type="button" class="btn btn-danger removeStudentButton">
-                                <i class="fa fa-trash p-2"></i> Remove
-                            </button>
+                            <input type="text" class="form-control" value="{{ isset($student['department']) ? $student['department'] : '' }}" readonly>
                         </td>
                     </tr>
                 @endforeach
             @else
                 <tr class="student-entry">
                     <td>
-                        <input type="text" class="form-control" name="studentName[]" placeholder="Enter Name of Student" required>
+                        <input type="text" class="form-control" name="studentName[]" placeholder="Enter Name of Student" required readonly>
                     </td>
                     <td>
-                        <input type="text" class="form-control" name="studentYear[]" placeholder="Enter Year Level" required>
+                        <input type="text" class="form-control" name="studentYear[]" placeholder="Enter Year Level" required readonly>
                     </td>
                     <td>
-                        <select class="form-control" name="studentDepartment[]" required>
+                        <select class="form-control" name="studentDepartment[]" required disabled>
                             <option value="" disabled selected>Select Department</option>
                             @foreach($departments as $department)
                                 <option value="{{ $department->id }}">{{ $department->department_name }}</option>
@@ -140,15 +130,12 @@
                         </select>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-primary" id="addStudentButton">
+                        <button type="button" class="btn btn-primary" id="addStudentButton" disabled>
                             <i class="fa fa-plus p-2"></i> Add Student
                         </button>
                     </td>
                 </tr>
             @endif
-            
-            
-            
             </tbody>
         </table>
     </div>
@@ -157,8 +144,9 @@
     <input type="hidden" name="students_info" id="students_info">
 
     <!-- Submit Button -->
-    <button type="submit" class="btn btn-success mt-5">Submit Endorsement Letter</button>
+    {{-- <button type="submit" class="btn btn-success mt-5" disabled>Submit Endorsement Letter</button> --}}
 </form>
+
 @endsection
 
 

@@ -149,15 +149,14 @@ Thank you very much and more power!
                 <tr class="student-entry">
                     <td><input type="text" class="form-control" name="studentName[]" placeholder="Enter Name of Student" required></td>
                     <td><input type="text" class="form-control" name="studentYear[]" placeholder="Enter Year Level" required></td>
-                   <td>
-    <select class="form-control" name="studentDepartment[]" required>
-        <option value="" disabled selected>Select Department</option>
-        @foreach($departments as $department)
-            <option value="{{ $department->id }}">{{ $department->department_name }}</option>
-        @endforeach
-    </select>
-</td>
-
+                    <td>
+                        <select class="form-control" name="studentDepartment[]" required>
+                            <option value="" disabled selected>Select Department</option>
+                            @foreach($departments as $department)
+                                <option value="{{ $department->department_name }}">{{ $department->department_name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
                     <td><button type="button" class="btn btn-danger delete-row"><i class="fa fa-trash"></i></button></td>
                 </tr>
             `;
@@ -178,7 +177,7 @@ Thank you very much and more power!
             $('#studentsTable tbody tr').each(function() {
                 var studentName = $(this).find('input[name="studentName[]"]').val();
                 var studentYear = $(this).find('input[name="studentYear[]"]').val();
-                var studentDepartment = $(this).find('input[name="studentDepartment[]"]').val();
+                var studentDepartment = $(this).find('select[name="studentDepartment[]"]').val();
                 if (studentName && studentYear && studentDepartment) {
                     students.push(`${studentName}, ${studentYear} - ${studentDepartment}`);
                 }
@@ -192,21 +191,29 @@ Thank you very much and more power!
 
         // Update the students_info hidden field before form submission
         $("form").on("submit", function(event) {
+            event.preventDefault(); // Prevent form submission for debugging
             const students = [];
             const rows = $("#studentsTable tbody tr");
             rows.each(function() {
                 const studentName = $(this).find('input[name="studentName[]"]').val();
                 const studentYear = $(this).find('input[name="studentYear[]"]').val();
-                const studentDepartment = $(this).find('input[name="studentDepartment[]"]').val();
-                students.push({
-                    name: studentName,
-                    year: studentYear,
-                    department: studentDepartment
-                });
+                const studentDepartment = $(this).find('select[name="studentDepartment[]"]').val();
+                if (studentName && studentYear && studentDepartment) {
+                    students.push({
+                        name: studentName,
+                        year: studentYear,
+                        department: studentDepartment
+                    });
+                }
             });
 
             $('#students_info').val(JSON.stringify(students));
+
+            // Submit the form now
+            this.submit(); // Submit the form after setting the hidden field
         });
     });
 </script>
+
+
 

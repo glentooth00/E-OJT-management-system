@@ -49,28 +49,28 @@ class EndorsementController extends Controller
     public function store(Request $request)
     {
         // Validate the form data
-        $request->validate([
+        $validatedData = $request->validate([
             'agencyPersonnel' => 'required|string',
             'agencyName' => 'required|string',
             'agencyAddress' => 'required|string',
-            'students_info' => 'required|string',  // Ensure this field is required
+            'students_info' => 'required|json', // Ensure the students_info is a valid JSON string
         ]);
     
-        // Decode the students_info JSON to get the array of students
+        // Decode the students_info JSON into an array
         $studentsInfo = json_decode($request->input('students_info'), true);
     
-        // Create a new Endorsement record
+        // Create the Endorsement model and save the data
         $endorsement = Endorsement::create([
             'agency_personnel' => $request->input('agencyPersonnel'),
             'agency_name' => $request->input('agencyName'),
             'agency_address' => $request->input('agencyAddress'),
-            'endorsement_letter' => $request->input('endorsementLetter'), // Assuming the endorsement letter text is sent from the form
             'students_info' => json_encode($studentsInfo), // Store the student info as JSON
         ]);
     
-        // Flash a success message to the session
-        return redirect()->back()->with('success', 'Endorsement letter submitted successfully!');
+        // Additional processing logic, if needed
+        return redirect()->back()->with('success', 'Endorsement saved successfully!');
     }
+    
     
     
     
@@ -91,7 +91,7 @@ class EndorsementController extends Controller
         $studentsJson = $endorsement->students_info;  // Assuming it's a JSON string
     
         // Decode the JSON string into an array
-        $students = json_decode($studentsJson, true);  // true converts it into an associative array
+        $students = json_decode($endorsement->students_info, true);
     
         return view('admin.endorsement_letter.view', [
             'endorsement' => $endorsement,
