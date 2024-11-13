@@ -68,6 +68,7 @@ class EvaluationController extends Controller
     
     public function evaluateStudent(Request $request)
     {
+        
         $studentId = $request->input('studentId');
         $studentName = $request->input('studentName');
         $remarks = $request->input('remarks');
