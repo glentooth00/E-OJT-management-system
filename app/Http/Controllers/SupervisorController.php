@@ -24,18 +24,22 @@ class SupervisorController extends Controller
     }
 
     public function internList(Request $request) {
+        // Get the logged-in user
+        $loggedInUser = Auth::user();
+        // Retrieve the logged-in user's office
+        $userOffice = $loggedInUser->office;
     
         $searchTerm = $request->input('search');
         $course = $request->input('course');
     
+        // Filter students based on search term, course, designation, and office
         $students = Student::when($searchTerm, function ($query, $searchTerm) {
-            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
-        })->when($course, function ($query, $course) {
-            return $query->where('course', $course);
-        })
-        // Add condition to filter by MDRRMO designation
-        ->where('designation', 'MDRRMO')
-        ->paginate(10);
+                return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+            })->when($course, function ($query, $course) {
+                return $query->where('course', $course);
+            })
+            ->where('designation', $userOffice) // Add office filter
+            ->paginate(10);
     
         return view('supervisor.list.index', [
             'students' => $students,
@@ -43,6 +47,7 @@ class SupervisorController extends Controller
             'course' => $course,
         ]);
     }
+    
     
 
     public function internsLIst()
