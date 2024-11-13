@@ -42,124 +42,120 @@
                                     <div class="row mt-5">
                                         <div class="col-md-4">
 
-                                            <div class="mt-2">
-                                                <p><b>A. Attendance</b></p>
+                                            <div>
+                                                <p><b>A. Attendace</b></p>
                                                 @foreach ($attendances as $attendance)
                                                 <span>
-                                                    <input type="checkbox" name="attendance_questions[]" value="{{ $attendance->question }}" 
-                                                           onclick="handleSingleSelection(this, 'attendance_questions', {{ $attendance->points }})">
-                                                    {{ $attendance->question }}
-                                                    <input type="hidden" name="attendance_points[{{ $attendance->question }}]" value="0">
+                                                    <input type="checkbox" name="attendance_questions[{{ $attendance->question }}]" value="{{ $attendance->question }}">
+                                                    {{ $attendance->question }} 
+                                                    <input type="hidden" name="attendance_points[{{ $attendance->question }}]" value="{{ $attendance->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
+
                                             </div>
                                             
                                             <div class="mt-2">
                                                 <p><b>B. Punctuality</b></p>
                                                 @foreach ($punctualities as $punctuality)
                                                 <span>
-                                                    <input type="checkbox" name="punctuality_questions[]" value="{{ $punctuality->question }}" 
-                                                           onclick="handleSingleSelection(this, 'punctuality_questions', {{ $punctuality->points }})">
-                                                    {{ $punctuality->question }}
-                                                    <input type="hidden" name="punctuality_points[{{ $punctuality->question }}]" value="0">
+                                                    <input type="checkbox" name="punctuality_questions[{{ $punctuality->question }}]" value="{{ $punctuality->question }}">
+                                                    {{ $punctuality->question }} 
+                                                    <input type="hidden" name="punctuality_points[{{ $punctuality->question }}]" value="{{ $punctuality->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
                                             </div>
                                             
                                             <div class="mt-2">
                                                 <p><b>C. Initiative</b></p>
                                                 @foreach ($initiatives as $initiative)
                                                 <span>
-                                                    <input type="checkbox" name="initiative_questions[]" value="{{ $initiative->question }}" 
-                                                           onclick="handleSingleSelection(this, 'initiative_questions', {{ $initiative->points }})">
-                                                    {{ $initiative->question }}
-                                                    <input type="hidden" name="initiative_points[{{ $initiative->question }}]" value="0">
+                                                    <input type="checkbox" name="initiative_questions[{{ $initiative->question }}]" value="{{ $initiative->question }}">
+                                                    {{ $initiative->question }} 
+                                                    <input type="hidden" name="initiative_points[{{ $initiative->question }}]" value="{{ $initiative->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
                                             </div>
                                             
                                             <div class="mt-2">
                                                 <p><b>D. Ability to Plan Activities</b></p>
                                                 @foreach ($plannings as $planning)
                                                 <span>
-                                                    <input type="checkbox" name="planning_questions[]" value="{{ $planning->question }}" 
-                                                           onclick="handleSingleSelection(this, 'planning_questions', {{ $planning->points }})">
-                                                    {{ $planning->question }}
-                                                    <input type="hidden" name="planning_points[{{ $planning->question }}]" value="0">
+                                                    <input type="checkbox" name="planning_questions[{{ $planning->question }}]" value="{{ $planning->question }}">
+                                                    {{ $planning->question }} 
+                                                    <input type="hidden" name="planning_points[{{ $planning->question }}]" value="{{ $planning->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
                                             </div>
                                             
                                             <div class="mt-2">
                                                 <p><b>E. Cooperation</b></p>
                                                 @foreach ($cooperations as $cooperation)
                                                 <span>
-                                                    <input type="checkbox" name="cooperation_questions[]" value="{{ $cooperation->question }}" 
-                                                           onclick="handleSingleSelection(this, 'cooperation_questions', {{ $cooperation->points }})">
-                                                    {{ $cooperation->question }}
-                                                    <input type="hidden" name="cooperation_points[{{ $cooperation->question }}]" value="0">
+                                                    <input type="checkbox" name="cooperation_questions[{{ $cooperation->question }}]" value="{{ $cooperation->question }}">
+                                                    {{ $cooperation->question }} 
+                                                    <input type="hidden" name="cooperation_points[{{ $cooperation->question }}]" value="{{ $cooperation->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
                                             </div>
-                                            
-                                            <div class="mt-2">
-                                                <p><b>F. Interest and Attitudes Towards Work</b></p>
+                                           <div class="mt-2">
+                                                <p><b>F. Interest and attitudes towards work</b></p>
                                                 @foreach ($interests as $interest)
-                                                <span>
-                                                    <input type="checkbox" name="interest_questions[]" value="{{ $interest->question }}" 
-                                                           onclick="handleSingleSelection(this, 'interest_questions', {{ $interest->points }})">
-                                                    {{ $interest->question }}
-                                                    <input type="hidden" name="interest_points[{{ $interest->question }}]" value="0">
-                                                </span><br>
+                                                    <span>
+                                                        <input type="checkbox" name="interest_questions[{{ $interest->question }}]" value="{{ $interest->question }}">
+                                                        {{ $interest->question }} 
+                                                        <input type="hidden" name="interest_points[{{ $interest->question }}]" value="{{ $interest->points }}">
+                                                    </span><br>
                                                 @endforeach
+
                                             </div>
-                                            
-                                            <div class="mt-2">
+                                            <br>
+                                           <div class="mt-2">
                                                 <p><b>G. Major Field of Concentration</b></p>
-                                                @foreach ($fields as $field)
-                                                <span>
-                                                    <input type="checkbox" name="field_questions[]" value="{{ $field->question }}" 
-                                                           onclick="handleSingleSelection(this, 'field_questions', {{ $field->points }})">
-                                                    {{ $field->question }}
-                                                    <input type="hidden" name="field_points[{{ $field->question }}]" value="0">
-                                                </span><br>
+                                                <span>(Weldling, Repair, Machine, Work, Typing, Filling, Accounting,
+                                                    Recording, File Processing, Inland and Marine Fisheries
+                                                    )</span> <br> <br>
+                                                    @foreach ($fields as $field)
+                                                    <span>
+                                                        <input type="checkbox" name="field_questions[{{ $field->question }}]" value="{{ $field->question }}">
+                                                        {{ $field->question }} 
+                                                        <input type="hidden" name="field_points[{{ $field->question }}]" value="{{ $field->points }}">
+                                                    </span><br>
                                                 @endforeach
+<br>
                                             </div>
-                                            
-                                            <div class="mt-2">
-                                                <p><b>H. Appearance</b></p>
+                                              <div class="mt-2">
+                                                <p><b>H. Apprearance </b></p>
                                                 @foreach ($appearances as $appearance)
                                                 <span>
-                                                    <input type="checkbox" name="appearance_questions[]" value="{{ $appearance->question }}" 
-                                                           onclick="handleSingleSelection(this, 'appearance_questions', {{ $appearance->points }})">
-                                                    {{ $appearance->question }}
-                                                    <input type="hidden" name="appearance_points[{{ $appearance->question }}]" value="0">
+                                                    <input type="checkbox" name="appearance_questions[{{ $appearance->question }}]" value="{{ $appearance->question }}">
+                                                    {{ $appearance->question }} 
+                                                    <input type="hidden" name="appearance_points[{{ $appearance->question }}]" value="{{ $appearance->points }}">
                                                 </span><br>
-                                                @endforeach
-                                            </div>
+                                            @endforeach
                                             
-                                            <div class="mt-2">
-                                                <p><b>I. Alertness</b></p>
+                                            </div>  
+                                            <br>
+                                             <div class="mt-2">
+                                                <p><b>I. Alertness </b></p>
                                                 @foreach ($alertness as $alert)
                                                 <span>
-                                                    <input type="checkbox" name="alert_questions[]" value="{{ $alert->question }}" 
-                                                           onclick="handleSingleSelection(this, 'alert_questions', {{ $alert->points }})">
-                                                    {{ $alert->question }}
-                                                    <input type="hidden" name="alert_points[{{ $alert->question }}]" value="0">
+                                                    <input type="checkbox" name="alert_questions[{{ $alert->question }}]" value="{{ $alert->question }}">
+                                                    {{ $alert->question }} 
+                                                    <input type="hidden" name="alert_points[{{ $alert->question }}]}" value="{{ $alert->points }}">
                                                 </span><br>
-                                                @endforeach
+                                            @endforeach
+
                                             </div>
-                                            
                                             <div class="mt-2">
-                                                <p><b>J. Self-Confidence</b></p>
+                                                <p><b>J. Self-confidence </b></p>
                                                 @foreach ($self_confidence as $self)
-                                                <span>
-                                                    <input type="checkbox" name="self_questions[]" value="{{ $self->question }}" 
-                                                           onclick="handleSingleSelection(this, 'self_questions', {{ $self->points }})">
-                                                    {{ $self->question }}
-                                                    <input type="hidden" name="self_points[{{ $self->question }}]" value="0">
-                                                </span><br>
+                                                    <span>
+                                                        <input type="checkbox" name="self_questions[{{ $self->question }}]" value="{{ $self->question }}">
+                                                        {{ $self->question }} 
+                                                        <input type="hidden" name="self_points[{{ $self->question }}]" value="{{ $self->points }}">
+                                                    </span><br>
                                                 @endforeach
+
                                             </div>
                                             
                                             
@@ -335,58 +331,5 @@
     <!---Container Fluid-->
 @endsection
 <script>
-    function handleCheckboxSelection(selectedCheckbox) {
-        // Find all checkboxes with name="attendance_questions[]"
-        const checkboxes = document.querySelectorAll('input[name="attendance_questions[]"]');
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
-            }
-        });
-    }
-
-    function handlePunctualityCheckboxSelection(selectedCheckbox) {
-        // Find all checkboxes with name="punctuality_questions[]"
-        const checkboxes = document.querySelectorAll('input[name="punctuality_questions[]"]');
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
-            }
-        });
-    }
-
-    function handleInitiativeCheckboxSelection(selectedCheckbox) {
-        // Find all checkboxes with name="initiative_questions[]"
-        const checkboxes = document.querySelectorAll('input[name="initiative_questions[]"]');
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
-            }
-        });
-    }
-
-    function handlePlanningCheckboxSelection(selectedCheckbox) {
-        // Find all checkboxes with name="planning_questions[]"
-        const checkboxes = document.querySelectorAll('input[name="planning_questions[]"]');
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
-            }
-        });
-    }
-
-    function handleSingleSelection(selectedCheckbox, questionGroup) {
-        // Select all checkboxes in the specified group
-        const checkboxes = document.querySelectorAll(`input[name="${questionGroup}[]"]`);
-
-        checkboxes.forEach(checkbox => {
-            if (checkbox !== selectedCheckbox) {
-                checkbox.checked = false; // Uncheck other checkboxes
-            }
-        });
-    }
+  
 </script>
