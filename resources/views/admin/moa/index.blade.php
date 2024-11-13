@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="modal-body" >
-                <img id="moaFile" src="{{ asset($moa->moa_file) }}" class="col-lg-12" frameborder="0">
+                <img id="moaFile" src="{{ asset($moa->moa_file ?? '') }}" class="col-lg-12" frameborder="0">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
