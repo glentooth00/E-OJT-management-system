@@ -106,7 +106,6 @@
 
 
 
-
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/notifications') ? 'active' : '' }}" href="/admin/notifications">
             <i class="fas fa-solid fa-bell"></i>
