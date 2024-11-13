@@ -281,15 +281,18 @@
                             <label for="modalMoa" class="badge text-black">Attach MOA</label>
                             <input type="hidden" id="modalMoa2" name="moa">
                             <!-- Use only the select field for MOA selection -->
-                            <select name="" id="modalMoa" class="form-control" @disabled(true)>
-                                <option value="" hidden >No MOA</option>
-                                @foreach ($moas as $moa)
+                            <select name="" id="modalMoa" class="form-control" @if ($moas->isEmpty()) disabled @endif>
+                                <option value="" hidden>No MOA</option>
+                                @forelse ($moas as $moa)
                                     <option value="{{ $moa->moa_file }}" 
-                                        {{ $student->moa == $moa->moa_file ? 'selected' : '' }}>
+                                        {{ isset($student) && $student->moa == $moa->moa_file ? 'selected' : '' }}>
                                         {{ $moa->moa_name }}
                                     </option>
-                                @endforeach
+                                @empty
+                                    <option value="" disabled>No MOA available</option>
+                                @endforelse
                             </select>
+                            
                         </div>
                 
                         <!-- Endorsement Letter Section -->
@@ -297,15 +300,18 @@
                             <label for="modalLetter" class="badge text-black">Attach Endorsement Letter</label>
                             
                             <input type="hidden" id="modalLetter2" value="" name="endorsement">
-                            <select name="endorsement" id="modalLetter" class="form-control">
+                            <select name="endorsement" id="modalLetter" class="form-control" @if ($letters->isEmpty()) disabled @endif>
                                 <option value="" hidden>Select letter</option>
-                                @foreach ($letters as $letter)
+                                @forelse ($letters as $letter)
                                     <option value="{{ $letter->letter }}"
-                                        {{ $student->endorsement == $letter->letter ? 'selected' : '' }}>
+                                        {{ isset($student) && $student->endorsement == $letter->letter ? 'selected' : '' }}>
                                         {{ $letter->letter_course }}
                                     </option>
-                                @endforeach
+                                @empty
+                                    <option value="" disabled>No letters available</option>
+                                @endforelse
                             </select>
+                            
                             
                             
                         </div>

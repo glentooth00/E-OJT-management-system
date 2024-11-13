@@ -4,116 +4,55 @@
         <div class="sidebar-brand-text mx-3">E-OJT Management System</div>
     </a>
     <hr class="sidebar-divider my-0">
+
     <li class="nav-item">
-    <!-- {{ request()->is('admin/dashboard') ? 'active' : '' }} -->
-        <a class="nav-link " href="/supervisor/dashboard">
+        <a class="nav-link" href="/supervisor/dashboard">
             <i class="fas fa-fw fa-tachometer-alt"></i>
-            <span>Dashboard</span></a>
+            <span>Dashboard</span>
+        </a>
     </li>
+
     <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        MENUS
-    </div>
+    <div class="sidebar-heading">MENUS</div>
+
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
-            href="{{ route('supervisor.list.index') }}">
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}" href="{{ route('supervisor.list.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Interns</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}"
-            href="{{ route('supervisor.experience.index') }}">
-            <i class="fas fa-fw fa-users"></i>
+        <a class="nav-link {{ request()->is('supervisor/list') ? 'active' : '' }}" href="{{ route('supervisor.experience.index') }}">
+            <i class="fas fa-fw fa-briefcase"></i>
             <span>Intern Experiences</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}"
-            href="{{ route('supervisor.interns.index') }}">
-            <i class="fas fa-fw fa-file"></i>
+        <a class="nav-link {{ request()->is('admin/interns-evaluation') ? 'active' : '' }}" href="{{ route('supervisor.interns.index') }}">
+            <i class="fas fa-fw fa-clipboard-list"></i>
             <span>Activity Logs</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('supervisor/evaluate/index') ? 'active' : '' }}"
-            href="{{ route('supervisor.evaluate.index') }}">
-            <i class="fas fa-fw fa-file"></i>
+        <a class="nav-link {{ request()->is('supervisor/evaluate/index') ? 'active' : '' }}" href="{{ route('supervisor.evaluate.index') }}">
+            <i class="fas fa-fw fa-star-half-alt"></i>
             <span>Evaluation</span>
         </a>
     </li>
-    {{-- <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/admin/interns-log">
-            <i class="fas fa-fw fa-clock"></i>
-            <span>Intern's Logs</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/archives ') ? 'active' : '' }}"
-            href="{{ route('admin.archive.index') }}">
-            <i class="fas fa-fw fa-clock"></i>
-            <span>Archives</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}" href="/admin/moa">
-            <i class="fas fa-regular fa-building"></i>
-            <span>MOA / MOU</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
-            <i class='fas fa-building'></i>
-            <span>Agencies</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
-            href="{{ route('admin.categories.index') }}">
-            <i class='fas fa-building'></i>
-            <span>Categories</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
-            href="{{ route('admin.departmentHead.department_head') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Department Head</span>
-        </a>
-    </li> --}}
 
     {{-- <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
-            href="{{ route('admin.departmentHead.department_head') }}">
-            <i class='fas fa-building'></i>
-            <span>Department Head</span>
-        </a>
-    </li> --}}
-
-    {{-- <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
-            href="{{ route('admin.supervisor.supervisor') }}">
-            <i class='fas fa-building'></i>
-            <span>Supervisor</span>
-        </a>
-    </li> --}}
-
-
-
-
-    <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/notifications') ? 'active' : '' }}" href="/admin/notifications">
             <i class="fas fa-solid fa-bell"></i>
             <span>Notification</span>
             <span class="badge badge-success rounded-circle" style="font-size: 10px;">3+</span>
         </a>
-    </li>
+    </li> --}}
+
     <hr class="sidebar-divider">
+
     <li class="nav-item">
         <a class="nav-link" href="#">
             <i class="fas fa-solid fa-cogs"></i>
@@ -131,8 +70,7 @@
         </form>
     </li>
 
-
-    <div class="sidebar-heading">
+    <div class="sidebar-heading"></div>
 </ul>
 <!-- Sidebar -->
 
@@ -161,14 +99,11 @@
 
     $(document).ready(function() {
         $('#departmentHeadLink').click(function(e) {
-            e.preventDefault(); // Prevent default link behavior
-
-            // Perform an Ajax request to load the content dynamically
+            e.preventDefault();
             $.ajax({
-                url: $(this).attr('href'), // Get the URL from the link
+                url: $(this).attr('href'),
                 type: 'GET',
                 success: function(response) {
-                    // Replace the content of a specific element with the loaded content
                     $('#mainContent').html(response);
                 },
                 error: function() {
@@ -180,7 +115,6 @@
 </script>
 
 <style>
-    /* Smooth transition for dropdown animation */
     .dropdown-menu {
         opacity: 0;
         visibility: hidden;
@@ -194,6 +128,5 @@
 
     .nav-link.active {
         background-color: #f8f9fa;
-        /* your desired background color */
     }
 </style>
