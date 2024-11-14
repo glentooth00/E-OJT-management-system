@@ -291,7 +291,7 @@
         </div>
                 
                         <!-- Endorsement Letter Section -->
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label for="modalLetter" class="badge text-black">Attach Endorsement Letter</label>
                             <input type="hidden" id="modalLetter2" value="" name="endorsement">
                             <select name="endorsement" id="modalLetter" class="form-control" disabled>
@@ -305,7 +305,7 @@
                             </select>
                             
                             
-                        </div>
+                        </div> --}}
                     </div>
                 
                     <div class="modal-footer">
