@@ -8,7 +8,7 @@
     <div class="container-fluid mb-5">
         <h3>Experience Record</h3>
         @if(session('success'))
-        <div class="alert alert-success border-success" id="success-alert">
+        <div class="alert alert-success border-success text-success" id="success-alert">
             {{ session('success') }}
         </div>
     @endif
@@ -43,10 +43,10 @@
                                 <label class="badge">Week no.</label>
                                 <input type="text" name="week_no" value="{{ $diffInWeek }}" class="form-control" readonly>
                             </div>
-                            <div class="p-2">
+                            {{-- <div class="p-2">
                                 <label class="badge">No. of Hours</label>
                                 <input type="text" name="no_of_hours" class="form-control" id="">
-                            </div>
+                            </div> --}}
                             <div class="p-2">
                                 <label class="badge">Description*</label>
                                 <textarea name="activities" class="form-control" id="" cols="30" rows="5"></textarea>
@@ -145,10 +145,10 @@
                             <label class="badge">Week no.</label>
                             <input type="text" name="week_no" class="form-control" readonly>
                         </div>
-                        <div class="p-2">
+                        {{-- <div class="p-2">
                             <label class="badge">No. of Hours</label>
                             <input type="text" name="no_of_hours" class="form-control">
-                        </div>
+                        </div> --}}
                         <div class="p-2">
                             <label class="badge">Description*</label>
                             <textarea name="activities" class="form-control" cols="30" rows="5"></textarea>
@@ -185,12 +185,10 @@
     $(document).on('click', '.view-more', function() {
     var id = $(this).data('id');
     var weekNo = $(this).data('week_no');
-    var noOfHours = $(this).data('no_of_hours');
     var activities = $(this).data('activities');
 
     // Populate modal fields with the clicked experience's data
     $('#exampleModal').find('input[name="week_no"]').val(weekNo);
-    $('#exampleModal').find('input[name="no_of_hours"]').val(noOfHours);
     $('#exampleModal').find('textarea[name="activities"]').val(activities);
     $('#exampleModal form').attr('action', '/student/experience/update/' + id); // Update form action
 });
