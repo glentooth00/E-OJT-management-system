@@ -37,6 +37,14 @@
         </a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link {{ request()->is('supervisor/endorsements/index') ? 'active' : '' }}" href="{{ route('supervisor.endorsement.index') }}">
+            <i class="fas fa-fw fa-file-alt"></i> <!-- Icon for Endorsements -->
+            <span>Endorsements</span>
+        </a>
+    </li>
+    
+
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/notifications') ? 'active' : '' }}" href="/admin/notifications">
             <i class="fas fa-solid fa-bell"></i>

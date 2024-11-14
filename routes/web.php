@@ -454,6 +454,10 @@ Route::middleware('auth:supervisor')->group(function () {
 
     Route::post('/supervisor/evaluate/evaluation_form/{student_id}', [SupervisorController::class, 'evaluate'])->name('supervisor.evaluate.evaluation_form');
 
+    Route::get('/supervisor/endorsement', [EndorsementController::class, 'supEndorsement'])->name('supervisor.endorsement.index');
+
+    // web.php
+Route::get('endorsement/{id}', [EndorsementController::class, 'showEndorsement'])->name('supervisor.endorsement.show');
 
 
     Route::post('/supervisor/evaluation/store', [EvaluationController::class, 'evaluateStudent'])->name('supervisor.evaluation.store');

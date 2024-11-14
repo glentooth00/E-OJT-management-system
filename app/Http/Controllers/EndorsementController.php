@@ -65,12 +65,53 @@ class EndorsementController extends Controller
             'agency_name' => $request->input('agencyName'),
             'agency_address' => $request->input('agencyAddress'),
             'students_info' => json_encode($studentsInfo), // Store the student info as JSON
+            'status' => 'Pending', // Set status to 'Pending'
         ]);
     
         // Additional processing logic, if needed
         return redirect()->back()->with('success', 'Endorsement saved successfully!');
     }
     
+
+    public function supEndorsement() {
+        // Get the logged-in supervisor
+        $supervisor = auth()->user(); // Get the currently authenticated user
+
+        $office = $supervisor->office;
+
+        $get_endorsements = Endorsement::where('agency_name', $office)->get();
+
+    
+        // Pass the supervisor data to the view
+        return view('supervisor.endorsement.displayList', [
+            'endorsements' => $get_endorsements,
+        ]);
+    }
+    
+
+    public function showEndorsement($id)
+    {
+        $endorsement = Endorsement::findOrFail($id);
+    
+        $agencies = Agency::all();
+        $departments = Department::all();
+        $yearLevels = YearLevel::all();
+    
+        // Assuming you have a 'students_info' field in the 'endorsements' table that contains JSON data
+        $studentsJson = $endorsement->students_info;  // Assuming it's a JSON string
+    
+        // Decode the JSON string into an array
+        $students = json_decode($endorsement->students_info, true);
+        
+        // You can pass the endorsement, agencies, and departments to the view
+        return view('supervisor.endorsement.view', [
+            'endorsement' => $endorsement,
+            'agencies' => $agencies,
+            'departments' => $departments,
+            'yearLevels' => $yearLevels,
+            'students' => $students,
+        ]);
+    }
     
     
     

@@ -1,4 +1,6 @@
-@extends('includes.layouts.app')
+{{-- resources/views/endorsements/show.blade.php --}}
+
+@extends('includes.layouts.supervisor')
 
 @section('page-title', 'Endorsement Letter')
 
@@ -184,51 +186,10 @@
             $(this).closest('tr').remove();
         });
 
-        // Form submission handler
-        $("form").on("submit", function(event) {
-            const students = [];
-            let isValid = true; // Track validity of inputs
-
-            $("#studentsTable tbody tr").each(function() {
-                const studentName = $(this).find('input[name="studentName[]"]').val();
-                const studentYear = $(this).find('input[name="studentYear[]"]').val();
-                const studentDepartment = $(this).find('select[name="studentDepartment[]"]').val();
-
-                // Check if all fields are filled
-                if (!studentName || !studentYear || !studentDepartment) {
-                    isValid = false;
-                    return false; // Break out of each loop
-                }
-
-                students.push({
-                    name: studentName,
-                    year: studentYear,
-                    department: studentDepartment
-                });
-            });
-
-            if (!isValid) {
-                alert("Please fill in all student details before submitting.");
-                event.preventDefault(); // Prevent form submission if validation fails
-                return;
-            }
-
-            // Store the student data as JSON in a hidden input field
-            $('#students_info').val(JSON.stringify(students));
-        });
     });
 
-
-        // JavaScript function for back button
-        function goBack() {
-        window.history.back(); // Navigates to the previous page in history
+    // Function to go back to the previous page
+    function goBack() {
+        window.history.back();
     }
-
-    $(document).ready(function() {
-        $('.view-letter').on('click', function() {
-            var letterUrl = $(this).data('letter'); // Get the URL of the letter from the data attribute
-            $('#letterImage').attr('src', letterUrl); // Set the URL in the image tag
-        });
-    });
 </script>
-
