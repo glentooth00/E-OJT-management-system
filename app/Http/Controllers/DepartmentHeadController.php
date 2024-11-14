@@ -377,20 +377,18 @@ class DepartmentHeadController extends Controller
     }
 
 
-    public function viewEvaluation(){
-
+    public function viewEvaluation()
+    {
         $user = Auth::user();
-
         $course = $user->course;
-
-
-    $evaluations = Supervisor_student_evaluations::where('course', $course);
-
-        
-
-        return view('department_head.evaluation.index',[
+    
+        // Fetch evaluations for the user's course
+        $evaluations = Supervisor_student_evaluations::where('course', $course)->get();
+    
+        return view('department_head.evaluation.index', [
             'evaluations' => $evaluations,
         ]);
     }
+    
     
 }
