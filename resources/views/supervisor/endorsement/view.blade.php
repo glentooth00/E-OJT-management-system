@@ -20,7 +20,7 @@
     @endif
 
     @if (session('success'))
-        <div class="alert alert-success text-success">
+        <div class="alert alert-success text-dark">
             {{ session('success') }}
         </div>
     @endif
@@ -152,6 +152,16 @@
     {{-- <button type="submit" class="btn btn-success mt-5" disabled>Submit Endorsement Letter</button> --}}
 </form>
 
+<form id="approveForm" method="POST" action="{{ route('endorsement.approve', $endorsement->id) }}">
+    @csrf
+    @method('PUT') <!-- Use PUT method to update the endorsement -->
+    <input type="hidden" name="status" value="approved">
+    <button type="submit" id="approveButton" class="btn btn-success">Approve</button>
+</form>
+
+
+
+
 @endsection
 
 
@@ -192,4 +202,6 @@
     function goBack() {
         window.history.back();
     }
+
+
 </script>

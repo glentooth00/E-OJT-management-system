@@ -459,6 +459,11 @@ Route::middleware('auth:supervisor')->group(function () {
     // web.php
 Route::get('endorsement/{id}', [EndorsementController::class, 'showEndorsement'])->name('supervisor.endorsement.show');
 
+// web.php
+// web.php
+Route::put('endorsement/{id}/approve', [EndorsementController::class, 'approve'])->name('endorsement.approve');
+
+
 
     Route::post('/supervisor/evaluation/store', [EvaluationController::class, 'evaluateStudent'])->name('supervisor.evaluation.store');
 

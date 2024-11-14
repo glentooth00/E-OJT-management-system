@@ -23,7 +23,18 @@ class EndorsementController extends Controller
         return view('admin.endorsement_letter.list', compact('endorsements'));
     }
     
-    
+    public function approve(Request $request, $id)
+    {
+        // Find the endorsement by ID
+        $endorsement = Endorsement::findOrFail($id);
+
+        // Update the status to 'approved'
+        $endorsement->status = $request->input('status');
+        $endorsement->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Endorsement approved successfully!');
+    }
     
 
     /**

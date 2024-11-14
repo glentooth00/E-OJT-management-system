@@ -24,6 +24,7 @@
                     <tr>
                         <th>Agency Personnel</th>
                         <th>Agency Name</th>
+                        <Th>Status</Th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -32,6 +33,13 @@
                         <tr>
                             <td>{{ $endorsement->agency_personnel }}</td>
                             <td>{{ $endorsement->agency_name }}</td>
+                            <td>
+                                @if($endorsement->status === 'approved')
+                                    <span class="badge bg-success">Approved</span>
+                                @else
+                                    {{ $endorsement->status }}
+                                @endif
+                            </td>
                             <td>
                                
                                 <a href=" {{ route('admin.endorsement.show', $endorsement->id) }}" class="btn btn-primary btn-sm">
