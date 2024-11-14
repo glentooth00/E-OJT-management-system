@@ -72,11 +72,13 @@ class EvaluationController extends Controller
         $studentId = $request->input('studentId');
         $studentName = $request->input('studentName');
         $remarks = $request->input('remarks');
-    
+        $studentCourse = $request->input('course');  // Get the 'course' input
+        
         // Prepare common data
         $commonData = [
             'student_name' => $studentName,
             'student_id' => $studentId,
+            'course' => $studentCourse,  // Add the 'course' to the data
         ];
     
         // Initialize an array to hold all evaluated data

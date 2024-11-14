@@ -379,7 +379,12 @@ class DepartmentHeadController extends Controller
 
     public function viewEvaluation(){
 
-    $evaluations = Supervisor_student_evaluations::paginate();
+        $user = Auth::user();
+
+        $course = $user->course;
+
+
+    $evaluations = Supervisor_student_evaluations::where('course', $course);
 
         
 

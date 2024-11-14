@@ -37,6 +37,7 @@
                                 <form action="{{ route('supervisor.evaluation.store') }}" method="POST">
 
                                     @csrf
+                                    <input type="hidden" name="course" value="{{  $student->course  }}">
                                     <input type="hidden" name="studentName" value="{{ $student->fullname }}">
                                     <input type="hidden" name="studentId" value="{{ $student->id }}">
                                     <div class="row mt-5">
