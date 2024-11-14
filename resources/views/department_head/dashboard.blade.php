@@ -115,7 +115,6 @@
                                 <th>Course and Year</th>
                                 <th>Assigned to</th>
                                 <th>MOA</th>
-                                <th>Endorsement Letter</th>
                                 <th>Application status</th>
                                 <th></th>
                             </tr>
@@ -142,22 +141,7 @@
                                         @endif
                                         
                                     </td>
-                                    <td>
-                                        @if (empty($student->endorsement))
-                                            <span class="badge badge-danger" >No Endorsement letter</span>
-                                        @else
-                                        <span href="javascript:void(0)" 
-                                        class="badge badge-success with-data view-letter" 
-                                        data-toggle="modal" 
-                                        data-target="#letterModal" 
-                                        data-endorsement="{{ $student->endorsement }}">
-                                      View Endorsement Letter
-                                  </span>
-                                  
-
-                                  
-                                        @endif
-                                    </td>
+                                   
                                     <td>
                                         @if ($student->application_status == 'pending')
                                             <span class="badge badge-warning" >Pending</span>
