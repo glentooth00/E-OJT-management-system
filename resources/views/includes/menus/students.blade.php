@@ -50,9 +50,9 @@
         <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="{{ route('download.documents') }}">Download Form</a>
-            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/upload">Upload Form</a>
-            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="#">Endorsement Letter</a>
-            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/printables/letter-of-intent">Picture With Description</a>
+            {{-- <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/upload">Upload Form</a>
+            <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="#">Endorsement Letter</a> --}}
+            {{-- <a class="collapse-item {{ request()->is('') ? 'active' : '' }}" href="/student/printables/letter-of-intent">Picture With Description</a> --}}
           </div>
         </div>
       </li>
@@ -72,29 +72,59 @@
          </a>
      </li>
 
-
+{{-- 
      <li class="nav-item">
          <a class="nav-link position-relative {{ request()->is('admin/interns-log') ? 'active' : '' }}" href="/student/notification">
              <i class="fa fa-bell" aria-hidden="true"></i>
              <span>Notifications</span>
          </a>
-     </li>
+     </li> --}}
      <hr class="sidebar-divider">
+
+     <!-- Settings with Submenu -->
      <li class="nav-item">
-         <a class="nav-link" href="#">
+         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#settingsSubMenu" aria-expanded="false" aria-controls="settingsSubMenu">
              <i class="fas fa-solid fa-cogs"></i>
              <span>Settings</span>
          </a>
+         <div id="settingsSubMenu" class="collapse">
+             <ul class="submenu">
+                 <li>
+                     <form action="{{ route('student.logout') }}" method="POST">
+                         @csrf
+                         <button type="submit" class="nav-link" style="background: none; border: none; padding-left: 30px;">
+                             <i class="fas fa-sign-out-alt"></i>
+                             Logout
+                         </button>
+                     </form>
+                 </li>
+             </ul>
+         </div>
      </li>
-     <li class="nav-item">
-         <form action="{{ route('student.logout') }}" method="POST">
-             @csrf
-             <button type="submit" class="nav-link" style="background: none; border: none;">
-                 <i class="fas fa-sign-out-alt"></i>
-                 <span>Logout</span>
-             </button>
-         </form>
-     </li>
+     
      <div class="sidebar-heading">
- </ul>
- <!-- Sidebar -->
+     </ul>
+     
+     <!-- CSS for submenu styling -->
+     <style>
+         /* Styling the submenu */
+         .submenu {
+             list-style-type: none;
+             padding: 0;
+         }
+     
+         .submenu li {
+             padding-left: 20px;
+         }
+     
+         /* Styling for smooth collapse */
+         #settingsSubMenu {
+             padding-top: 5px;
+             padding-bottom: 5px;
+         }
+     </style>
+
+     <!-- Required Bootstrap CSS and JS for collapse functionality -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>

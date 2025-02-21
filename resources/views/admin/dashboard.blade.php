@@ -102,13 +102,12 @@
                         <thead class="thead-light">
                             <tr>
                                 <th style="width:10%;">ID</th>
-                                <th>DOB</th>
+                                {{-- <th>DOB</th> --}}
                                 <th>ID Number</th>
                                 <th>Department</th>
                                 <th>Course and Year</th>
-                                <th>Assigned to</th>
+                                <th>Agency</th>
                                 <th>MOA</th>
-                                <th>Endorsement Letter</th>
                                 <th>Application status</th>
                                 <th></th>
                             </tr>
@@ -117,7 +116,7 @@
                             @foreach ($filtered_students as $student)
                                 <tr>
                                     <td>{{ $student->fullname }}</td>
-                                    <td>{{ $student->dob }}</td>
+                                    {{-- <td>{{ $student->dob }}</td> --}}
                                     <td>{{ $student->id_number }}</td>
                                     <td>{{ $student->department }}</td>
                                     <td>{{ $student->course }}</td>
@@ -136,22 +135,7 @@
                                         @endif
                                         
                                     </td>
-                                    <td>
-                                        @if (empty($student->endorsement))
-                                            <span class="badge badge-danger" >No Endorsement letter</span>
-                                        @else
-                                        <span href="javascript:void(0)" 
-                                        class="badge badge-success with-data view-letter" 
-                                        data-toggle="modal" 
-                                        data-target="#letterModal" 
-                                        data-endorsement="{{ $student->endorsement }}">
-                                      View Endorsement Letter
-                                  </span>
-                                  
-
-                                  
-                                        @endif
-                                    </td>
+                                    
                                     <td>
                                         @if ($student->application_status == 'pending')
                                             <span class="badge badge-warning" >Pending</span>
@@ -220,49 +204,52 @@
             </div>
             <div class="modal-body">
                 {{-- {{ route('admin.students.updateStatus', $student->id) }} --}}
-                <form action="{{ route('admin.student.updateStudentStatus', $student->id) }}" method="post">
+                <form action="{{ route('admin.student.updateStudentStatus', $student->id ?? '') }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="form-row">
                         <div class="form-group col-md-6">
-            <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id }}" readonly>
+                            <input type="hidden" name="id" class="form-control" id="modalId" value="{{ $student->id ?? '' }}" readonly>
+
             <label for="modalFullName" class="badge text-black">Fullname</label>
-            <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname }}" readonly>
+            <input type="text" name="fullname" class="form-control" id="modalFullName" value="{{ $student->fullname ?? '' }}" readonly>
+
         </div>
         <div class="form-group col-md-6">
             <label for="modalDOB" class="badge text-black">Date of Birth</label>
-            <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob }}" readonly>
+            <input type="text" name="dob" class="form-control" id="modalDOB" value="{{ $student->dob ?? '' }}" readonly>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="modalIDNumber" class="badge text-black">ID Number</label>
-            <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number }}" readonly>
+            <input type="text" name="id_number" class="form-control" id="modalIDNumber" value="{{ $student->id_number ?? '' }}" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="modalDepartment" class="badge text-black">Department</label>
-            <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department }}" readonly>
+            <input type="text" name="department" class="form-control" id="modalDepartment" value="{{ $student->department ?? '' }}" readonly>
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="modalCourse" class="badge text-black">Course and Year</label>
-            <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course }}" readonly>
+            <input type="text" name="course" class="form-control" id="modalCourse" value="{{ $student->course ?? '' }}" readonly>
         </div>
         <div class="form-group col-md-6">
             <label for="modalApplicationStatus" class="badge text-black">Application Status</label><br>
-            @if ($student->application_status == 'pending')
-            <span class="badge badge-warning" style="font-size: 25px;">PENDING</span>
-            @elseif ($student->application_status == 'registered')
-            <span class="badge badge-success" style="font-size: 25px;">REGISTERED</span>
+            @if ($student->application_status ?? '' == 'pending')
+                <span class="badge badge-warning" style="font-size: 25px;">PENDING</span>
+            @elseif ($student->application_status ?? '' == 'registered')
+                <span class="badge badge-success" style="font-size: 25px;">REGISTERED</span>
             @else
-            <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
+                <span class="bg-secondary p-2 w-10 text-capitalize text-white">Unknown Status</span>
             @endif
         </div>
+        
         <div class="form-group col-md-6">
             <label for="modalAssignedTo" class="badge text-black">Assign to</label>
 
-            <input type="text" class="form-control" name="designation" value="{{ $student->designation }}" readonly>
+            <input type="text" class="form-control" name="designation" value="{{ $student->designation ?? '' }}" readonly>
 
             {{-- <select name="designation" id="modalDesignation" class="form-control" readonly disabled>
                 <option value="{{ $student->designation }}" hidden>{{ $student->designation }}</option>
@@ -278,34 +265,40 @@
                             <label for="modalMoa" class="badge text-black">Attach MOA</label>
                             <input type="hidden" id="modalMoa2" name="moa">
                             <!-- Use only the select field for MOA selection -->
-                            <select name="" id="modalMoa" class="form-control" @disabled(true)>
-                                <option value="" hidden >No MOA</option>
-                                @foreach ($moas as $moa)
+                            <select name="" id="modalMoa" class="form-control" @if ($moas->isEmpty()) disabled @endif>
+                                <option value="" hidden>No MOA</option>
+                                @forelse ($moas as $moa)
                                     <option value="{{ $moa->moa_file }}" 
-                                        {{ $student->moa == $moa->moa_file ? 'selected' : '' }}>
+                                        {{ isset($student) && $student->moa == $moa->moa_file ? 'selected' : '' }}>
                                         {{ $moa->moa_name }}
                                     </option>
-                                @endforeach
+                                @empty
+                                    <option value="" disabled>No MOA available</option>
+                                @endforelse
                             </select>
+                            
                         </div>
                 
                         <!-- Endorsement Letter Section -->
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                             <label for="modalLetter" class="badge text-black">Attach Endorsement Letter</label>
                             
                             <input type="hidden" id="modalLetter2" value="" name="endorsement">
-                            <select name="endorsement" id="modalLetter" class="form-control">
+                            <select name="endorsement" id="modalLetter" class="form-control" @if ($letters->isEmpty()) disabled @endif>
                                 <option value="" hidden>Select letter</option>
-                                @foreach ($letters as $letter)
+                                @forelse ($letters as $letter)
                                     <option value="{{ $letter->letter }}"
-                                        {{ $student->endorsement == $letter->letter ? 'selected' : '' }}>
+                                        {{ isset($student) && $student->endorsement == $letter->letter ? 'selected' : '' }}>
                                         {{ $letter->letter_course }}
                                     </option>
-                                @endforeach
+                                @empty
+                                    <option value="" disabled>No letters available</option>
+                                @endforelse
                             </select>
                             
                             
-                        </div>
+                            
+                        </div> --}}
                     </div>
                 
                     <div class="modal-footer">
@@ -332,7 +325,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="moaImage" src="{{ asset($student->moa) }}" alt="MOA" class="img-fluid">
+                <img id="moaImage" src="{{ asset($student->moa ?? '') }}" alt="MOA" class="img-fluid">
             </div>
         </div>
     </div>
@@ -348,7 +341,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img id="endorsementImage" src="{{ asset($student->endorsement) }}" alt="Endorsement Letter" class="img-fluid">
+                <img id="endorsementImage" src="{{ asset($student->endorsement ?? '') }}" alt="Endorsement Letter" class="img-fluid">
             </div>
         </div>
     </div>

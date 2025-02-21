@@ -42,10 +42,10 @@
                                 <h2>Login</h2>
                             </div>
                             <div>
-                                <label for="email" class="text-light">Email</label>
-                                <input type="email" name="email"
-                                    class="form-control @error('email') is-invalid @enderror" required>
-                                @error('email')
+                                <label for="username" class="text-light">Username</label>
+                                <input type="username" name="username"
+                                    class="form-control @error('username') is-invalid @enderror" required>
+                                @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

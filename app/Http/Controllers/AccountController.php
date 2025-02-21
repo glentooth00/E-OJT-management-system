@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\Course;
+use App\Models\Department;
 use App\Models\DepartmentHead;
 use Auth;
 use Illuminate\Http\Request;
@@ -14,12 +16,16 @@ class AccountController extends Controller
      */
     public function index()
     {
-    
-        
+        $departments = Department::get();
 
         $department_heads = DepartmentHead::all();
+
+        $courses = Course::get();
+
         return view('admin.departmentHead.index', [
             'department_heads' => $department_heads,
+            'departments' => $departments,
+            'courses' => $courses,
         ]);
     }
 

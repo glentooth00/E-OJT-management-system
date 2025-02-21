@@ -6,7 +6,7 @@
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800"></h1>
         </div>
 
         <section>
@@ -67,29 +67,7 @@
             </div>
         </section>
 
-        <section class="mt-5">
-            <div class="card">
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Interns</h6>
-
-                    {{-- <form action="{{ route('admin.filterStudents', ['status' => 'pending']) }}" method="GET">
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between"> --}}
-
-                    {{-- <select name="filter" onchange="this.form.submit()">
-                                <option value="">All</option>
-                                <option value="registered" {{ $selectedFilter == 'registered' ? 'selected' : '' }}>
-                                    Registered</option>
-                                <option value="pending" {{ $selectedFilter == 'pending' ? 'selected' : '' }}>Pending
-                                </option>
-                            </select> --}}
-                    {{-- </div>
-                    </form> --}}
-
-                </div>
-                <div class="table-responsive">
-                    {{-- --}}
-                </div>
-        </section>
+       
     </div>
     <!---Container Fluid-->
 @endsection

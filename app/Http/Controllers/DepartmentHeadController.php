@@ -120,10 +120,15 @@ class DepartmentHeadController extends Controller
     }
 
     public function departmentIndex(){
+
+
         $department_heads = DepartmentHead::all();
+
+        $departments = Department::get();
 
         return view('admin.departmentHead.index', [
             'department_heads' => $department_heads,
+            'departments' => $departments,
         ]);
     }
 
@@ -168,6 +173,8 @@ class DepartmentHeadController extends Controller
     
     public function weekly_reports($id)
     {
+        
+
         return view('department_head.weekly_reports.index');
     }
 
@@ -193,27 +200,32 @@ class DepartmentHeadController extends Controller
      */
     public function store(Request $request)
     {
+        // Validate the incoming data
         $validatedData = $request->validate([
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:department_heads|max:255',
+            'username' => 'nullable|max:255',
             'password' => 'nullable|string|min:8',
             'course' => 'nullable|string|max:255',
             'department' => 'nullable|string|max:255',
         ]);
-
-        // dd( $validatedData);
-
-        // // // Hash the password before saving
+    
+        // Hash the password before saving
         $validatedData['password'] = bcrypt($validatedData['password']);
-
-        // // Create a new department head record
+    
+        // Create a new department head record
         $departmentHead = DepartmentHead::create($validatedData);
-
+    
+        // Debugging session data
+      
+    
         // Redirect or return response as needed
-        return redirect()->route('department_head.departmentHead.create')->with('success', 'Department Head created successfully.');
-    }          
+        return back()->with('success', 'Department Head created successfully.');
+    }
+    
+    
+    
 
     /**
      * Display the specified resource.
@@ -240,18 +252,59 @@ class DepartmentHeadController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DepartmentHead $departmentHead)
+    public function update(Request $request)
     {
-        //
+        // Find the department head by ID
+        $department_head = DepartmentHead::findOrFail($request->id);
+    
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'nullable|email|max:255|unique:department_heads,email,' . $request->id,
+            'department' => 'required|string|exists:departments,department_name', // Validate based on department_name
+        ]);
+    
+        try {
+            // Update department head fields
+            $department_head->first_name = $request->input('first_name');
+            $department_head->middle_name = $request->input('middle_name');
+            $department_head->last_name = $request->input('last_name');
+            $department_head->email = $request->input('email');
+            $department_head->department = $request->input('department'); // Store the department name
+            
+    
+            // Save the updated department head
+            $department_head->save();
+    
+            // Redirect back with success message
+            return back()->with('success', 'Department Head updated successfully!');
+    
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error('Department Head Update Error: ' . $e->getMessage());
+    
+            // Redirect back with an error message
+            return back()->withErrors('There was an issue updating the Department Head. Please try again.');
+        }
     }
+    
+    
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(DepartmentHead $departmentHead)
     {
-        //
+        // Delete the department head
+        $departmentHead->delete();
+    
+        // Redirect back with a success message
+        return back()->with('success', 'Department Head deleted successfully!');
     }
+    
 
     public function approveStudent(Request $request, Student $student)
     {
@@ -280,16 +333,16 @@ class DepartmentHeadController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
     
         if (Auth::guard('department_head')->attempt($credentials)) {
             // Authentication successful, redirect to intended page
             return redirect()->route('department_head.dashboard');
         } else {
             // Authentication failed, log error message
-            \Log::error('Authentication failed for department head with email: ' . $credentials['email']);
+            \Log::error('Authentication failed for department head with username: ' . $credentials['username']);
     
-            return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+            return back()->withErrors(['username' => 'Invalid credentials'])->withInput();
         }
     }
     
@@ -324,15 +377,18 @@ class DepartmentHeadController extends Controller
     }
 
 
-    public function viewEvaluation(){
-
-    $evaluations = Supervisor_student_evaluations::paginate();
-
-        
-
-        return view('department_head.evaluation.index',[
+    public function viewEvaluation()
+    {
+        $user = Auth::user();
+        $course = $user->course;
+    
+        // Fetch evaluations for the user's course
+        $evaluations = Supervisor_student_evaluations::where('course', $course)->get();
+    
+        return view('department_head.evaluation.index', [
             'evaluations' => $evaluations,
         ]);
     }
+    
     
 }

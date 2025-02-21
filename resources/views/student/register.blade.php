@@ -114,6 +114,7 @@
                                         <option value="FEMALE"> FEMALE </option>
                                     </select>
                                 </div>
+
                                 <div class="col-md-6 mt-3">
                                     <label for="" class="text-white required">Year/Level</label>
                                     <select name="year_level" id="" class="form-control" required>
@@ -125,6 +126,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+
                                 <div class="col-md-6 mt-3">
                                     <label for="schoolYear" class="text-white required">School year</label>
                                     <select name="school_year" id="schoolYear" class="form-control" required>
@@ -183,6 +185,64 @@ $(document).ready(function() {
         } else {
             // Clear the department field if no course is selected
             $('#department').val('');
+            alert('Please select a course.');
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    $('#course').on('change', function() {
+        var courseInitials = $(this).val();
+
+        if (courseInitials) {
+            // Fetch department based on selected course
+            $.ajax({
+                url: `/get-department/${courseInitials}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    if (data && data.department) {
+                        $('#department').val(data.department.department_name);
+                    } else {
+                        $('#department').val('');
+                        alert('No department data found for the selected course.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    alert('Error retrieving department data. Please try again.');
+                }
+            });
+
+            // Fetch year levels directly from year_levels table
+            $.ajax({
+                url: `/get-year-levels/${courseInitials}`,
+                type: 'GET',
+                dataType: 'json',
+                success: function(yearLevels) {
+                    // Clear the existing options
+                    $('select[name="year_level"]').empty();
+                    $('select[name="year_level"]').append('<option value="" hidden>Select year and section</option>');
+
+                    // Populate with new year level options
+                    $.each(yearLevels, function(index, yearLevel) {
+                        $('select[name="year_level"]').append(
+                            `<option value="${yearLevel.year_level} ${yearLevel.section}">
+                                ${yearLevel.year_level} ${yearLevel.section}
+                             </option>`
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);
+                    alert('Error retrieving year levels. Please try again.');
+                }
+            });
+        } else {
+            // Clear the department and year level fields if no course is selected
+            $('#department').val('');
+            $('select[name="year_level"]').empty().append('<option value="" hidden>Select year and section</option>');
             alert('Please select a course.');
         }
     });

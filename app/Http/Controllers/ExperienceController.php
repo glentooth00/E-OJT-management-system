@@ -108,25 +108,48 @@ class ExperienceController extends Controller
 
     public function timeOut(Request $request)
     {
-        // Find the record based on studentId
-        $experience = Experience::where('id', $request->id)->first();
+        // Find the most recent 'timeIn' record for the student without a 'timeOut' entry
+        $experience = Experience::where('studentId', $request->studentId)
+            ->where('attendance', 'in')
+            ->whereNull('time_out')
+            ->latest('date')
+            ->first();
     
-        // Check if the record exists
         if ($experience) {
-            // Update the fields
+            // Calculate the difference in hours between time_in and the current time_out
+            $timeIn = Carbon::parse($experience->time_in);
+            $timeOut = Carbon::now('Asia/Manila');
+    
+            $noOfHours = $timeIn->diffInHours($timeOut); // Calculate hours between time_in and time_out
+            $experience->time_out = $timeOut->format('g:i A');
             $experience->attendance = 'out';
             $experience->status = 'Logged-Out';
-            $experience->time_out = Carbon::now('Asia/Manila')->format('g:i A');
+            $experience->no_of_hours = $noOfHours;
     
-            // Save the updated record
+            // Save the current experience entry with updated time_out and no_of_hours
             $experience->save();
+    
+            // Update total_no_hours by summing all no_of_hours for this student
+            $totalNoHours = Experience::where('studentId', $request->studentId)
+                ->whereNotNull('time_out')
+                ->sum('no_of_hours');
+    
+            // Save the cumulative total if you want it in each entry
+            $experience->total_no_hours = $totalNoHours;
+            $experience->save();
+    
+            // Check if the student has reached or exceeded 480 hours
+            if ($totalNoHours >= 480) {
+                return redirect()->back()->with('success', 'Congratulations! You have completed your OJT requirement of 480 hours.');
+            }
         } else {
-            // Handle case when no record is found
             return response()->json(['message' => 'Record not found'], 404);
         }
     
-        return redirect()->back()->with('success', 'activity saved');
+        return redirect()->back()->with('success', 'Successfully logged OUT!');
     }
+    
+    
     
 
     /**
@@ -152,7 +175,6 @@ class ExperienceController extends Controller
     {
  
         $validate = $request->validate([
-            'no_of_hours' => 'nullable|string|max:255',
             'week_no' => 'nullable|string|max:255',
             'activities' => 'nullable|string|max:255',
         ]);

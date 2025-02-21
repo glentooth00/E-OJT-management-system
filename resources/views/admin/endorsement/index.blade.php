@@ -4,18 +4,18 @@
 
 @section('content')
     <!-- Container Fluid-->
-
     <div class="container">
         @if(session('success'))
-    <div class="alert alert-success text-success">
-        {{ session('success') }}
-    </div>
-    @endif
+            <div class="alert alert-success text-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <div class="row justify-content-start">
             <div class="col">
                 <h1 class="mb-3">Endorsement Letter</h1>
                 <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addAgencyModal">Upload Endorsement letter</button>
+                <button type="button" class="btn btn-secondary mb-3" onclick="goBack()">Back</button> <!-- Back Button -->
                 <table class="table">
                     <thead>
                         <tr>
@@ -48,7 +48,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- Add Agency Modal -->
     <div class="modal fade" id="addAgencyModal" tabindex="-1" role="dialog" aria-labelledby="addAgencyModalLabel"
@@ -87,33 +86,32 @@
                         </div>
                     </form>
                     
+                </div>
             </div>
         </div>
     </div>
-</div>
     <!---Container Fluid-->
 
-<!-- Modal -->
-<div class="modal fade" id="letterModal" tabindex="-1" role="dialog" aria-labelledby="letterModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="letterModalLabel">View Letter</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body text-center">
-                <!-- Image will be displayed here -->
-                <img id="letterImage" src="{{ asset($letter->letter) }}"" class="img-fluid" alt="Letter" style="max-height: 80vh;">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- Modal -->
+    <div class="modal fade" id="letterModal" tabindex="-1" role="dialog" aria-labelledby="letterModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="letterModalLabel">View Letter</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <!-- Image will be displayed here -->
+                    <img id="letterImage" src="{{ asset($letter->letter ?? '') }}" class="img-fluid" alt="Letter" style="max-height: 80vh;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
 
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -172,5 +170,6 @@ $(document).ready(function() {
     });
 
 
+    
     </script>
     

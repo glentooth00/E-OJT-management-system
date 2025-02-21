@@ -42,11 +42,123 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/documents') ? 'active' : '' }}" href="{{ route('admin.documents') }}">
-            <i class="fas fa-regular fa-building"></i>
-            <span>Upload documents</span>
+        <a class="nav-link" href="#endorsementMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="endorsementMenu">
+            <i class="fas fa-file"></i>
+            <span>Endorsement</span>
         </a>
     </li>
+    
+    <!-- Submenu items under Endorsement -->
+    <div class="collapse" id="endorsementMenu">
+        <li class="nav-item">
+           
+            <a class="nav-link {{ request()->is('admin/endorsement/list') ? 'active' : '' }}" href=" {{ route('admin.endorsement.list') }}">
+                <i class="fas fa-list"></i> <!-- Icon for List Endorsements -->
+                <span>List Endorsements</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            {{-- {{ route('admin.endorsement.create') }} --}}
+            <a class="nav-link {{ request()->is('admin/endorsement/create') ? 'active' : '' }}" href="{{ route('admin.endorsement') }}">
+                <i class="fas fa-plus-circle"></i> <!-- Icon for Create Endorsement -->
+                <span>Create Endorsement</span>
+            </a>
+        </li>
+    </div>
+    
+
+
+    <li class="nav-item">
+        <a class="nav-link" href="#userManagementMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="userManagementMenu">
+            <i class="fas fa-users"></i>
+            <span>User Management</span>
+        </a>
+    </li>
+    
+    <!-- Submenu items under User Management -->
+    <div class="collapse" id="userManagementMenu">
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}" href="{{ route('admin.supervisor.supervisor') }}">
+                <i class="fas fa-users-cog"></i> <!-- Icon for Supervisor -->
+                <span>Supervisor</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/department_head') ? 'active' : '' }}" href="{{ route('admin.department_head.index') }}">
+                <i class="fas fa-chalkboard-teacher"></i> <!-- Icon for Chairpersons -->
+                <span>Chairpersons</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->is('admin/ojt_supervisor') ? 'active' : '' }}" href="{{ route('admin.ojt_supervisor.index') }}">
+                <i class="fas fa-user-tie"></i> <!-- Icon for OJT Supervisor -->
+                <span>OJT Supervisor</span>
+            </a>
+        </li>
+    </div>
+    
+    
+    
+    
+
+    <li class="nav-item">
+        <a class="nav-link" href="#documentsMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="documentsMenu">
+            <i class="fas fa-folder"></i>
+            <span>Documents</span>
+        </a>
+    </li>
+    
+    <!-- Submenu items under Documents -->
+    <div class="collapse" id="documentsMenu">
+        <li class="nav-item">
+            <a class="nav-link" href="#uploadDocuments" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="uploadDocuments">
+                <i class="fas fa-upload"></i> Upload Documents
+            </a>
+            <div class="collapse" id="uploadDocuments">
+                <a class="nav-link" href="{{ route('admin.documents') }}">Go to Upload Documents</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#reports" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="reports">
+                <i class="fas fa-chart-line"></i> Reports
+            </a>
+            <div class="collapse" id="reports">
+                <a class="nav-link" href="{{ route('reports.index') }}">Go to Reports</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#endorsement" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="endorsement">
+                <i class="fas fa-paper-plane"></i> Endorsement Letter
+            </a>
+            <div class="collapse" id="endorsement">
+                <a class="nav-link" href="{{ route('admin.endorsement.index') }}">Go to Endorsement Letter</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#healthCert" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="healthCert">
+                <i class="fas fa-stethoscope"></i> Health Certificate
+            </a>
+            <div class="collapse" id="healthCert">
+                <a class="nav-link" href="{{ route('admin.healthCert') }}">Go to Health Certificate</a>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <a class="nav-link" href="#moa" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="moa">
+                <i class="fas fa-file-alt"></i> Upload MOA
+            </a>
+            <div class="collapse" id="moa">
+                <a class="nav-link" href="{{ route('admin.moa.index') }}">Go to Upload MOA</a>
+            </div>
+        </li>
+    </div>
+    
+    
+    
+
 
 
 
@@ -60,7 +172,7 @@
             <span>Department Head</span>
         </a>
     </li> --}}
-
+{{-- 
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/supervisor') ? 'active' : '' }}"
             href="{{ route('admin.supervisor.supervisor') }}">
@@ -75,7 +187,7 @@
             <i class='fas fa-building'></i>
             <span>Chairpersons</span>
         </a>
-    </li>
+    </li> --}}
 
     {{-- <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
@@ -158,89 +270,48 @@
 <hr class="sidebar-divider">
 <li class="nav-item">
     <a class="nav-link" href="#settingsMenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="settingsMenu">
-        <i class="fas fa-solid fa-cogs"></i>
+        <i class="fas fa-cogs"></i>  <!-- Changed icon here -->
         <span>Settings</span>
     </a>
 </li>
 
 <!-- Submenu items under Settings -->
 <div class="collapse" id="settingsMenu">
-    {{-- <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/departmentHead') ? 'active' : '' }}"
-            href="{{ route('admin.departmentHead.department_head') }}">
-            <i class="fas fa-fw fa-users"></i>
-            <span>Department Head</span>
-        </a>
-    </li>
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('admin.school_year.create') }}">
-            <i class="fas fa-solid fa-cogs"></i>
-            <span>Add School Year</span>
-        </a>
-    </li> --}}
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
-            href="{{ route('admin.categories.index') }}">
-            <i class='fas fa-building'></i>
+        <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}" href="{{ route('admin.categories.index') }}">
+            <i class="fas fa-th-large"></i>  <!-- Changed icon for Categories -->
             <span>Categories</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}"
-            href="{{ route('admin.questionnaire.index') }}">
-            <i class='fas fa-building'></i>
+        <a class="nav-link {{ request()->is('admin/questionaire') ? 'active' : '' }}" href="{{ route('admin.questionnaire.index') }}">
+            <i class="fas fa-clipboard-check"></i>  <!-- Changed icon for Evaluation -->
             <span>Evaluation</span>
         </a>
     </li>
     <li class="nav-item">
         <a class="nav-link {{ request()->is('admin/agencies') ? 'active' : '' }}" href="/admin/agencies">
-            <i class='fas fa-building'></i>
+            <i class="fas fa-building"></i>  <!-- Icon remains same for Agencies -->
             <span>Agencies</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/endorsement') ? 'active' : '' }}"
-            href="{{ route('admin.endorsement.index') }}">
-            <i class='fas fa-building'></i>
-            <span>Endorsement letter </span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/healthCert') ? 'active' : '' }}" href="{{ route('admin.healthCert') }}">
-            <i class="fas fa-regular fa-building"></i>
-            <span>Health Certificate</span>
-        </a>
-    </li>
-
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/moa') ? 'active' : '' }}"
-            href="{{ route('admin.moa.index') }}">
-            <i class='fas fa-building'></i>
-            <span>Upload MOA</span>
-        </a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/department') ? 'active' : '' }}"
-            href="{{ route('admin.department.index') }}">
-            <i class='fas fa-building'></i>
+        <a class="nav-link {{ request()->is('admin/department') ? 'active' : '' }}" href="{{ route('admin.department.index') }}">
+            <i class="fas fa-sitemap"></i>  <!-- Changed icon for Add Department -->
             <span>Add Department</span>
         </a>
     </li>
-
     
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}"
-            href="{{ route('admin.course.index') }}">
-            <i class='fas fa-building'></i>
+        <a class="nav-link {{ request()->is('admin/course') ? 'active' : '' }}" href="{{ route('admin.course.index') }}">
+            <i class="fas fa-graduation-cap"></i>  <!-- Changed icon for Course -->
             <span>Course</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link {{ request()->is('admin/year_level') ? 'active' : '' }}"
-            href="{{ route('admin.year_level.index') }}">
-            <i class='fas fa-building'></i>
+        <a class="nav-link {{ request()->is('admin/year_level') ? 'active' : '' }}" href="{{ route('admin.year_level.index') }}">
+            <i class="fas fa-calendar-alt"></i>  <!-- Changed icon for Year/Level -->
             <span>Year/Level</span>
         </a>
     </li>
@@ -249,12 +320,13 @@
         <form action="{{ route('admin.logout') }}" method="POST">
             @csrf
             <button type="submit" class="nav-link" style="background: none; border: none;">
-                <i class="fas fa-sign-out-alt"></i>
+                <i class="fas fa-sign-out-alt"></i>  <!-- Icon remains same for Logout -->
                 <span>Logout</span>
             </button>
         </form>
     </li>
 </div>
+
 
 <!-- Bootstrap JS and Popper.js (required for Bootstrap 5) -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
@@ -307,6 +379,12 @@
             });
         });
     });
+
+    function closeDropdown(element) {
+    $(element).removeClass('show');
+    $(element).find('.dropdown-menu').removeClass('show');
+}
+
 </script>
 
 <style>

@@ -9,14 +9,8 @@
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px">
-                            @if (Auth::check())
-                                @if (Auth::user()->role == 'admin')
-                                    <span class="ml-2 d-none d-lg-inline text-white small">ADMIN</span>
-                                @elseif(Auth::user()->role == 'department_head')
-                                    <span class="ml-2 d-none d-lg-inline text-white small">DEPARTMENT HEAD</span>
-                                @endif
-                            @endif
+                            {{-- <img class="img-profile rounded-circle" src="img/boy.png" style="max-width: 60px"> --}}
+                           
 
                         </a>
                     </li>

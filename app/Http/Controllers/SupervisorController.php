@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agency;
 use App\Models\Questionnaire;
 use App\Models\Student;
 use App\Models\Category;
@@ -17,25 +18,32 @@ class SupervisorController extends Controller
         $categories = Category::all(); // Fetch all categories
         $supervisor_accounts = Supervisor::orderBy('created_at', 'desc')->get(); // Fetch all supervisor accounts sorted by latest
 
+        $agencies = Agency::all();
+
         return view('admin.supervisor.index', [
             'categories' => $categories,
-            'supervisor_accounts' => $supervisor_accounts
+            'supervisor_accounts' => $supervisor_accounts,
+            'agencies' => $agencies,
         ]);
     }
 
     public function internList(Request $request) {
+        // Get the logged-in user
+        $loggedInUser = Auth::user();
+        // Retrieve the logged-in user's office
+        $userOffice = $loggedInUser->office;
     
         $searchTerm = $request->input('search');
         $course = $request->input('course');
     
+        // Filter students based on search term, course, designation, and office
         $students = Student::when($searchTerm, function ($query, $searchTerm) {
-            return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
-        })->when($course, function ($query, $course) {
-            return $query->where('course', $course);
-        })
-        // Add condition to filter by MDRRMO designation
-        ->where('designation', 'MDRRMO')
-        ->paginate(10);
+                return $query->where('fullname', 'LIKE', '%' . $searchTerm . '%');
+            })->when($course, function ($query, $course) {
+                return $query->where('course', $course);
+            })
+            ->where('designation', operator: $userOffice) // Add office filter
+            ->paginate(10);
     
         return view('supervisor.list.index', [
             'students' => $students,
@@ -43,6 +51,7 @@ class SupervisorController extends Controller
             'course' => $course,
         ]);
     }
+    
     
 
     public function internsLIst()
@@ -118,29 +127,32 @@ class SupervisorController extends Controller
 
     public function store(Request $request)
     {
+        // Validate incoming data
         $validatedData = $request->validate([
             'first_name' => 'nullable|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'nullable|string|max:255',
-            'email' => 'required|email|unique:supervisors|max:255',
+            'username' => 'nullable|max:255|unique:supervisors,username', // Ensure uniqueness
             'password' => 'required|string|min:8',
             'category' => 'required|string|max:255',
-            'office' => 'required|string|max:255', // Add this validation
+            'office' => 'required|string|max:255',
         ]);
-        // dd($validatedData);
-
+    
+        // Create supervisor record
         Supervisor::create([
             'first_name' => $validatedData['first_name'],
             'middle_name' => $validatedData['middle_name'],
             'last_name' => $validatedData['last_name'],
-            'email' => $validatedData['email'],
+            'username' => $validatedData['username'], // Ensure the username is passed here
             'password' => Hash::make($validatedData['password']),
             'category' => $validatedData['category'],
-            'office' => $validatedData['office'], // Save office as well
+            'office' => $validatedData['office'],
         ]);
-
+    
         return redirect()->back()->with('success', 'Supervisor account created successfully.');
     }
+    
+    
 
     public function studentActivities($student_id, $day, $day_no){
         dd($student_id, $day, $day_no);
@@ -156,15 +168,48 @@ class SupervisorController extends Controller
         //
     }
 
-    public function update(Request $request, Supervisor $supervisor)
+    public function update(Request $request)
     {
-        //
+        // Find the supervisor by ID
+        $supervisor = Supervisor::findOrFail($request->id);
+    
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'username' => 'required|max:255|unique:supervisors,username,' . $request->id, // Exclude current username
+            'category' => 'nullable|string|max:255',
+            'office' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:8', // Optional password validation
+        ]);
+    
+        // Update supervisor fields
+        $supervisor->first_name = $request->input('firstname');
+        $supervisor->middle_name = $request->input('middlename');
+        $supervisor->last_name = $request->input('lastname');
+        $supervisor->username = $request->input('username');
+        $supervisor->category = $request->input('category');
+        $supervisor->office = $request->input('office');
+    
+        // If a password is provided, hash it and update the password
+        if ($request->filled('password')) {
+            $supervisor->password = bcrypt($request->input('password')); // Hash the password
+        }
+    
+        // Save the updated supervisor
+        $supervisor->save();
+    
+        // Redirect back with success message
+        return back()->with('success', 'Supervisor updated successfully!');
     }
+    
+    
 
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required|email',
+            'username' => 'required',
             'password' => 'required|min:8',
         ]);
 
@@ -188,8 +233,13 @@ class SupervisorController extends Controller
 
     public function destroy(Supervisor $supervisor)
     {
-        //
+        // Delete the supervisor
+        $supervisor->delete();
+    
+        // Redirect back with a success message
+        return back()->with('success', 'Supervisor deleted successfully!');
     }
+    
 
 
     public function supervisorEvaluate(){

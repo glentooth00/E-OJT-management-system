@@ -64,6 +64,22 @@ class StudentController extends Controller
         ]);
     }
     
+
+    public function getYearLevels($courseInitials)
+    {
+        // Retrieve year levels where course column matches selected course initials
+        $yearLevels = DB::table('year_levels')
+            ->where('course', $courseInitials)
+            ->select('year_level', 'section')
+            ->get();
+    
+        // Return a JSON response with the year levels
+        return response()->json($yearLevels);
+    }
+    
+    
+    
+
     
     
     
@@ -97,18 +113,18 @@ class StudentController extends Controller
         if ($request->filled('password')) {
             $validatedData['password'] = Hash::make($validatedData['password']);
         }
-        dd( $validatedData);
+        // dd( $validatedData);
 
-        // if ($request->hasFile('id_attachment')) {
-        //     $file = $request->file('id_attachment');
-        //     $fileName = $file->getClientOriginalName();
-        //     $filePath = $file->storeAs('public/id_attachments', $fileName);
-        //     $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
-        // }
+        if ($request->hasFile('id_attachment')) {
+            $file = $request->file('id_attachment');
+            $fileName = $file->getClientOriginalName();
+            $filePath = $file->storeAs('public/id_attachments', $fileName);
+            $validatedData['id_attachment'] = str_replace('public/', '', $filePath);
+        }
 
-        // Student::create($validatedData);
+        Student::create($validatedData);
 
-        // return redirect()->route('site.index')->with('success', 'Student registered successfully.');
+        return redirect()->route('site.index')->with('success', 'Student registered successfully.');
     }
 
     /**

@@ -11,4 +11,6 @@ class Admin extends Authenticatable implements AuthenticatableContract
     use Notifiable;
 
     // Other model code...
+
+    protected $guarded = [];
 }

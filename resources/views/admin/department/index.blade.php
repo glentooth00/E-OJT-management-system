@@ -55,7 +55,7 @@
                             <input type="text" class="form-control" name="department_name" id="school_year"
                                 placeholder="">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <label for="school_year">Course</label>
                             <select class="form-select" name="course">
                                 @foreach ($courses as $course)
@@ -63,7 +63,7 @@
                                     <option value="{{ $course->course_initials }}">{{ $course->course_initials }}</option>
                                 @endforeach
                             </select>
-                        </div>
+                        </div> --}}
                     </form>
                 </div>
                 <div class="modal-footer">

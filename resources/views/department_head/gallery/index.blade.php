@@ -22,14 +22,14 @@
                     </div>
                 </div>
             
-                <div class="form-group mr-2" style="flex: 1;">
+                {{-- <div class="form-group mr-2" style="flex: 1;">
                     <label for="course" class="mr-2">Filter by Course:</label>
                     <select name="course" id="course" class="form-control" onchange="this.form.submit()">
                         <option value="">All Courses</option>
                         <option value="BSIT" {{ request('course') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
                         <option value="BSCS" {{ request('course') == 'BSCS' ? 'selected' : '' }}>BSCS</option>
                     </select>
-                </div>
+                </div> --}}
             </form>
        <div class="row justify-content-start">
             <div class="col">

@@ -12,7 +12,7 @@
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Weekly Reports</h1>
+            <h1 class="h3 mb-0 text-gray-800">Weekly Reportsdd</h1>
         </div>
         <form method="GET" action="{{ route('department_head.weekly_reports.reports') }}" class="form-inline mb-3">
                 <div class="input-group mr-2" style="flex: 1;">
@@ -22,14 +22,14 @@
                     </div>
                 </div>
             
-                <div class="form-group mr-2" style="flex: 1;">
+                {{-- <div class="form-group mr-2" style="flex: 1;">
                     <label for="course" class="mr-2">Filter by Course:</label>
                     <select name="course" id="course" class="form-control" onchange="this.form.submit()">
                         <option value="">All Courses</option>
                         <option value="BSIT" {{ request('course') == 'BSIT' ? 'selected' : '' }}>BSIT</option>
                         <option value="BSCS" {{ request('course') == 'BSCS' ? 'selected' : '' }}>BSCS</option>
                     </select>
-                </div>
+                </div> --}}
             </form>
        <div class="row justify-content-start">
             <div class="col">
